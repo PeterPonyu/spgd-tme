@@ -179,16 +179,40 @@ eB <- ggplot(fulln, aes(substrate, tumor_rmse, fill = substrate)) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.16))) +
   labs(x = NULL, y = "Full-n tumor RMSE") +
   theme_tme()
-eC <- ggplot(donor[!is.na(donor$RMSE), ], aes(pair, RMSE)) +
-  geom_col(fill = oi("blue"), width = 0.62) +
+# One of these four edges is the recorded close rather than a computed transfer.
+# Drawing all four in one colour reads as four results of the same kind.
+eC_d <- donor[!is.na(donor$RMSE), ]
+eC <- ggplot(eC_d, aes(pair, RMSE, fill = source)) +
+  geom_col(width = 0.62) +
+  geom_text(
+    aes(label = sprintf("%.4f", RMSE)),
+    vjust = -0.35, size = TME_VALUE_PT, family = TME_FONT
+  ) +
+  geom_text(
+    data = eC_d[eC_d$source == "locked", ],
+    aes(label = "locked"), y = 0, vjust = -0.9,
+    size = TME_VALUE_PT, family = TME_FONT, colour = "white"
+  ) +
+  scale_fill_manual(
+    values = c(computed = oi("blue"), locked = oi("orange")), guide = "none"
+  ) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.18))) +
   labs(x = NULL, y = "Donor RMSE") +
   theme_tme()
-timing$step <- factor(pretty_step(timing$step), levels = pretty_step(timing$step))
+timing$step <- factor(pretty_step(timing$step), levels = rev(pretty_step(timing$step)))
+# The self-gate is fifty times the next step, so on a shared vertical axis the
+# other five steps are invisible and their names have to be angled to fit. Laid
+# on its side each step gets a full-width label and prints its own seconds.
 eD <- ggplot(timing, aes(step, seconds)) +
-  geom_col(fill = oi("orange"), width = 0.62) +
-  labs(x = NULL, y = "Seconds") +
-  theme_tme() +
-  theme(axis.text.x = element_text(angle = 28, hjust = 1))
+  geom_col(fill = oi("orange"), width = 0.66) +
+  geom_text(
+    aes(label = ifelse(seconds >= 0.01, sprintf("%.2f s", seconds), "<0.01 s")),
+    hjust = -0.12, size = TME_VALUE_PT, family = TME_FONT
+  ) +
+  coord_flip(clip = "off") +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.30))) +
+  labs(x = NULL, y = "Seconds, one openST pass") +
+  theme_tme()
 # Distance to the cutoff, not the cosine itself: the cosine board is already the
 # hero figure, and what the board needs is how much headroom each call has.
 refuse$margin <- refuse$c_star - refuse$cosine
