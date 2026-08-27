@@ -14,8 +14,12 @@ suppressMessages({
   "Tinos"
 }
 TME_FONT <- .tme_required_font()
-TME_AXIS_PT <- 9.0
-TME_TICK_PT <- 8.0
+# Panels are printed six-up at \textwidth, so a 9/8 pt pair lands near 5 pt on
+# the page. These sizes keep tick labels legible after that reduction.
+TME_AXIS_PT <- 10.5
+TME_TICK_PT <- 9.5
+TME_VALUE_PT <- 3.2
+TME_TAG_PT <- 13
 
 # Okabe-Ito; used for substrate / pair keys, not for a method leaderboard.
 .OI <- c(
@@ -43,6 +47,12 @@ COND_COL <- c(
   Unwound = oi("orange"),
   Wound = oi("green")
 )
+
+PATIENT_COL <- c(
+  A = oi("blue"), B = oi("verm"), C = oi("green"), D = oi("purple")
+)
+
+DECISION_COL <- c(ABSTAIN = oi("verm"), KEEP = oi("green"))
 
 TYPE_COL <- c(
   Cancer = oi("verm"), Endothelial = oi("sky"), Fibroblast = oi("orange"),
@@ -107,7 +117,9 @@ theme_tme <- function(base_size = 10) {
       axis.text = element_text(size = TME_TICK_PT, face = "plain", colour = "black"),
       axis.line = element_line(linewidth = 0.4, colour = "black"),
       axis.ticks = element_line(linewidth = 0.4, colour = "black"),
-      legend.title = element_blank(),
+      # Keys that need no title pass name = NULL; a colourbar has to say what it
+      # encodes, so the title is not blanked here.
+      legend.title = element_text(size = TME_TICK_PT, face = "plain"),
       legend.text = element_text(size = TME_TICK_PT, face = "plain"),
       legend.position = "top",
       legend.location = "plot",
@@ -118,7 +130,7 @@ theme_tme <- function(base_size = 10) {
       legend.margin = margin(0, 0, 2, 0),
       plot.title = element_blank(),
       plot.subtitle = element_blank(),
-      plot.tag = element_text(size = 12, family = TME_FONT, face = "bold"),
+      plot.tag = element_text(size = TME_TAG_PT, family = TME_FONT, face = "bold"),
       plot.caption = element_text(size = TME_TICK_PT, hjust = 0, colour = "grey20", margin = margin(6, 0, 0, 0)),
       strip.background = element_rect(fill = "grey94", colour = NA),
       strip.text = element_text(size = TME_TICK_PT, face = "plain", margin = margin(4, 6, 4, 6)),
@@ -186,19 +198,53 @@ scalebar_label <- function(length_um) {
   }
 }
 
-scale_fraction <- function(name) {
+# Every 0--1 face on this paper is the same quantity on the same scale, so they
+# share one title and patchwork collects them into a single bar per figure.
+# Which type each panel colours is stated in that panel's caption sentence.
+OCCUPANCY_LAB <- "Type occupancy (0-1)"
+
+scale_fraction <- function(name = OCCUPANCY_LAB) {
   scale_colour_viridis_c(
     option = "magma",
     limits = c(0, 1),
-    breaks = c(0, 0.5, 1),
+    breaks = c(0, 0.25, 0.5, 0.75, 1),
     begin = 0.08,
     end = 0.94,
-    name = name,
+    name = OCCUPANCY_LAB,
     guide = guide_colorbar(
       title.position = "left",
-      barwidth = unit(2.2, "cm"),
-      barheight = unit(0.22, "cm"),
+      title.vjust = 0.9,
+      barwidth = unit(3.4, "cm"),
+      barheight = unit(0.26, "cm"),
       ticks.linewidth = 0.2
+    )
+  )
+}
+# The collinearity sweep records the cosine at every t, so the refused stretch
+# of a panel can be drawn from the same rows that carry the RMSE.
+abstain_span <- function(d, c_star = 0.80) {
+  refused <- d$t[d$cosine >= c_star]
+  if (!length(refused)) {
+    return(NULL)
+  }
+  min(refused)
+}
+
+abstain_layers <- function(d, c_star = 0.80) {
+  onset <- abstain_span(d, c_star)
+  if (is.null(onset)) {
+    return(list())
+  }
+  list(
+    annotate(
+      "rect",
+      xmin = onset, xmax = Inf, ymin = -Inf, ymax = Inf,
+      fill = oi("verm"), alpha = 0.09
+    ),
+    annotate(
+      "segment",
+      x = onset, xend = onset, y = -Inf, yend = Inf,
+      linetype = "22", linewidth = 0.45, colour = oi("verm")
     )
   )
 }
@@ -211,6 +257,8 @@ theme_spatial <- function() {
       axis.line = element_blank(),
       panel.grid.major = element_blank(),
       panel.background = element_rect(fill = "white", colour = "grey70", linewidth = 0.30),
+      # One collected bar per figure, so it has to carry its own title.
+      legend.title = element_text(size = TME_TICK_PT, face = "plain", family = TME_FONT),
       legend.position = "bottom",
       legend.direction = "horizontal",
       legend.location = "plot",

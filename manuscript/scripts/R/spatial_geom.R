@@ -162,7 +162,14 @@ stack_spatial <- function(rows, guide_h = 0.07) {
   hs <- c(vapply(rows, function(r) r$aspect, numeric(1)), guide_h)
   list(
     plot = composed + patchwork::plot_layout(heights = hs, guides = "collect") &
-      theme(legend.position = "bottom", legend.justification = "center"),
+      theme(
+        legend.position = "bottom",
+        legend.justification = "center",
+        # Collected guides sit side by side; stacked they push the last key off
+        # the canvas.
+        legend.box = "horizontal",
+        legend.box.just = "center"
+      ),
     heights = hs
   )
 }
@@ -184,16 +191,15 @@ add_scalebar <- function(p, um_x, um_y) {
       x = mean(c(sb$x, sb$xend)),
       y = sb$y - 0.055 * dy,
       label = scalebar_label(L),
-      size = 2.3,
+      size = 2.9,
       family = TME_FONT,
       colour = "grey15"
     )
 }
 
-apply_cell_colour <- function(p, d, colour_by, point_size) {
+apply_cell_colour <- function(p, d, colour_by, point_size, show_key = TRUE) {
   if (colour_by %in% c("cancer", "fibroblast", "momacdc")) {
     key <- c(cancer = "Cancer.cells", fibroblast = "Fibroblast", momacdc = "MoMacDC")[[colour_by]]
-    lab <- c(cancer = "Cancer", fibroblast = "Fibroblast", momacdc = "MoMacDC")[[colour_by]]
     d$frac <- as.numeric(d$celltype == key)
     p +
       geom_point(
@@ -203,7 +209,7 @@ apply_cell_colour <- function(p, d, colour_by, point_size) {
         stroke = 0,
         alpha = 0.90
       ) +
-      scale_fraction(lab)
+      scale_fraction()
   } else if (colour_by == "type") {
     d$type <- factor(pretty_type(d$celltype), levels = names(TYPE_COL))
     p +
@@ -214,7 +220,17 @@ apply_cell_colour <- function(p, d, colour_by, point_size) {
         stroke = 0,
         alpha = 0.90
       ) +
-      scale_colour_manual(values = TYPE_COL, drop = TRUE)
+      scale_colour_manual(
+        values = TYPE_COL, drop = FALSE, name = NULL,
+        # A figure that also stacks the eight types already prints this key; a
+        # second copy in point form is the same eight labels twice.
+        # Cells are drawn sub-point, so the key it does print needs its own size.
+        guide = if (show_key) {
+          guide_legend(override.aes = list(size = 1.8, alpha = 1))
+        } else {
+          "none"
+        }
+      )
   } else if (colour_by == "condition") {
     p +
       geom_point(
@@ -226,23 +242,12 @@ apply_cell_colour <- function(p, d, colour_by, point_size) {
       ) +
       scale_colour_manual(
         values = c(COND_COL, `Ulcerated nodular` = oi("purple")),
-        drop = TRUE
-      )
+        drop = TRUE, name = NULL
+      ) +
+      guides(colour = guide_legend(override.aes = list(size = 1.8, alpha = 1)))
   } else {
     stop(sprintf("unknown colour_by: %s", colour_by), call. = FALSE)
   }
-}
-
-spot_legend_name <- function(colour_col) {
-  switch(
-    as.character(colour_col),
-    "Cancer.cells" = "Cancer",
-    "Fibroblast" = "Fibroblast",
-    "MoMacDC" = "MoMacDC",
-    "tumor_truth" = "Tumor truth",
-    "tumor_hat" = "Tumor hat",
-    pretty_type(colour_col)
-  )
 }
 
 tile_base <- function(rects) {
@@ -259,12 +264,12 @@ tile_base <- function(rects) {
     theme_spatial()
 }
 
-cell_mosaic <- function(cells, colour_by, point_size = 0.28) {
+cell_mosaic <- function(cells, colour_by, point_size = 0.28, show_key = TRUE) {
   packed <- pack_cells(cells)
   rects <- pack_rects(cells)
   um_x <- c(rects$x0, rects$x1)
   um_y <- c(rects$y0, rects$y1)
-  p <- apply_cell_colour(tile_base(rects), packed, colour_by, point_size)
+  p <- apply_cell_colour(tile_base(rects), packed, colour_by, point_size, show_key)
   fill_axes(add_scalebar(p, um_x, um_y), um_x, um_y)
 }
 
@@ -299,7 +304,7 @@ spot_on_tissue <- function(spots, colour_col, cells, point_size = 1.05, alpha = 
       alpha = alpha,
       stroke = 0
     ) +
-    scale_fraction(spot_legend_name(colour_col))
+    scale_fraction()
   fill_axes(add_scalebar(p, um_x, um_y), um_x, um_y)
 }
 
