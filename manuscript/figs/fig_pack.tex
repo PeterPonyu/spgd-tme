@@ -5,7 +5,7 @@
   tme panel/.style={
     draw=black!38, fill=black!2.4, rounded corners=2.6pt,
     inner sep=0pt, outer sep=0pt,
-    minimum width=7.46cm, minimum height=2.72cm, anchor=north west
+    minimum width=7.46cm, minimum height=2.34cm, anchor=north west
   },
   tme lab/.style={font=\bfseries\large, inner sep=2.6pt, anchor=north west},
   tme title/.style={font=\small, inner sep=0.6pt, anchor=north},
@@ -14,52 +14,52 @@
     align=center, inner sep=1.6pt, font=\scriptsize,
     minimum height=0.46cm
   },
+  % The self-gate carries almost the whole pass, so the panel that names the
+  % steps also shades them by cost rather than drawing six identical boxes.
+  tme hot/.style={tme step, fill=black!14, draw=black!62},
+  tme cost/.style={font=\tiny, text=black!58, inner sep=0.8pt},
   tme arr/.style={-{Latex[length=2.5pt]}, line width=0.42pt, draw=black!60},
+  tme edge/.style={font=\tiny, text=black!60, inner sep=1.1pt},
   tme eq/.style={font=\scriptsize, align=left, inner sep=0.4pt, anchor=west}
 ]
 \def\colB{7.72}
-\def\rowB{-2.90}
-\def\rowC{-5.80}
+\def\rowB{-2.52}
+\def\rowC{-5.04}
 
 % A Protocol
 \node[tme panel] (pA) at (0,0) {};
 \node[tme lab] at (pA.north west) {A};
 \node[tme title] at ([yshift=-12pt]pA.north) {Protocol};
-\begin{scope}[shift={($(pA.center)+(0,-0.14)$)}]
-  \node[tme step, text width=1.28cm] (aref) at (-2.52,0.38) {TME reference};
-  \node[tme step, text width=1.52cm] (aw) at (-0.72,0.38) {specificity weights};
-  \node[tme step, text width=1.18cm] (asg) at (0.95,0.38) {self-gate};
-  \node[tme step, text width=1.70cm] (arg) at (2.62,0.38) {reportability gate};
-  \node[tme step, text width=1.42cm] (aabs) at (-1.20,-0.62) {ABSTAIN};
-  \node[tme step, text width=1.62cm] (acomp) at (1.20,-0.62) {composition};
+\begin{scope}[shift={($(pA.center)+(0,-0.16)$)}]
+  \node[tme step, text width=1.28cm] (aref) at (-2.52,0.42) {TME reference};
+  \node[tme step, text width=1.52cm] (aw) at (-0.72,0.42) {specificity weights};
+  \node[tme step, text width=1.18cm] (asg) at (0.95,0.42) {self-gate};
+  \node[tme step, text width=1.70cm] (arg) at (2.62,0.42) {reportability gate};
+  \node[tme step, text width=1.42cm] (aabs) at (-1.20,-0.60) {ABSTAIN};
+  \node[tme step, text width=1.62cm] (acomp) at (1.20,-0.60) {composition};
   \draw[tme arr] (aref) -- (aw);
   \draw[tme arr] (aw) -- (asg);
   \draw[tme arr] (asg) -- (arg);
-  \draw[tme arr] (arg.south) -- ++(0,-0.10) -| (aabs.north);
-  \draw[tme arr] (arg.south) -- ++(0,-0.10) -| (acomp.north);
+  % The gate is a branch, so each outgoing arrow says which call takes it.
+  \draw[tme arr] (arg.south) -- ++(0,-0.12) -| (aabs.north)
+    node[tme edge, pos=0.72, above] {\(\cos\ge c^\star\)};
+  \draw[tme arr] (arg.south) -- ++(0,-0.12) -| (acomp.north)
+    node[tme edge, pos=0.72, above] {\(\cos<c^\star\)};
 \end{scope}
 
 % B Operators
 \node[tme panel] (pB) at (\colB,0) {};
 \node[tme lab] at (pB.north west) {B};
 \node[tme title] at ([yshift=-12pt]pB.north) {Operators};
-\begin{scope}[shift={($(pB.north east)+(-0.42,-0.55)$)}]
-  \draw[line width=0.45pt, black!55] (0,0) -- (0.28,0) -- (0.14,0.24) -- cycle;
-\end{scope}
-\node[tme eq] at ($(pB.west)+(0.42,0.12)$) {\(w_g=1-H(q_g)/\log K\)};
-\node[tme eq] at ($(pB.west)+(0.42,-0.28)$) {\(S=e^{g\hat\gamma}(P\odot w)\)};
-\node[tme eq] at ($(pB.west)+(0.42,-0.68)$) {\(\hat\pi=\mathrm{simplex}(W^\star)\)};
+\node[tme eq] at ($(pB.west)+(0.42,0.10)$) {\(w_g=1-H(q_g)/\log K\)};
+\node[tme eq] at ($(pB.west)+(0.42,-0.26)$) {\(S=e^{g\hat\gamma}(P\odot w)\)};
+\node[tme eq] at ($(pB.west)+(0.42,-0.62)$) {\(\hat\pi=\mathrm{simplex}(W^\star)\)};
 
 % C KEEP/ABSTAIN gate
 \node[tme panel] (pC) at (0,\rowB) {};
 \node[tme lab] at (pC.north west) {C};
 \node[tme title] at ([yshift=-12pt]pC.north) {KEEP/ABSTAIN gate};
-\begin{scope}[shift={($(pC.north east)+(-0.58,-0.52)$)}]
-  \draw[line width=0.55pt, black!55] (0,0) -- (0,0.26);
-  \draw[line width=0.55pt, black!55] (0.28,0) -- (0.28,0.26);
-  \draw[line width=0.70pt, black!55] (-0.04,0.14) -- (0.32,0.14);
-\end{scope}
-\node[font=\scriptsize, align=center, anchor=center] at ($(pC.center)+(0,-0.16)$) {%
+\node[font=\scriptsize, align=center, anchor=center] at ($(pC.center)+(0,-0.18)$) {%
   \(\cos(s_{\mathrm{mal}},s_{\mathrm{nbr}})\ge c^\star=0.80\)\\[2.5pt]
   \(\Rightarrow\) ABSTAIN, then renormalize};
 
@@ -67,13 +67,7 @@
 \node[tme panel] (pD) at (\colB,\rowB) {};
 \node[tme lab] at (pD.north west) {D};
 \node[tme title] at ([yshift=-12pt]pD.north) {Donor split};
-\begin{scope}[shift={($(pD.north east)+(-0.72,-0.48)$)}]
-  \draw[line width=0.45pt, black!55] (0,0.18) circle (0.06);
-  \draw[line width=0.45pt, black!55] (0,0.12) -- (0,0.00);
-  \draw[line width=0.45pt, black!55] (0.36,0.18) circle (0.06);
-  \draw[line width=0.45pt, black!55] (0.36,0.12) -- (0.36,0.00);
-\end{scope}
-\node[font=\scriptsize, align=center, anchor=center] at ($(pD.center)+(0,-0.16)$) {%
+\node[font=\scriptsize, align=center, anchor=center] at ($(pD.center)+(0,-0.18)$) {%
   \(\{\text{spot patient}\}\cap\{\text{reference patient}\}=\emptyset\)\\[3pt]
   key \(=\mathrm{Patient\_ID}\)};
 
@@ -81,29 +75,30 @@
 \node[tme panel] (pE) at (0,\rowC) {};
 \node[tme lab] at (pE.north west) {E};
 \node[tme title] at ([yshift=-12pt]pE.north) {Evaluation};
-\begin{scope}[shift={($(pE.north east)+(-0.68,-0.70)$)}]
-  \fill[black!48] (0,0) rectangle (0.07,0.10);
-  \fill[black!48] (0.11,0) rectangle (0.18,0.22);
-  \fill[black!48] (0.22,0) rectangle (0.29,0.16);
-\end{scope}
-\node[font=\scriptsize, align=center, anchor=center] at ($(pE.center)+(0,-0.16)$) {%
+\node[font=\scriptsize, align=center, anchor=center] at ($(pE.center)+(0,-0.18)$) {%
   RMSE, type PCC, spot PCC, tumor RMSE, JSD\\[3pt]
   \(B=1000\)};
 
 % F Six steps
 \node[tme panel] (pF) at (\colB,\rowC) {};
 \node[tme lab] at (pF.north west) {F};
-\node[tme title] at ([yshift=-12pt]pF.north) {Six steps};
-\begin{scope}[shift={($(pF.center)+(0,-0.14)$)}]
-  \node[tme step, text width=1.18cm] (fa) at (-2.10,0.28) {signature};
-  \node[tme step, text width=1.18cm] (fb) at (0.00,0.28) {weights};
-  \node[tme step, text width=1.18cm] (fc) at (2.10,0.28) {fit};
-  \node[tme step, text width=1.18cm] (fd) at (-2.10,-0.42) {self-gate};
-  \node[tme step, text width=1.18cm] (fe) at (0.00,-0.42) {gate};
-  \node[tme step, text width=1.18cm] (ff) at (2.10,-0.42) {simplex};
+\node[tme title] at ([yshift=-12pt]pF.north) {Six steps, one openST pass};
+\begin{scope}[shift={($(pF.center)+(0,-0.20)$)}]
+  \node[tme step, text width=1.18cm] (fa) at (-2.10,0.34) {signature};
+  \node[tme step, text width=1.18cm] (fb) at (0.00,0.34) {weights};
+  \node[tme step, text width=1.18cm] (fc) at (2.10,0.34) {fit};
+  \node[tme hot,  text width=1.18cm] (fd) at (-2.10,-0.50) {self-gate};
+  \node[tme step, text width=1.18cm] (fe) at (0.00,-0.50) {gate};
+  \node[tme step, text width=1.18cm] (ff) at (2.10,-0.50) {simplex};
+  \node[tme cost, below=0.4pt of fa] {0.86 s};
+  \node[tme cost, below=0.4pt of fb] {\(<\)0.01 s};
+  \node[tme cost, below=0.4pt of fc] {8.37 s};
+  \node[tme cost, below=0.4pt of fd] {47.96 s};
+  \node[tme cost, below=0.4pt of fe] {0.001 s};
+  \node[tme cost, below=0.4pt of ff] {3.06 s};
   \draw[tme arr] (fa) -- (fb);
   \draw[tme arr] (fb) -- (fc);
-  \draw[tme arr] (fc.south) -- ++(0,-0.14) -| (fd.north);
+  \draw[tme arr] (fc.south) -- ++(0,-0.16) -| (fd.north);
   \draw[tme arr] (fd) -- (fe);
   \draw[tme arr] (fe) -- (ff);
 \end{scope}
