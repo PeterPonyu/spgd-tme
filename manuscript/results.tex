@@ -1,0 +1,108 @@
+Four-patient CosMx basal-cell carcinoma is the mixed-spot TME object (Figure~\ref{fig:hero}). The export contains 232{,}802 cells from four patients~\cite{Andreatta2024zenodo}, and restriction to the eight shared types leaves 216{,}949 typed cells. Directed pairs A from B, B from A, and D from C yield 1194, 2020, and 3261 spots. Native CosMx calls are KEEP on BCC (cosine \(0.603666\)), on independent NSCLC (cosine \(0.648151\)), on colorectal carcinoma (cosine \(0.505826\)), and on HCC (cosine \(0.648597\)); the same frozen rule returns ABSTAIN on CosMx PDAC (\(0.861599\)), openST (\(0.972678\)), Xenium (\(0.980196\)), and Xenium FLEX (\(0.987505\)). The C-from-D metrics (overall RMSE \(0.1149\), type-level PCC \(0.7708\), spot-level PCC \(0.8773\)) are recorded in Table~\ref{tab:materials}.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth]{figs/rendered/F2_hero.pdf}
+\caption{\protect\input{captions/F2_spatial_maps.tex}}
+\label{fig:hero}
+\end{figure}
+
+Four-patient cell-level fields give a clinically separable tissue (Figure~\ref{fig:cohort}A--D). These panels are cell-level geography, not mixed-spot composition. Typed-cell cancer fractions on the same four patients are \(0.4922\) (Patient A) and \(0.8277\) (Patient B) (Figure~\ref{fig:cohort}E). On Patient D the typed-cell cancer fraction falls from \(0.8863\) at Baseline to \(0.5396\) at Wound, while fibroblast rises from \(0.0607\) to \(0.1829\) and MoMacDC from \(0.0057\) to \(0.1266\). Typed-cell counts for those patients and conditions are Figure~\ref{fig:cohort}F.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth]{figs/rendered/F3_cohort.pdf}
+\caption{\protect\input{captions/F3_cohort.tex}}
+\label{fig:cohort}
+\end{figure}
+
+The ulcerated-nodular pair is readable as a spatial field (Figure~\ref{fig:ulcerated}). Patient A fields carry stromal and myeloid programs beside tumor; Patient B fields are tumor-rich. A-from-B and B-from-A mixed spots recover that contrast as tumor-truth maps.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth]{figs/rendered/F4_ulcerated.pdf}
+\caption{\protect\input{captions/F4_ulcerated.tex}}
+\label{fig:ulcerated}
+\end{figure}
+
+Tumor fraction falls and stromal and myeloid occupancy rise along the wound axis, read on Patient D fields and on D-from-C mixed spots (Figure~\ref{fig:wound}). Each of the 3261 spots carries the majority Condition of its pooled Patient D cells: Baseline \(n=977\), Unwound \(n=812\), Wound \(n=1472\). Mean tumor truth is \(0.8425\) at Baseline, \(0.7518\) at Unwound, and \(0.4665\) at Wound. Fibroblast rises from \(0.0881\) to \(0.2107\) and MoMacDC from \(0.0070\) to \(0.1280\).
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth]{figs/rendered/F5_wound.pdf}
+\caption{\protect\input{captions/F5_wound.tex}}
+\label{fig:wound}
+\end{figure}
+
+The protocol reports CosMx tumor coordinates and places them beside locked tumor truth (Figure~\ref{fig:keep}). On the full-\(n\) CosMx KEEP map at \(t=0\) (\(n=5686\)), estimated tumor fraction has median \(0.6739\) (quartiles \(0.0510\)--\(0.9195\); mean \(0.5428\)). The protocol reports a tumor column because the CosMx cosine is \(0.603666\).
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth]{figs/rendered/F6_keep.pdf}
+\caption{\protect\input{captions/F6_keep.tex}}
+\label{fig:keep}
+\end{figure}
+
+Collinearity dose--response interpolates each malignant signature toward its neighbor (Figure~\ref{fig:dose}). At \(t=0\), the 400-spot ungated tumor RMSEs were \(0.0757\) (95\% bootstrap CI \(0.0643\)--\(0.0874\); \(B=1000\)), \(0.1558\) (\(0.1380\)--\(0.1724\)), and \(0.1542\) (\(0.1364\)--\(0.1729\)) for openST, Xenium, and CosMx. Full-\(n\) confirmation gave \(0.0903\) (\(n=6971\)), \(0.1613\) (\(n=2864\)), and \(0.1516\) (\(n=5686\)). Across the sweep, openST RMSE increased from \(0.0757\) to \(0.3357\) and CosMx from \(0.1542\) to \(0.6862\). CosMx stays KEEP at \(t=0,0.1,0.2\) and writes ABSTAIN from \(t=0.3\).
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth]{figs/rendered/F7_dose.pdf}
+\caption{\protect\input{captions/F7_dose.tex}}
+\label{fig:dose}
+\end{figure}
+
+Directed donor transfer recovers composition across patients (Figure~\ref{fig:donor}A; Table~\ref{tab:donor}). Overall RMSE is \(0.0659\)--\(0.1349\) (Figure~\ref{fig:donor}B), type-level PCC \(0.7034\)--\(0.7708\), and spot-level PCC \(0.8030\)--\(0.9528\) (Figure~\ref{fig:donor}C). The strongest computed edge is B from A (RMSE \(0.0659\), spot-level PCC \(0.9528\)); packed tumor-truth geography is B-from-A (Figure~\ref{fig:donor}D), D-from-C (Figure~\ref{fig:donor}E), and A-from-B on 1194 spots (Figure~\ref{fig:donor}F).
+
+The same frozen cosine reports KEEP on an independent CosMx non-small-cell lung carcinoma pair (tumor versus fibroblast \(0.648151\))~\cite{He2022}, on CosMx colorectal carcinoma (cosine \(0.505826\))~\cite{Crowell2025preprint}, and on CosMx HCC (cosine \(0.648597\))~\cite{He2022} (Figure~\ref{fig:keepcancers}). Directed Patient\_ID transfer on the NSCLC edge recovers composition on 4237 spots (overall RMSE \(0.1066\), type-level PCC \(0.5986\), spot-level PCC \(0.8415\)).
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth]{figs/rendered/F8_donor.pdf}
+\caption{\protect\input{captions/F8_donor.tex}}
+\label{fig:donor}
+\end{figure}
+
+\begin{table}[ht]
+\centering
+\small
+\resizebox{\textwidth}{!}{\input{tables/T3_donor_matrix.tex}}
+\caption{\protect\input{captions/T3_donor_matrix.tex}}
+\label{tab:donor}
+\end{table}
+
+MoMacDC occupancy on the three computed pairs is \(0.0803\) (A from B), \(0.0129\) (B from A), and \(0.0636\) (D from C) (Figure~\ref{fig:myeloid}A). A-from-B mixed-spot MoMacDC occupancy on packed Patient A fields is Figure~\ref{fig:myeloid}B, and D-from-C mixed-spot MoMacDC occupancy on packed Patient D fields is Figure~\ref{fig:myeloid}C. Patient A myeloid cells in one field of view are Figure~\ref{fig:myeloid}D, and Patient D wound-field myeloid cells are Figure~\ref{fig:myeloid}E. A-from-B fibroblast mixed-spot occupancy on packed Patient A fields is Figure~\ref{fig:myeloid}F. The myeloid coordinate is higher on the more stromal A-from-B face and on the wound-containing D-from-C pair.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth]{figs/rendered/F9_myeloid.pdf}
+\caption{\protect\input{captions/F9_myeloid.tex}}
+\label{fig:myeloid}
+\end{figure}
+
+The evaluation board collects the \(t=0\) interval, the full-\(n\) confirmation, donor RMSE, and the timed openST pass (Figure~\ref{fig:eval}; Table~\ref{tab:timing}).
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth]{figs/rendered/F10_eval.pdf}
+\caption{\protect\input{captions/F10_eval.tex}}
+\label{fig:eval}
+\end{figure}
+
+Figure~\ref{fig:floor} places mixed-spot TME composition on the type floor. Mean truth fraction for each of eight shared types, with a builder floor of fifty reference cells per type, is the occupancy face (Figure~\ref{fig:floor}A). Wound-axis occupancy is Yerly BCC only (Figure~\ref{fig:floor}B). MoMacDC means on the three computed pairs are \(0.0803\) (A from B), \(0.0129\) (B from A), and \(0.0636\) (D from C) (Figure~\ref{fig:floor}C). Packed A-from-B, B-from-A, and D-from-C mixed-spot fields show tumor-truth fraction as spatial occupancy, not a prognostic signature (Figure~\ref{fig:floor}D--F).
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.92\textwidth]{figs/rendered/F11_floor.pdf}
+\caption{\protect\input{captions/F11_floor.tex}}
+\label{fig:floor}
+\end{figure}
+
+The same frozen cosine reports KEEP on independent CosMx carcinomas (Figure~\ref{fig:keepcancers}). CosMx BCC, CosMx NSCLC, CosMx CRC, and CosMx HCC sit below \(c^\star=0.80\); CosMx PDAC, openST, Xenium, and Xenium FLEX sit above it. Directed Patient\_ID transfer includes the NSCLC edge (4237 spots; overall RMSE \(0.1066\), spot-level PCC \(0.8415\)) beside the BCC edges.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth]{figs/rendered/F12_keep.pdf}
+\caption{\protect\input{captions/F12_keep.tex}}
+\label{fig:keepcancers}
+\end{figure}

@@ -1,0 +1,18 @@
+\begin{tikzpicture}[
+  font=\small,
+  node distance=0.50cm and 0.42cm,
+  box/.style={draw, thick, align=center, minimum height=0.95cm, text width=2.70cm, inner sep=3pt},
+  arr/.style={-{Latex}, thick}
+]
+\node[box] (exp) {CosMx export};
+\node[box, right=of exp] (eval) {evaluated: openST,\\Xenium, CosMx};
+\node[box, right=of eval] (lock) {recorded donor composition};
+\node[box, below=of exp] (orth) {orthogonal FLEX reference};
+\node[box, below=of eval] (prov) {recorded donor close};
+\node[box, below=of lock] (thr) {type pairs and \(c^\star=0.80\)};
+\draw[arr] (exp) -- (eval);
+\draw[arr] (eval) -- (lock);
+\draw[arr] (exp) -- (orth);
+\draw[arr] (eval) -- (prov);
+\draw[arr] (lock) -- (thr);
+\end{tikzpicture}

@@ -1,0 +1,19 @@
+\begin{tikzpicture}[
+  font=\small,
+  node distance=0.55cm and 0.50cm,
+  box/.style={draw, thick, align=center, minimum height=0.90cm, text width=2.55cm, inner sep=3pt},
+  stop/.style={draw, thick, dashed, align=center, minimum height=0.90cm, text width=2.55cm, inner sep=3pt},
+  arr/.style={-{Latex}, thick}
+]
+\node[box] (cos) {cosine vs \(c^\star\)};
+\node[box, right=of cos] (pid) {Patient\_ID split};
+\node[box, right=of pid] (plot) {recorded inventory};
+\node[stop, below=of cos] (abs) {ABSTAIN};
+\node[stop, below=of pid] (don) {require disjoint donors};
+\node[stop, below=of plot] (halt) {require recorded sources};
+\draw[arr] (cos) -- (pid);
+\draw[arr] (pid) -- (plot);
+\draw[arr] (cos) -- (abs);
+\draw[arr] (pid) -- (don);
+\draw[arr] (plot) -- (halt);
+\end{tikzpicture}

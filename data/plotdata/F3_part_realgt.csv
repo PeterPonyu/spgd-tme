@@ -1,0 +1,12 @@
+substrate,t,cosine,tumor_rmse,malignant,neighbor,c_star,abstain,n_spots,subsample_seed
+realgt,0.0,0.980196,0.155754,Invasive_Tumor,Prolif_Invasive_Tumor,0.8,True,400,0
+realgt,0.1,0.983737,0.162431,Invasive_Tumor,Prolif_Invasive_Tumor,0.8,True,400,0
+realgt,0.2,0.986979,0.168815,Invasive_Tumor,Prolif_Invasive_Tumor,0.8,True,400,0
+realgt,0.3,0.989903,0.173168,Invasive_Tumor,Prolif_Invasive_Tumor,0.8,True,400,0
+realgt,0.4,0.99249,0.175493,Invasive_Tumor,Prolif_Invasive_Tumor,0.8,True,400,0
+realgt,0.5,0.994723,0.175907,Invasive_Tumor,Prolif_Invasive_Tumor,0.8,True,400,0
+realgt,0.6,0.996585,0.17424,Invasive_Tumor,Prolif_Invasive_Tumor,0.8,True,400,0
+realgt,0.7,0.998058,0.169295,Invasive_Tumor,Prolif_Invasive_Tumor,0.8,True,400,0
+realgt,0.8,0.999128,0.156798,Invasive_Tumor,Prolif_Invasive_Tumor,0.8,True,400,0
+realgt,0.9,0.99978,0.127151,Invasive_Tumor,Prolif_Invasive_Tumor,0.8,True,400,0
+realgt,1.0,1.0,0.170417,Invasive_Tumor,Prolif_Invasive_Tumor,0.8,True,400,0

@@ -1,0 +1,27 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+data/donor_pairs/**/*.h5ad
+data/donor_pairs/**/*.mtx*
+data/donor_pairs/**/*.mtx.gz
+data/tmp/
+*.log
+manuscript/*.aux
+manuscript/*.out
+manuscript/*.fls
+manuscript/*.fdb_latexmk
+manuscript/*.synctex.gz
+
+# KEEP-LOCAL belt (large-file-governance §3.4). data/plotdata/ is the tracked
+# rebuild SSOT; everything else under data/ is re-fetchable or re-derivable.
+data/external/
+data/donor_pairs/
+.omc/
+.omx/
+.claude/
+
+# Derived from data/plotdata/ by manuscript/scripts; not a truth source.
+manuscript/figs/rendered/
+manuscript/*.pdf
+manuscript/*.bbl
+manuscript/*.blg

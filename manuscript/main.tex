@@ -1,0 +1,131 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{booktabs}
+\usepackage{caption}
+\captionsetup{font=small,labelfont=bf,skip=4pt}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc,fit}
+\usepackage{placeins}
+\usepackage[numbers]{natbib}
+\usepackage{hyperref}
+\title{Two locked operators report mixed-spot TME composition on CosMx carcinomas}
+\author{Zeyu Fu}
+\date{}
+\raggedbottom
+\setlength{\textfloatsep}{10pt plus 3pt minus 2pt}
+\setlength{\floatsep}{8pt plus 2pt minus 2pt}
+\setlength{\intextsep}{8pt plus 2pt minus 2pt}
+\renewcommand{\topfraction}{0.92}
+\renewcommand{\bottomfraction}{0.45}
+\renewcommand{\textfraction}{0.07}
+\renewcommand{\floatpagefraction}{0.82}
+\setcounter{topnumber}{2}
+\setcounter{totalnumber}{4}
+
+% Missing evidence must stop the build. No placeholder figures or tables.
+\newcommand{\RequireManuscriptFile}[1]{%
+  \IfFileExists{#1}{}{%
+    \errmessage{FAIL-CLOSED: missing #1}%
+  }%
+}
+\RequireManuscriptFile{../data/plotdata/F2_pair_cards.csv}
+\RequireManuscriptFile{../data/plotdata/F2_truth_mass.csv}
+\RequireManuscriptFile{../data/plotdata/F2_native_refuse.csv}
+\RequireManuscriptFile{../data/plotdata/F2_realgt2_cosine.csv}
+\RequireManuscriptFile{../data/plotdata/F2_donor_edges.csv}
+\RequireManuscriptFile{../data/plotdata/F2D_A_from_B_truth_maps.csv}
+\RequireManuscriptFile{../data/plotdata/F2D_B_from_A_truth_maps.csv}
+\RequireManuscriptFile{../data/plotdata/F9_D_from_C_truth_maps.csv}
+\RequireManuscriptFile{../data/plotdata/F4_keep_spatial_fulln_compare.csv}
+\RequireManuscriptFile{../data/plotdata/cells_spatial.csv.gz}
+\RequireManuscriptFile{../data/plotdata/F3_collinearity_sweep.csv}
+\RequireManuscriptFile{../data/plotdata/F3_t0_bootstrap.csv}
+\RequireManuscriptFile{../data/plotdata/F3_t0_fulln.csv}
+\RequireManuscriptFile{../data/plotdata/F4_refusal.csv}
+\RequireManuscriptFile{../data/plotdata/F5_donor_transfer.csv}
+\RequireManuscriptFile{../data/plotdata/F9_type_floor.csv}
+\RequireManuscriptFile{../data/plotdata/F9_condition_occupancy.csv}
+\RequireManuscriptFile{../data/plotdata/F9_condition_spot_truth.csv}
+\RequireManuscriptFile{../data/plotdata/F10_myeloid_occupancy.csv}
+\RequireManuscriptFile{../data/plotdata/F4_keep_spatial.csv}
+\RequireManuscriptFile{../data/plotdata/F4_keep_spatial_summary.csv}
+\RequireManuscriptFile{../data/plotdata/F4_keep_spatial_fulln.csv}
+\RequireManuscriptFile{../data/plotdata/F4_keep_spatial_fulln_summary.csv}
+\RequireManuscriptFile{../data/plotdata/F2_condition_cell_summary.csv}
+\RequireManuscriptFile{../data/plotdata/T1_materials.csv}
+\RequireManuscriptFile{../data/plotdata/T2_timing.csv}
+\RequireManuscriptFile{../data/plotdata/T3_donor_matrix.csv}
+\RequireManuscriptFile{../data/plotdata/F12_keep_cosine.csv}
+\RequireManuscriptFile{../data/plotdata/F12_donor_rmse.csv}
+\RequireManuscriptFile{tables/T1_materials.tex}
+\RequireManuscriptFile{tables/T2_timing.tex}
+\RequireManuscriptFile{tables/T3_donor_matrix.tex}
+\RequireManuscriptFile{figs/rendered/F2_hero.pdf}
+\RequireManuscriptFile{figs/rendered/F3_cohort.pdf}
+\RequireManuscriptFile{figs/rendered/F4_ulcerated.pdf}
+\RequireManuscriptFile{figs/rendered/F5_wound.pdf}
+\RequireManuscriptFile{figs/rendered/F6_keep.pdf}
+\RequireManuscriptFile{figs/rendered/F7_dose.pdf}
+\RequireManuscriptFile{figs/rendered/F8_donor.pdf}
+\RequireManuscriptFile{figs/rendered/F9_myeloid.pdf}
+\RequireManuscriptFile{figs/rendered/F10_eval.pdf}
+\RequireManuscriptFile{figs/rendered/F11_floor.pdf}
+\RequireManuscriptFile{figs/rendered/F12_keep.pdf}
+\RequireManuscriptFile{figs/fig_pack.tex}
+\RequireManuscriptFile{references.bib}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+\input{abstract.tex}
+\end{abstract}
+\noindent\textit{Keywords:} tumor microenvironment; mixed-spot composition; reportability gate; donor transfer; CosMx KEEP carcinoma
+
+\section{Introduction}
+\input{intro.tex}
+
+\FloatBarrier
+\section{CosMx carcinoma materials and locked references}
+\input{materials.tex}
+
+\begin{table}[H]
+\centering
+\small
+\input{tables/T1_materials.tex}
+\caption{\protect\input{captions/T1_materials.tex}}
+\label{tab:materials}
+\end{table}
+
+\FloatBarrier
+\section{Two locked operators for reportable mixed-spot composition}
+\input{methods.tex}
+
+\begin{figure}[H]
+\centering
+\input{figs/fig_pack.tex}
+\caption{\protect\input{captions/F1_protocol.tex}}
+\label{fig:protocol}
+\end{figure}
+\vspace{-6pt}
+\begin{table}[H]
+\centering
+\input{tables/T2_timing.tex}
+\caption{\protect\input{captions/T2_timing.tex}}
+\label{tab:timing}
+\end{table}
+
+\FloatBarrier
+\section{Named tissue objects and independent CosMx KEEP}
+\input{results.tex}
+
+\FloatBarrier
+\section{Locked operators recover mixed-spot TME composition}
+\input{discussion.tex}
+
+\bibliographystyle{unsrtnat}
+\bibliography{references}
+
+\end{document}

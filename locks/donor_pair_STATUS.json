@@ -1,0 +1,59 @@
+[
+  {
+    "spot_donor": "PatientA",
+    "ref_donor": "PatientB",
+    "n_shared_types": 8,
+    "kept": [
+      "Cancer.cells",
+      "Endothelial",
+      "Fibroblast",
+      "Melanocyte",
+      "MoMacDC",
+      "Normal.Kerat",
+      "Pericyte",
+      "PlasmaCell"
+    ],
+    "spot_n": 21665,
+    "ref_n": 41787,
+    "out_dir": "/home/zeyufu/Desktop/labs/active/spgd-tme/data/donor_pairs/A_from_B",
+    "n_spots": 1194
+  },
+  {
+    "spot_donor": "PatientB",
+    "ref_donor": "PatientA",
+    "n_shared_types": 8,
+    "kept": [
+      "Cancer.cells",
+      "Endothelial",
+      "Fibroblast",
+      "Melanocyte",
+      "MoMacDC",
+      "Normal.Kerat",
+      "Pericyte",
+      "PlasmaCell"
+    ],
+    "spot_n": 41787,
+    "ref_n": 21665,
+    "out_dir": "/home/zeyufu/Desktop/labs/active/spgd-tme/data/donor_pairs/B_from_A",
+    "n_spots": 2020
+  },
+  {
+    "spot_donor": "PatientD",
+    "ref_donor": "PatientC",
+    "n_shared_types": 8,
+    "kept": [
+      "Cancer.cells",
+      "Endothelial",
+      "Fibroblast",
+      "Melanocyte",
+      "MoMacDC",
+      "Normal.Kerat",
+      "Pericyte",
+      "PlasmaCell"
+    ],
+    "spot_n": 65167,
+    "ref_n": 90636,
+    "out_dir": "/home/zeyufu/Desktop/labs/active/spgd-tme/data/donor_pairs/D_from_C",
+    "n_spots": 3261
+  }
+]

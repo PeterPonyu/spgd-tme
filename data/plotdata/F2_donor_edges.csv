@@ -1,0 +1,5 @@
+pair,n_spots,source,RMSE,PCC_type,PCC_spot
+A_from_B,1194,q1_truth,,,
+B_from_A,2020,q1_truth,,,
+D_from_C,3261,q1_truth,,,
+C_from_D,,locked,0.1149,0.7708,0.8773

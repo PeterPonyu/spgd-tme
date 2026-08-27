@@ -1,0 +1,18 @@
+\begin{tikzpicture}[
+  font=\small,
+  node distance=0.48cm and 0.40cm,
+  box/.style={draw, thick, align=center, minimum height=0.92cm, text width=2.20cm, inner sep=3pt},
+  arr/.style={-{Latex}, thick}
+]
+\node[box] (ref) {TME reference};
+\node[box, right=of ref] (w) {specificity weights};
+\node[box, right=of w] (g) {platform self-gate};
+\node[box, right=of g] (r) {reportability gate};
+\node[box, below left=0.70cm and 1.05cm of r] (abs) {ABSTAIN};
+\node[box, below right=0.70cm and 1.05cm of r] (comp) {composition};
+\draw[arr] (ref) -- (w);
+\draw[arr] (w) -- (g);
+\draw[arr] (g) -- (r);
+\draw[arr] (r.south) -- ++(0,-0.22) -| (abs.north);
+\draw[arr] (r.south) -- ++(0,-0.22) -| (comp.north);
+\end{tikzpicture}

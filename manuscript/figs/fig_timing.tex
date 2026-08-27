@@ -1,0 +1,18 @@
+\begin{tikzpicture}[
+  font=\small,
+  node distance=0.32cm,
+  box/.style={draw, thick, align=center, minimum height=0.95cm, text width=1.78cm, inner sep=2pt},
+  arr/.style={-{Latex}, thick}
+]
+\node[box] (a) {signature extraction};
+\node[box, right=of a] (b) {specificity weights};
+\node[box, right=of b] (c) {weighted fit};
+\node[box, right=of c] (d) {self-gate};
+\node[box, right=of d] (e) {gate};
+\node[box, right=of e] (f) {Poisson close};
+\draw[arr] (a) -- (b);
+\draw[arr] (b) -- (c);
+\draw[arr] (c) -- (d);
+\draw[arr] (d) -- (e);
+\draw[arr] (e) -- (f);
+\end{tikzpicture}

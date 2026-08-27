@@ -1,0 +1,126 @@
+{
+  "source": "CosMx_liver_zenodo15487520",
+  "n_cells": 460441,
+  "n_genes": 1000,
+  "n_types": 16,
+  "types": [
+    "Antibody.secreting.B.cells",
+    "CD3+.alpha.beta.T.cells",
+    "Central.venous.LSECs",
+    "Cholangiocytes",
+    "Erthyroid.cells",
+    "Hep",
+    "Inflammatory.macrophages",
+    "Mature.B.cells",
+    "NK.like.cells",
+    "Non.inflammatory.macrophages",
+    "NotDet",
+    "Periportal.LSECs",
+    "Portal.endothelial.cells",
+    "Stellate.cells",
+    "gamma.delta.T.cells.1",
+    "tumor"
+  ],
+  "malignant": "tumor",
+  "neighbor": "Stellate.cells",
+  "cosine": 0.648597,
+  "c_star": 0.8,
+  "decision": "KEEP",
+  "n_patients": 2,
+  "patient_column": "patient",
+  "tumor_on_normal": false,
+  "donor_tumor_column": false,
+  "sample": "CancerousLiver",
+  "prefixes": [
+    "CancerousLiver",
+    "NormalLiver"
+  ],
+  "neighbor_scan": [
+    {
+      "neighbor": "Stellate.cells",
+      "cosine": 0.648597,
+      "decision": "KEEP"
+    },
+    {
+      "neighbor": "Inflammatory.macrophages",
+      "cosine": 0.828847,
+      "decision": "ABSTAIN"
+    },
+    {
+      "neighbor": "Non.inflammatory.macrophages",
+      "cosine": 0.814175,
+      "decision": "ABSTAIN"
+    },
+    {
+      "neighbor": "Portal.endothelial.cells",
+      "cosine": 0.842196,
+      "decision": "ABSTAIN"
+    },
+    {
+      "neighbor": "NK.like.cells",
+      "cosine": 0.801224,
+      "decision": "ABSTAIN"
+    },
+    {
+      "neighbor": "Antibody.secreting.B.cells",
+      "cosine": 0.261389,
+      "decision": "KEEP"
+    },
+    {
+      "neighbor": "CD3+.alpha.beta.T.cells",
+      "cosine": 0.854095,
+      "decision": "ABSTAIN"
+    },
+    {
+      "neighbor": "Central.venous.LSECs",
+      "cosine": 0.825098,
+      "decision": "ABSTAIN"
+    },
+    {
+      "neighbor": "Cholangiocytes",
+      "cosine": 0.611077,
+      "decision": "KEEP"
+    },
+    {
+      "neighbor": "Erthyroid.cells",
+      "cosine": 0.417553,
+      "decision": "KEEP"
+    },
+    {
+      "neighbor": "Hep",
+      "cosine": 0.571128,
+      "decision": "KEEP"
+    },
+    {
+      "neighbor": "Mature.B.cells",
+      "cosine": 0.812665,
+      "decision": "ABSTAIN"
+    },
+    {
+      "neighbor": "NotDet",
+      "cosine": 0.5022,
+      "decision": "KEEP"
+    },
+    {
+      "neighbor": "Periportal.LSECs",
+      "cosine": 0.773915,
+      "decision": "KEEP"
+    },
+    {
+      "neighbor": "gamma.delta.T.cells.1",
+      "cosine": 0.849754,
+      "decision": "ABSTAIN"
+    }
+  ],
+  "zip_bytes": 503486548,
+  "gene_head": [
+    "AATK",
+    "ABL1",
+    "ABL2",
+    "ACACB",
+    "ACE",
+    "ACKR1",
+    "ACKR3",
+    "ACKR4"
+  ]
+}

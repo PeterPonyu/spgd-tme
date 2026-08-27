@@ -1,0 +1,2 @@
+substrate,t,decision,n_spots,tumor_hat_mean,tumor_hat_median,tumor_hat_q25,tumor_hat_q75
+realgt3,0.0,KEEP,400,0.533111,0.670766,0.022085,0.911687
