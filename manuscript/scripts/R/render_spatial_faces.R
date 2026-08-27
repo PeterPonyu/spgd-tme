@@ -12,50 +12,65 @@ fov_wnd <- largest_fov(cells, "PatientD", "Wound")
 
 if (!identical(Sys.getenv("TME_RENDER_ONLY"), "F11")) {
 
-f3_sum <- cell_sum
-f3_sum$patient <- factor(gsub("^Patient", "", f3_sum$patient), levels = c("A", "B", "C", "D"))
-f3_sum$condition <- factor(
-  gsub("_", " ", f3_sum$condition),
-  levels = c("Baseline", "Ulcerated nodular", "Unwound", "Wound")
+# The cohort is an eight-type simplex, so the cell-level faces report the whole
+# composition rather than the three coordinates the wound axis moves.
+occ <- cell_occ
+occ$patient <- factor(gsub("^Patient", "", occ$patient), levels = c("A", "B", "C", "D"))
+occ$condition <- factor(
+  gsub("_", " ", occ$condition),
+  levels = c("Ulcerated nodular", "Baseline", "Unwound", "Wound")
 )
-f3_fill <- c(
-  "Ulcerated nodular" = oi("purple"), Baseline = oi("blue"),
-  Unwound = oi("orange"), Wound = oi("green")
-)
-clong <- f3_sum %>%
-  tidyr::pivot_longer(
-    c("cancer_fraction", "fibroblast_fraction", "momacdc_fraction"),
-    names_to = "metric", values_to = "value"
-  ) %>%
-  mutate(metric = recode(
-    metric,
-    cancer_fraction = "Cancer",
-    fibroblast_fraction = "Fibroblast",
-    momacdc_fraction = "MoMacDC"
-  ))
+occ$type <- factor(pretty_type(occ$type), levels = names(TYPE_COL))
+type_counts <- occ %>%
+  dplyr::group_by(patient, type) %>%
+  dplyr::summarise(n_cells = sum(n_cells), .groups = "drop")
 
-g3a <- cell_mosaic(pa, "cancer")
-g3b <- cell_mosaic(pb, "cancer")
-g3c <- cell_mosaic(pc, "cancer")
-g3d <- cell_mosaic(pd, "cancer")
-g3e <- ggplot(clong, aes(patient, value, fill = condition)) +
-  geom_col(position = position_dodge(0.78), width = 0.72) +
-  facet_wrap(~metric, ncol = 3, scales = "free_y") +
-  scale_fill_manual(values = f3_fill) +
+# F3 has no spot-level panel to justify an occupancy bar, so the fields are
+# coloured by the same eight types the composition panel stacks and take their
+# key from that panel instead of printing a second copy of it.
+g3a <- cell_mosaic(pa, "type", show_key = FALSE)
+g3b <- cell_mosaic(pb, "type", show_key = FALSE)
+g3c <- cell_mosaic(pc, "type", show_key = FALSE)
+g3d <- cell_mosaic(pd, "type", show_key = FALSE)
+g3e <- ggplot(occ, aes(patient, fraction, fill = type)) +
+  geom_col(width = 0.72) +
+  facet_grid(~condition, scales = "free_x", space = "free_x") +
+  scale_fill_manual(values = TYPE_COL, name = NULL) +
+  # No y limits: the stacked top lands on 1 within floating point, and a hard
+  # limit censors the segment that carries it.
+  scale_y_continuous(breaks = c(0, 0.5, 1), expand = expansion(mult = c(0, 0.02))) +
+  guides(fill = guide_legend(nrow = 2, byrow = TRUE)) +
   labs(x = "Patient", y = "Typed-cell fraction") +
   theme_tme()
-g3f <- ggplot(f3_sum, aes(patient, n_cells, fill = condition)) +
-  geom_col(position = position_dodge(0.78), width = 0.72) +
-  scale_fill_manual(values = f3_fill) +
-  labs(x = "Patient", y = "Typed cells") +
-  theme_tme()
-f3 <- stack_spatial(list(
-  row_fill(list(g3a, g3b), c(packed_aspect(pa), packed_aspect(pb))),
-  row_fill(list(g3c, g3d), c(packed_aspect(pc), packed_aspect(pd))),
-  row_fill(list(g3e, g3f), c(0.36, 0.36))
-))
+floor_note <- data.frame(
+  type = factor(levels(type_counts$type)[1], levels = levels(type_counts$type)),
+  n_cells = 50
+)
+g3f <- ggplot(type_counts, aes(type, n_cells, colour = patient)) +
+  geom_hline(yintercept = 50, linetype = "22", linewidth = 0.45, colour = oi("verm")) +
+  geom_text(
+    data = floor_note, aes(type, n_cells, label = "50-cell reference floor"),
+    inherit.aes = FALSE, hjust = 0, vjust = -0.6,
+    size = TME_VALUE_PT, family = TME_FONT, colour = oi("verm")
+  ) +
+  geom_point(position = position_dodge(0.62), size = 1.9) +
+  scale_colour_manual(values = PATIENT_COL, name = NULL) +
+  scale_y_log10(
+    labels = function(v) format(v, big.mark = ",", scientific = FALSE, trim = TRUE)
+  ) +
+  labs(x = NULL, y = "Typed cells per donor") +
+  theme_tme() +
+  theme(axis.text.x = element_text(angle = 35, hjust = 1))
+f3 <- stack_spatial(
+  list(
+    row_fill(list(g3a, g3b), c(packed_aspect(pa), packed_aspect(pb))),
+    row_fill(list(g3c, g3d), c(packed_aspect(pc), packed_aspect(pd))),
+    row_fill(list(g3e, g3f), c(0.38, 0.38))
+  ),
+  guide_h = 0.11
+)
 f3_tag <- theme(
-  plot.tag = element_text(size = 11, family = TME_FONT, face = "bold"),
+  plot.tag = element_text(size = TME_TAG_PT, family = TME_FONT, face = "bold"),
   plot.tag.position = "topleft",
   plot.margin = margin(6, 4, 4, 6)
 )
@@ -92,13 +107,39 @@ wB <- fov_zoom(cells, "PatientD", fov_base, "cancer")
 wC <- fov_zoom(cells, "PatientD", fov_wnd, "cancer")
 wD <- spot_on_tissue(maps_d, "Cancer.cells", pd, point_size = 0.95)
 wE <- spot_on_tissue(maps_d, "Fibroblast", pd, point_size = 0.95)
-cond_spots$condition <- factor(cond_spots$condition, levels = c("Baseline", "Unwound", "Wound"))
-cond_spots$type <- factor(pretty_type(cond_spots$type), levels = rev(unique(pretty_type(cond_spots$type))))
-wF <- ggplot(cond_spots, aes(type, mean, fill = condition)) +
-  geom_col(position = position_dodge(0.78), width = 0.72) +
-  coord_flip() +
-  scale_fill_manual(values = COND_COL) +
-  labs(x = NULL, y = "Mean truth fraction") +
+# Each of the 3261 spots carries its own truth vector and the condition of the
+# field it sits in, so the wound axis is three distributions, not three means.
+spot_cond$condition <- factor(spot_cond$condition, levels = c("Baseline", "Unwound", "Wound"))
+wound_n <- spot_cond %>%
+  dplyr::count(condition, name = "n")
+wound_lab <- stats::setNames(
+  sprintf("%s\n(n=%d)", wound_n$condition, wound_n$n),
+  as.character(wound_n$condition)
+)
+wound_long <- spot_cond %>%
+  tidyr::pivot_longer(
+    c("Cancer.cells", "Fibroblast", "MoMacDC"),
+    names_to = "type", values_to = "truth"
+  ) %>%
+  mutate(type = factor(pretty_type(type), levels = c("Cancer", "Fibroblast", "MoMacDC")))
+wound_dodge <- position_dodge(width = 0.80)
+wF <- ggplot(wound_long, aes(condition, truth, fill = type)) +
+  geom_violin(
+    position = wound_dodge, scale = "width", width = 0.72,
+    linewidth = 0.25, colour = "grey35"
+  ) +
+  geom_boxplot(
+    position = wound_dodge, width = 0.13, outlier.shape = NA,
+    linewidth = 0.25, fill = "white", colour = "grey25"
+  ) +
+  stat_summary(
+    fun = mean, geom = "point", position = wound_dodge,
+    shape = 23, size = 1.4, fill = "white", colour = "grey15", stroke = 0.4
+  ) +
+  scale_fill_manual(values = TYPE_COL, name = NULL) +
+  scale_x_discrete(labels = wound_lab) +
+  scale_y_continuous(breaks = c(0, 0.5, 1), expand = expansion(mult = c(0.02, 0.04))) +
+  labs(x = NULL, y = "Per-spot truth fraction") +
   theme_tme()
 f5 <- stack_spatial(list(
   row_fill(
@@ -116,17 +157,40 @@ kA <- cell_mosaic(pc, "cancer", point_size = 0.16)
 kB <- spot_on_tissue(keep_cmp, "tumor_truth", pc, point_size = 0.70)
 kC <- spot_on_tissue(keep_cmp, "tumor_hat", pc, point_size = 0.70)
 kD <- fov_zoom(cells, "PatientC", fov_c, "cancer")
-kE <- ggplot(refuse, aes(substrate, cosine, fill = decision)) +
-  geom_col(width = 0.62) +
-  geom_hline(yintercept = 0.80, linewidth = 0.45, linetype = "22") +
-  scale_fill_manual(values = c(ABSTAIN = oi("verm"), KEEP = oi("green"))) +
-  labs(x = NULL, y = "Cosine") +
-  theme_tme() +
-  theme(axis.text.x = element_text(angle = 28, hjust = 1))
-kF <- ggplot(refuse, aes(decision, fill = decision)) +
-  geom_bar(width = 0.55) +
-  scale_fill_manual(values = c(ABSTAIN = oi("verm"), KEEP = oi("green")), guide = "none") +
-  labs(x = "Native call", y = "Substrates") +
+# The reported column is 5686 paired numbers; the two maps above show where they
+# sit, and these two faces show how well they agree.
+keep_rmse <- sqrt(mean((keep_cmp$tumor_hat - keep_cmp$tumor_truth)^2))
+keep_pcc <- stats::cor(keep_cmp$tumor_hat, keep_cmp$tumor_truth)
+kE <- ggplot(keep_cmp, aes(tumor_truth, tumor_hat)) +
+  geom_abline(slope = 1, intercept = 0, linetype = "22", linewidth = 0.45, colour = "grey35") +
+  geom_point(size = 0.45, alpha = 0.22, colour = oi("green"), stroke = 0) +
+  annotate(
+    "label",
+    x = 0.02, y = 1.0, hjust = 0, vjust = 1,
+    label = sprintf(
+      "n = %d\nRMSE = %.4f\nr = %.4f", nrow(keep_cmp), keep_rmse, keep_pcc
+    ),
+    size = TME_VALUE_PT, family = TME_FONT,
+    fill = "white", alpha = 0.75, lineheight = 1.05
+  ) +
+  scale_x_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1)) +
+  scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1)) +
+  labs(x = "Locked tumor truth", y = "Estimated tumor fraction") +
+  theme_tme()
+keep_ecdf <- rbind(
+  data.frame(series = "Locked truth", value = keep_cmp$tumor_truth),
+  data.frame(series = "Protocol estimate", value = keep_cmp$tumor_hat)
+)
+kF <- ggplot(keep_ecdf, aes(value, colour = series)) +
+  stat_ecdf(linewidth = 0.7, pad = FALSE) +
+  geom_hline(yintercept = 0.5, linetype = "22", linewidth = 0.35, colour = "grey55") +
+  scale_colour_manual(
+    values = c(`Locked truth` = oi("grey"), `Protocol estimate` = oi("green")),
+    name = NULL
+  ) +
+  scale_x_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1)) +
+  scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1)) +
+  labs(x = "Tumor fraction", y = "Cumulative share of spots") +
   theme_tme()
 f6 <- stack_spatial(list(
   row_fill(list(kA, kB, kC), c(packed_aspect(pc), packed_aspect(pc), packed_aspect(pc))),
@@ -153,7 +217,7 @@ dlong <- donor %>%
 dA <- ggplot(dlong[!is.na(dlong$value), ], aes(pair, value, colour = source)) +
   geom_point(size = 3.2, stroke = 0.8) +
   facet_wrap(~metric, scales = "free_y", ncol = 2) +
-  scale_colour_manual(values = c(computed = oi("blue"), locked = oi("orange"))) +
+  scale_colour_manual(values = c(computed = oi("blue"), locked = oi("orange")), name = NULL) +
   labs(x = "Directed transfer", y = "Metric") +
   theme_tme()
 dB <- ggplot(donor[!is.na(donor$RMSE), ], aes(pair, RMSE, fill = source)) +
@@ -192,7 +256,7 @@ tme_save(
   f8$plot +
     plot_annotation(tag_levels = "A") &
     theme(
-      plot.tag = element_text(size = 11, family = TME_FONT, face = "bold", hjust = 0, vjust = 1),
+      plot.tag = element_text(size = TME_TAG_PT, family = TME_FONT, face = "bold", hjust = 0, vjust = 1),
       plot.tag.position = "topleft"
     ),
   "F8_donor", 11.2, 11.2 * sum(f8$heights) + 0.40, figdir
@@ -200,27 +264,6 @@ tme_save(
 ## F8_donor end
 
 myelo$pair <- factor(pretty_pair(myelo$pair), levels = pair_levels)
-f9_occ <- function(p, name) {
-  p +
-    scale_colour_viridis_c(
-      option = "magma",
-      limits = c(0, 1),
-      breaks = c(0, 0.5, 1),
-      begin = 0.08,
-      end = 0.94,
-      name = name,
-      guide = guide_colorbar(
-        title.position = "top",
-        title.hjust = 0.5,
-        barwidth = unit(2.6, "cm"),
-        barheight = unit(0.22, "cm"),
-        ticks.linewidth = 0.2
-      )
-    ) +
-    theme(
-      legend.title = element_text(size = TME_TICK_PT, face = "plain", family = TME_FONT)
-    )
-}
 mA <- ggplot(myelo, aes(pair, mean)) +
   geom_col(fill = oi("purple"), width = 0.55) +
   geom_text(
@@ -233,26 +276,11 @@ mA <- ggplot(myelo, aes(pair, mean)) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.18))) +
   labs(x = "Pair", y = "MoMacDC mean truth fraction") +
   theme_tme()
-mB <- f9_occ(
-  spot_on_tissue(maps_a, "MoMacDC", pa, point_size = 4.20, alpha = 1.00),
-  "MoMacDC occupancy"
-)
-mC <- f9_occ(
-  spot_on_tissue(maps_d, "MoMacDC", pd, point_size = 1.75, alpha = 0.90),
-  "MoMacDC occupancy"
-)
-mD <- f9_occ(
-  fov_zoom(cells, "PatientA", fov_a, "momacdc", point_size = 2.40),
-  "MoMacDC occupancy"
-)
-mE <- f9_occ(
-  fov_zoom(cells, "PatientD", fov_wnd, "momacdc", point_size = 1.90),
-  "MoMacDC occupancy"
-)
-mF <- f9_occ(
-  spot_on_tissue(maps_a, "Fibroblast", pa, point_size = 4.20, alpha = 1.00),
-  "Fibroblast occupancy"
-)
+mB <- spot_on_tissue(maps_a, "MoMacDC", pa, point_size = 4.20, alpha = 1.00)
+mC <- spot_on_tissue(maps_d, "MoMacDC", pd, point_size = 1.75, alpha = 0.90)
+mD <- fov_zoom(cells, "PatientA", fov_a, "momacdc", point_size = 2.40)
+mE <- fov_zoom(cells, "PatientD", fov_wnd, "momacdc", point_size = 1.90)
+mF <- spot_on_tissue(maps_a, "Fibroblast", pa, point_size = 4.20, alpha = 1.00)
 f9 <- stack_spatial(
   list(
     row_fill(list(mA, mB, mC), c(0.42, packed_aspect(pa), packed_aspect(pd))),
@@ -267,7 +295,7 @@ tme_save(
   f9$plot +
     plot_annotation(tag_levels = "A") &
     theme(
-      plot.tag = element_text(size = 11, family = TME_FONT, face = "bold", hjust = 0, vjust = 1),
+      plot.tag = element_text(size = TME_TAG_PT, family = TME_FONT, face = "bold", hjust = 0, vjust = 1),
       plot.tag.position = "topleft",
       legend.title = element_text(size = TME_TICK_PT, face = "plain", family = TME_FONT)
     ),
@@ -284,13 +312,13 @@ myelo$pair <- factor(pretty_pair(myelo$pair), levels = pair_levels)
 p9a <- ggplot(floor, aes(type, mean, fill = pair)) +
   geom_col(position = position_dodge(0.78), width = 0.72) +
   coord_flip() +
-  scale_fill_manual(values = PAIR_COL) +
+  scale_fill_manual(values = PAIR_COL, name = NULL) +
   labs(x = "Type", y = "Mean truth fraction") +
   theme_tme()
 fB <- ggplot(cond_spots, aes(type, mean, fill = condition)) +
   geom_col(position = position_dodge(0.78), width = 0.72) +
   coord_flip() +
-  scale_fill_manual(values = COND_COL) +
+  scale_fill_manual(values = COND_COL, name = NULL) +
   labs(x = NULL, y = "Wound-axis fraction") +
   theme_tme()
 fC <- ggplot(myelo, aes(pair, mean)) +
@@ -313,7 +341,7 @@ f11 <- stack_spatial(list(
   row_fill(list(fD, fE, fF), c(packed_aspect(pa), packed_aspect(pb), packed_aspect(pd)))
 ))
 f11_tag <- theme(
-  plot.tag = element_text(size = 11, family = TME_FONT, face = "bold", hjust = 0, vjust = 1),
+  plot.tag = element_text(size = TME_TAG_PT, family = TME_FONT, face = "bold", hjust = 0, vjust = 1),
   plot.tag.position = "topleft",
   plot.title = element_text(
     hjust = 0.5, face = "plain", family = TME_FONT, size = TME_AXIS_PT

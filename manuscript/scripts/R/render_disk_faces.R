@@ -35,6 +35,8 @@ maps_b <- read.csv(file.path(plotdir, "F2D_B_from_A_truth_maps.csv"), stringsAsF
 maps_d <- read.csv(file.path(plotdir, "F9_D_from_C_truth_maps.csv"), stringsAsFactors = FALSE)
 floor <- read.csv(file.path(plotdir, "F9_type_floor.csv"), stringsAsFactors = FALSE)
 cond_spots <- read.csv(file.path(plotdir, "F9_condition_spot_truth.csv"), stringsAsFactors = FALSE)
+spot_cond <- read.csv(file.path(plotdir, "F9_D_from_C_spot_condition.csv"), stringsAsFactors = FALSE)
+cell_occ <- read.csv(file.path(plotdir, "F9_condition_occupancy.csv"), stringsAsFactors = FALSE)
 myelo <- read.csv(file.path(plotdir, "F10_myeloid_occupancy.csv"), stringsAsFactors = FALSE)
 sweep <- read.csv(file.path(plotdir, "F3_collinearity_sweep.csv"), stringsAsFactors = FALSE)
 boot <- read.csv(file.path(plotdir, "F3_t0_bootstrap.csv"), stringsAsFactors = FALSE)
@@ -55,7 +57,7 @@ edges$pair <- factor(pretty_pair(edges$pair), levels = pair_levels)
 edge_available <- edges[!is.na(as.numeric(edges$n_spots)) & edges$source == "q1_truth", ]
 donor$pair <- factor(pretty_pair(donor$pair), levels = pair_levels)
 
-tag_theme <- theme(plot.tag = element_text(size = 12, family = TME_FONT, face = "bold"))
+tag_theme <- theme(plot.tag = element_text(size = TME_TAG_PT, family = TME_FONT, face = "bold"))
 
 if (!identical(Sys.getenv("TME_RENDER_ONLY"), "F11")) {
   source(file.path(root, "manuscript/scripts/R/render_metric_faces.R"))
