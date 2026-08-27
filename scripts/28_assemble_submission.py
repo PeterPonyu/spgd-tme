@@ -139,7 +139,21 @@ def flatten(bbl: str) -> str:
     leftover = INPUT_RE.search(text) or GRAPHICS_RE.search(text)
     if leftover:
         sys.exit(f"FAIL: unresolved reference {leftover.group(0)}")
-    return text
+    return strip_comments(text)
+
+
+def strip_comments(text: str) -> str:
+    """Drop whole-line comments from the capsule source.
+
+    The editing copy explains every typesetting decision to whoever edits it
+    next. An editor opening the submitted source is not that reader, and the
+    notes name the target journal and the reasoning behind page breaks. TeX
+    discards a whole-line comment together with its newline, so removing the
+    line is typographically identical. Trailing comments are left alone: a
+    line-final % suppresses a space and is load-bearing.
+    """
+    kept = [ln for ln in text.split("\n") if not ln.lstrip().startswith("%")]
+    return "\n".join(kept)
 
 
 def _graphics_repl(match: re.Match[str]) -> str:

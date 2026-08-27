@@ -58,6 +58,14 @@ def test_bibliography_is_inline_so_the_capsule_needs_no_bibtex():
     assert "\\begin{thebibliography}" in text
 
 
+def test_no_editing_note_ships_with_the_capsule():
+    # The editing copy argues every typesetting choice in whole-line comments,
+    # and those name the target journal and the reasoning behind page breaks.
+    # An editor opening the submitted source is not the reader they were for.
+    offenders = [ln for ln in _tex().split("\n") if ln.lstrip().startswith("%")]
+    assert offenders == [], offenders[:5]
+
+
 def test_nothing_reaches_outside_the_capsule_directory():
     # A surviving path separator inside a braced argument is a reference to a
     # file the portal will not receive.
