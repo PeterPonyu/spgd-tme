@@ -239,5 +239,14 @@ eF <- ggplot(donor[!is.na(donor$pseudobulk_jsd), ], aes(pair, pseudobulk_jsd)) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.18))) +
   labs(x = NULL, y = "Pseudobulk JSD") +
   theme_tme()
-tme_save(collect_bottom((eA | eB | eC) / (eD | eE | eF)), "F10_eval", 11.2, 7.0, figdir)
+# patchwork aligns axis titles down a column, so A's title was pushed out to
+# clear the six step names on D and ended up floating a label's width from the
+# axis it names. Freeing the label, not the space, moves A's title back against
+# its own tick marks while both panels keep their shared left edge.
+tme_save(
+  collect_bottom(
+    (patchwork::free(eA, type = "label", side = "l") | eB | eC) / (eD | eE | eF)
+  ),
+  "F10_eval", 11.2, 7.0, figdir
+)
 ## F10_eval end
