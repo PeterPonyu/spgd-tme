@@ -168,6 +168,11 @@ and share first authorship.\quad
 \section{Locked operators recover mixed-spot TME composition}
 \input{discussion.tex}
 
+% The one barrier the paper keeps. Without it the float queue drains through the
+% back matter and lands a figure between the declarations and the reference list,
+% which then reads as two fragments instead of one block.
+\FloatBarrier
+
 % Frontiers generates the ethics and data statements from the submission form, but
 % author contributions and funding must be in the source file, and a reviewer reading
 % the PDF alone should see all of them.
@@ -175,8 +180,9 @@ and share first authorship.\quad
 \input{declarations.tex}
 
 % The default inter-entry skip pushed the last entry, a thirty-author paper,
-% alone onto a page of its own.
-\setlength{\bibsep}{3pt plus 1pt minus 1pt}
+% alone onto a page of its own. Each entry opens with its own bracketed number,
+% so a small skip is enough to keep them apart.
+\setlength{\bibsep}{1pt plus 0.5pt minus 0.5pt}
 \bibliographystyle{unsrtnat}
 \bibliography{references}
 
