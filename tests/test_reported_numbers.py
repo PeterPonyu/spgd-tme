@@ -9,7 +9,9 @@ away from data/plotdata/.
 from __future__ import annotations
 
 import csv
-from collections import defaultdict
+import math
+import statistics
+from collections import Counter, defaultdict
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -143,3 +145,105 @@ def test_occupancy_sparsity_claims_match_the_type_floor():
         assert f"{nonzero:.1f}" in body, (pair, "cancer nonzero")
         assert f"{absent:.1f}" in body, (pair, "pericyte absent")
     assert {int(r["floor_min_type_cells"]) for r in rows.values()} == {50}
+
+
+def test_keep_map_agreement_matches_the_paired_column():
+    """The reported column is 5686 paired values; the figure scores them."""
+    rows = _rows("F4_keep_spatial_fulln_compare.csv")
+    truth = [float(r["tumor_truth"]) for r in rows]
+    hat = [float(r["tumor_hat"]) for r in rows]
+    n = len(rows)
+    assert n == 5686
+
+    rmse = math.sqrt(sum((a - b) ** 2 for a, b in zip(hat, truth)) / n)
+    mh, mt = sum(hat) / n, sum(truth) / n
+    cov = sum((a - mh) * (b - mt) for a, b in zip(hat, truth))
+    pcc = cov / math.sqrt(
+        sum((a - mh) ** 2 for a in hat) * sum((b - mt) ** 2 for b in truth)
+    )
+
+    body = _body_text()
+    assert f"{rmse:.4f}" in body
+    assert f"{pcc:.4f}" in body
+    saturated = 100 * sum(1 for v in truth if v >= 0.999) / n
+    topped = 100 * sum(1 for v in hat if v >= 0.99) / n
+    assert f"{saturated:.1f}" in body
+    assert f"{topped:.1f}" in body
+
+
+def test_wound_axis_per_spot_split_matches_the_recovered_labels():
+    rows = _rows("F9_D_from_C_spot_condition.csv")
+    body = _body_text()
+    counts = Counter(r["condition"] for r in rows)
+    assert counts == {"Baseline": 977, "Unwound": 812, "Wound": 1472}
+
+    order = ("Baseline", "Unwound", "Wound")
+    tumor = [
+        statistics.median(
+            float(r["Cancer.cells"]) for r in rows if r["condition"] == cond
+        )
+        for cond in order
+    ]
+    assert tumor == sorted(tumor, reverse=True)
+    for value in tumor:
+        assert f"{value:.4f}" in body
+
+    for column, ends in (("Cancer.cells", "absent"), ("MoMacDC", "present")):
+        shares = []
+        for cond in ("Baseline", "Wound"):
+            vals = [float(r[column]) for r in rows if r["condition"] == cond]
+            hit = sum(1 for v in vals if (v == 0 if ends == "absent" else v > 0))
+            shares.append(100 * hit / len(vals))
+        for share in shares:
+            assert f"{share:.1f}" in body, (column, share)
+
+
+def test_occupancy_span_and_reference_floor_match_the_tables():
+    occupied = [
+        (100 * (1 - float(r["zero_rate"])), r["pair"], r["type"])
+        for r in _rows("F2_truth_mass.csv")
+    ]
+    body = _body_text()
+    for value, _, _ in (min(occupied), max(occupied)):
+        assert f"{value:.1f}" in body
+
+    per_donor = defaultdict(int)
+    for row in _rows("F9_condition_occupancy.csv"):
+        per_donor[(row["patient"], row["type"])] += int(row["n_cells"])
+    assert len(per_donor) == 32
+    assert min(per_donor.values()) == 137
+    assert all(v >= 50 for v in per_donor.values())
+    assert "32 donor" in body and "137 Pericyte" in body
+
+
+def test_neighbor_scan_counts_match_the_recorded_probes():
+    rows = _rows("F12_neighbor_scan.csv")
+    body = _body_text()
+    per_library = defaultdict(lambda: [0, 0])
+    for row in rows:
+        seen = per_library[row["library"]]
+        seen[1] += 1
+        seen[0] += row["decision"] == "ABSTAIN"
+    assert dict(per_library) == {
+        "CosMx CRC": [0, 8],
+        "CosMx NSCLC": [2, 17],
+        "CosMx HCC": [8, 15],
+        "CosMx PDAC": [6, 6],
+    }
+    # PDAC is the ABSTAIN face of the cutoff, and it is the only library whose
+    # malignant program is collinear with every neighbor it was scored against.
+    saturated = [lib for lib, (bad, total) in per_library.items() if bad == total]
+    assert saturated == ["CosMx PDAC"]
+    for library, (bad, total) in per_library.items():
+        assert f"\\({bad}\\) of \\({total}\\)" in body, library
+
+
+def test_cutoff_margins_match_the_native_board():
+    rows = _rows("F2_native_refuse.csv") + _rows("F2_realgt2_cosine.csv")
+    body = _body_text()
+    margins = {r["substrate"]: float(r["c_star"]) - float(r["cosine"]) for r in rows}
+    keep = [m for m in margins.values() if m > 0]
+    refused = sorted(-m for m in margins.values() if m < 0)
+    assert len(keep) == 1
+    assert f"{keep[0]:.4f}" in body
+    assert f"{refused[0]:.4f}" in body and f"{refused[-1]:.4f}" in body
