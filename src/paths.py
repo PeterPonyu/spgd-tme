@@ -1,8 +1,13 @@
+import os
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-DECONV = Path("/home/zeyufu/Desktop/labs/active/deconv-lab")
-CBC_MS = Path("/home/zeyufu/Desktop/labs/capsules/spgd-deconv/manuscript")
+# deconv-lab and the CBC capsule are siblings under labs/. Derive them from
+# ROOT so no user's home directory is baked into the tree; SPGD_TME_LABS_ROOT
+# relocates the whole set when the checkout is not under its usual parent.
+LABS = Path(os.environ.get("SPGD_TME_LABS_ROOT", ROOT.parents[1]))
+DECONV = LABS / "active/deconv-lab"
+CBC_MS = LABS / "capsules/spgd-deconv/manuscript"
 BCC_EXPORT = DECONV / "data/realgt3_benchmark/downloads/bcc_export"
 REALGT4 = DECONV / "data/realgt4_benchmark"
 LOCKS = ROOT / "locks"
