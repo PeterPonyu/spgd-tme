@@ -59,7 +59,7 @@ def test_required_figures_are_directly_included():
         r"\includegraphics[width=\textwidth]{figs/rendered/F8_donor.pdf}",
         r"\includegraphics[width=\textwidth]{figs/rendered/F9_myeloid.pdf}",
         r"\includegraphics[width=\textwidth]{figs/rendered/F10_eval.pdf}",
-        r"\includegraphics[width=0.92\textwidth]{figs/rendered/F11_floor.pdf}",
+        r"\includegraphics[width=\textwidth]{figs/rendered/F11_floor.pdf}",
         r"\includegraphics[width=\textwidth]{figs/rendered/F12_keep.pdf}",
     )
     for include in expected:
@@ -70,8 +70,10 @@ def test_required_figures_are_directly_included():
 
 def test_f11_caption_only_claims_plotted_mean_and_floor_metadata():
     blob = (ROOT / "manuscript/captions/F11_floor.tex").read_text().lower()
-    assert "mean truth fraction" in blob
-    assert "fifty reference cells per type" in blob
+    assert "mean spot occupancy" in blob
+    assert "fifty reference cells" in blob
+    # The panel plots the nonzero share, so the caption may name that; the
+    # 0.05 shoulder in the same table is not drawn anywhere and must not leak.
     assert "below 0.05" not in blob
     assert "exactly empty" not in blob
 
@@ -93,7 +95,7 @@ CAPTION_LEADS = {
     "F8_donor.tex": "Directed donor transfer recovers composition across patients.",
     "F9_myeloid.tex": "MoMacDC is an occupancy axis on the computed pairs.",
     "F10_eval.tex": "The evaluation board collects the interval, the full-n confirmation, donor RMSE, and the timed pass.",
-    "F11_floor.tex": "Mean truth fraction for each of eight shared types sits on a builder floor of fifty reference cells per type.",
+    "F11_floor.tex": "Every reported type clears the builder floor of fifty reference cells, and occupancy on that supported simplex is concentrated in one column.",
     "F12_keep.tex": "The same frozen cosine reports KEEP on independent CosMx carcinomas.",
 }
 

@@ -42,10 +42,13 @@ PAIR_COL <- c(
   `D from C` = oi("green")
 )
 
+# Not the pair palette. Figure 11 prints a pair key and a condition key side by
+# side, and two three-item keys in the same blue/orange/green read as one. This
+# one also runs cool to warm, which the wound axis does and the pair set does not.
 COND_COL <- c(
-  Baseline = oi("blue"),
-  Unwound = oi("orange"),
-  Wound = oi("green")
+  Baseline = oi("sky"),
+  Unwound = oi("purple"),
+  Wound = oi("verm")
 )
 
 PATIENT_COL <- c(

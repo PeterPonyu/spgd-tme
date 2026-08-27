@@ -70,7 +70,7 @@ REQUIRED_RENDERED = (
 REQUIRED_DIRECT_INCLUDES = {
     "F2_hero.pdf": r"\includegraphics[width=\textwidth]{figs/rendered/F2_hero.pdf}",
     "F3_cohort.pdf": r"\includegraphics[width=\textwidth]{figs/rendered/F3_cohort.pdf}",
-    "F11_floor.pdf": r"\includegraphics[width=0.92\textwidth]{figs/rendered/F11_floor.pdf}",
+    "F11_floor.pdf": r"\includegraphics[width=\textwidth]{figs/rendered/F11_floor.pdf}",
     "F12_keep.pdf": r"\includegraphics[width=\textwidth]{figs/rendered/F12_keep.pdf}",
 }
 BANNED = ("survival", "biomarker", "0.2034", "0.1126")

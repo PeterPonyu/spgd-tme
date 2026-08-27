@@ -368,39 +368,52 @@ tme_save(
 
 floor$pair <- factor(pretty_pair(floor$pair), levels = pair_levels)
 floor$type <- factor(pretty_type(floor$type), levels = rev(unique(pretty_type(floor$type))))
+floor$present <- 1 - floor$zero_rate
 cond_spots$condition <- factor(cond_spots$condition, levels = c("Baseline", "Unwound", "Wound"))
 cond_spots$type <- factor(pretty_type(cond_spots$type), levels = rev(unique(pretty_type(cond_spots$type))))
-myelo$pair <- factor(pretty_pair(myelo$pair), levels = pair_levels)
-p9a <- ggplot(floor, aes(type, mean, fill = pair)) +
+# Three bar panels over the same eight types: only the leftmost needs to name
+# them, and repeating the names costs the other two a third of their width.
+share_type_axis <- theme(
+  axis.text.y = element_blank(),
+  axis.ticks.y = element_blank()
+)
+fA <- ggplot(floor, aes(type, mean, fill = pair)) +
   geom_col(position = position_dodge(0.78), width = 0.72) +
   coord_flip() +
   scale_fill_manual(values = PAIR_COL, name = NULL) +
-  labs(x = "Type", y = "Mean truth fraction") +
+  scale_y_continuous(breaks = c(0, 0.25, 0.5, 0.75)) +
+  labs(x = NULL, y = "Mean spot occupancy") +
   theme_tme()
-fB <- ggplot(cond_spots, aes(type, mean, fill = condition)) +
+# A mean near zero can be a type spread thinly over every spot or a type absent
+# from most of them, and Type PCC averages those two cases differently. This is
+# the second reading the mean cannot give.
+fB <- ggplot(floor, aes(type, present, fill = pair)) +
+  geom_col(position = position_dodge(0.78), width = 0.72) +
+  coord_flip() +
+  scale_fill_manual(values = PAIR_COL, name = NULL) +
+  scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.25, 0.5, 0.75, 1)) +
+  labs(x = NULL, y = "Share of spots holding the type") +
+  theme_tme() +
+  share_type_axis
+fC <- ggplot(cond_spots, aes(type, mean, fill = condition)) +
   geom_col(position = position_dodge(0.78), width = 0.72) +
   coord_flip() +
   scale_fill_manual(values = COND_COL, name = NULL) +
-  labs(x = NULL, y = "Wound-axis fraction") +
-  theme_tme()
-fC <- ggplot(myelo, aes(pair, mean)) +
-  geom_col(fill = oi("purple"), width = 0.55) +
-  geom_text(
-    aes(label = sprintf("%.4f", mean)),
-    vjust = -0.35,
-    size = 2.6,
-    family = TME_FONT,
-    fontface = "plain"
-  ) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.18))) +
-  labs(x = NULL, y = "MoMacDC") +
-  theme_tme()
-fD <- spot_on_tissue(maps_a, "Cancer.cells", pa, point_size = 2.85)
-fE <- spot_on_tissue(maps_b, "Cancer.cells", pb, point_size = 2.60)
-fF <- spot_on_tissue(maps_d, "Cancer.cells", pd, point_size = 2.90)
+  scale_y_continuous(breaks = c(0, 0.25, 0.5, 0.75)) +
+  labs(x = NULL, y = "Mean spot occupancy, wound axis") +
+  theme_tme() +
+  share_type_axis
+# The three donors pack to aspects of 0.40, 0.50, and 0.57, so widths drawn from
+# each footprint leave the row ragged and pull the leftmost field away from the
+# panel above it. One shared view box makes the three the same size; the padding
+# lands outside the tissue and the micrometre scale is untouched.
+field_aspect <- exp(mean(log(c(packed_aspect(pa), packed_aspect(pb), packed_aspect(pd)))))
+fD <- spot_on_tissue(maps_a, "Cancer.cells", pa, point_size = 2.85, target_aspect = field_aspect)
+fE <- spot_on_tissue(maps_b, "Cancer.cells", pb, point_size = 2.60, target_aspect = field_aspect)
+fF <- spot_on_tissue(maps_d, "Cancer.cells", pd, point_size = 2.90, target_aspect = field_aspect)
 f11 <- stack_spatial(list(
-  row_fill(list(p9a, fB, fC), c(0.55, 0.55, 0.40)),
-  row_fill(list(fD, fE, fF), c(packed_aspect(pa), packed_aspect(pb), packed_aspect(pd)))
+  row_fill(list(fA, fB, fC), c(0.52, 0.52, 0.52)),
+  row_fill(list(fD, fE, fF), c(field_aspect, field_aspect, field_aspect))
 ))
 f11_tag <- theme(
   plot.tag = element_text(size = TME_TAG_PT, family = TME_FONT, face = "bold", hjust = 0, vjust = 1),

@@ -117,11 +117,27 @@ pack_points <- function(pts, cells) {
     )
 }
 
-fill_axes <- function(p, um_x, um_y, pad = 0.006) {
+fill_axes <- function(p, um_x, um_y, pad = 0.006, target_aspect = NULL) {
   xr <- range(um_x, na.rm = TRUE)
   yr <- range(um_y, na.rm = TRUE)
   dx <- max(diff(xr), 1e-3)
   dy <- max(diff(yr), 1e-3)
+  # Three donors pack to three different footprints, so a row that gives each one
+  # the width its own footprint asks for comes out ragged. Widening the view box
+  # to a shared aspect instead of widening the axis keeps the micrometre scale
+  # isotropic, so the scale bar stays valid and the tissue is only recentred.
+  if (!is.null(target_aspect)) {
+    want <- max(as.numeric(target_aspect), 1e-3)
+    if (dy / dx < want) {
+      grow <- (want * dx - dy) / 2
+      yr <- yr + c(-1, 1) * grow
+      dy <- want * dx
+    } else if (dy / dx > want) {
+      grow <- (dy / want - dx) / 2
+      xr <- xr + c(-1, 1) * grow
+      dx <- dy / want
+    }
+  }
   p +
     coord_cartesian(
       xlim = xr + c(-1, 1) * pad * dx,
@@ -255,7 +271,7 @@ apply_cell_colour <- function(p, d, colour_by, point_size, show_key = TRUE) {
         alpha = 0.90
       ) +
       scale_colour_manual(
-        values = c(COND_COL, `Ulcerated nodular` = oi("purple")),
+        values = c(COND_COL, `Ulcerated nodular` = oi("grey")),
         drop = TRUE, name = NULL
       ) +
       guides(colour = guide_legend(override.aes = list(size = 1.8, alpha = 1)))
@@ -296,7 +312,8 @@ cell_mosaic_slide <- function(cells, colour_by, point_size = 0.16) {
   fill_axes(add_scalebar(p, um$um_x, um$um_y), um$um_x, um$um_y)
 }
 
-spot_on_tissue <- function(spots, colour_col, cells, point_size = 1.05, alpha = 0.95) {
+spot_on_tissue <- function(spots, colour_col, cells, point_size = 1.05, alpha = 0.95,
+                           target_aspect = NULL) {
   packed_c <- pack_cells(cells)
   packed_s <- pack_points(spots, cells)
   rects <- pack_rects(cells)
@@ -319,7 +336,7 @@ spot_on_tissue <- function(spots, colour_col, cells, point_size = 1.05, alpha = 
       stroke = 0
     ) +
     scale_fraction()
-  fill_axes(add_scalebar(p, um_x, um_y), um_x, um_y)
+  fill_axes(add_scalebar(p, um_x, um_y), um_x, um_y, target_aspect = target_aspect)
 }
 
 largest_fov <- function(cells, patient, condition = NULL) {
