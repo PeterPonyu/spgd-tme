@@ -31,6 +31,14 @@
 \renewcommand{\floatpagefraction}{0.82}
 \setcounter{topnumber}{2}
 \setcounter{totalnumber}{4}
+% A float page defaults to equal infinite glue above and below, which centres a
+% lone figure and opens a band of white over its first panel row. Dropping the
+% top glue collects that slack at the foot of the page instead.
+\makeatletter
+\setlength{\@fptop}{0pt}
+\setlength{\@fpsep}{10pt plus 1fil}
+\setlength{\@fpbot}{0pt plus 1fil}
+\makeatother
 
 % Missing evidence must stop the build. No placeholder figures or tables.
 \newcommand{\RequireManuscriptFile}[1]{%
