@@ -89,7 +89,7 @@ CAPTION_LEADS = {
     "F4_ulcerated.tex": "Patient A is more stromal and Patient B is tumor-rich on the ulcerated-nodular pair.",
     "F5_wound.tex": "Tumor fraction falls and stromal and myeloid occupancy rise along the wound axis.",
     "F6_keep.tex": "The protocol reports CosMx tumor coordinates and places them beside locked tumor truth.",
-    "F7_dose.tex": "One frozen cosine produces a platform-dependent KEEP window.",
+    "F7_dose.tex": "The frozen cutoff \\(c^\\star=0.80\\) tracks malignant--neighbor collinearity as it is dialled up:",
     "F8_donor.tex": "Directed donor transfer recovers composition across patients.",
     "F9_myeloid.tex": "MoMacDC is an occupancy axis on the computed pairs.",
     "F10_eval.tex": "The evaluation board collects the interval, the full-n confirmation, donor RMSE, and the timed pass.",
@@ -212,6 +212,28 @@ def test_spatial_geom_keeps_native_axes():
     assert "pack_layout" in geom
     assert "row_fill" in geom
     assert "source" in orchestrator and "spatial_geom.R" in orchestrator
+
+
+def test_rendered_faces_relabel_internal_identifiers():
+    """Axis labels are reader-facing, so the renderer must map code names."""
+    theme = (ROOT / "manuscript/scripts/R/theme_tme.R").read_text()
+    metric = (ROOT / "manuscript/scripts/R/render_metric_faces.R").read_text()
+    for internal, shown in (
+        ("extract_signature", "Signature extraction"),
+        ("specificity_weight", "Specificity weights"),
+        ("fit_gamma", "Weighted fit"),
+        ("self_gate", "Platform self-gate"),
+        ("refuse", "Reportability gate"),
+        ("poisson_fit", "Poisson close"),
+    ):
+        assert f'"{internal}" = "{shown}"' in theme, internal
+    for internal, shown in (
+        ("realgt2", "Xenium FLEX"),
+        ("realgt3", "CosMx"),
+    ):
+        assert shown in theme, internal
+    assert "pretty_step(timing$step)" in metric
+    assert "factor(timing$step, levels = timing$step)" not in metric
 
 
 def test_reader_body_has_no_defensive_voice():
