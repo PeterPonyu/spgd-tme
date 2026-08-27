@@ -50,9 +50,12 @@ pB <- ggplot(scan, aes(library, cosine)) +
     fill = oi("verm"), alpha = 0.09
   ) +
   geom_hline(yintercept = 0.80, linewidth = 0.45, linetype = "22") +
-  geom_jitter(
+  # Seeded: an unseeded jitter redraws the scan differently on every render, so
+  # the figure in the PDF would stop matching the one a rerun produces.
+  geom_point(
     aes(fill = decision),
-    width = 0.16, height = 0, size = 1.7, shape = 21, stroke = 0.2,
+    position = position_jitter(width = 0.16, height = 0, seed = 20260827),
+    size = 1.7, shape = 21, stroke = 0.2,
     colour = "grey25", alpha = 0.85
   ) +
   geom_point(
