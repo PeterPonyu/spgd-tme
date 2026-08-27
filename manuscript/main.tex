@@ -178,8 +178,21 @@ and share first authorship.\quad
 % Frontiers generates the ethics and data statements from the submission form, but
 % author contributions and funding must be in the source file, and a reviewer reading
 % the PDF alone should see all of them.
+%
+% Grouped and tightened. Eight statements at the body paragraph skip run one
+% statement past the page, and the reader who checks them checks them together.
+% They are a list of short labelled blocks rather than running prose, so a
+% shorter skip between them costs no legibility.
+\begingroup
+\makeatletter
+\renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
+  {1.5ex \@plus 0.4ex \@minus 0.2ex}%
+  {-1em}%
+  {\normalfont\normalsize\bfseries}}
+\makeatother
 \section*{Declarations}
 \input{declarations.tex}
+\endgroup
 
 % Twenty-nine entries, several of them thirty-author consortium papers, ran two
 % and a half pages at body size and left the last two alone on a page. Reference
