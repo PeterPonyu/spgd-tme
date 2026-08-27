@@ -177,23 +177,37 @@ stack_spatial <- function(rows, guide_h = 0.07) {
 add_scalebar <- function(p, um_x, um_y) {
   L <- auto_scalebar(um_x, um_y)
   sb <- scalebar_xy(um_x, um_y, L)
+  dx <- max(diff(range(um_x, na.rm = TRUE)), 1e-3)
   dy <- max(diff(range(um_y, na.rm = TRUE)), 1e-3)
+  # A bare rule and its label land on whatever tissue is under them, and these
+  # fields are dense enough that a grey label on orange cells is unreadable. The
+  # plinth gives both a white background of their own.
+  plinth <- data.frame(
+    xmin = sb$x - 0.03 * dx, xmax = sb$xend + 0.03 * dx,
+    ymin = sb$y - 0.115 * dy, ymax = sb$y + 0.035 * dy
+  )
   p +
+    geom_rect(
+      data = plinth,
+      aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
+      inherit.aes = FALSE,
+      fill = "white", colour = NA, alpha = 0.88
+    ) +
     geom_segment(
       data = sb,
       aes(x = x, y = y, xend = xend, yend = yend),
       inherit.aes = FALSE,
-      linewidth = 0.55,
-      colour = "grey15"
+      linewidth = 0.7,
+      colour = "black"
     ) +
     annotate(
       "text",
       x = mean(c(sb$x, sb$xend)),
-      y = sb$y - 0.055 * dy,
+      y = sb$y - 0.062 * dy,
       label = scalebar_label(L),
-      size = 2.9,
+      size = 3.4,
       family = TME_FONT,
-      colour = "grey15"
+      colour = "black"
     )
 }
 
