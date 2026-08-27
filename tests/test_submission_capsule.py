@@ -58,6 +58,23 @@ def test_bibliography_is_inline_so_the_capsule_needs_no_bibtex():
     assert "\\begin{thebibliography}" in text
 
 
+def test_every_figure_clears_the_portal_image_rules():
+    # 300 dpi at final size, RGB, and no figure longer than a page. Final size
+    # for a full-width figure is the 180 mm two-column measure, so a figure
+    # rasterised at 300 dpi of a smaller drawing arrives under the rule.
+    pillow = pytest.importorskip("PIL.Image")
+    column_mm = 180.0
+    min_px = 300 * column_mm / 25.4
+    for n in range(1, FIGURE_COUNT + 1):
+        with pillow.open(CAPSULE / f"Figure{n}.jpg") as im:
+            width, height = im.size
+            assert im.mode == "RGB", f"Figure{n}.jpg is {im.mode}, not RGB"
+            assert width >= min_px, f"Figure{n}.jpg is {width}px, under {min_px:.0f}px"
+            assert im.info.get("dpi") == (300, 300), f"Figure{n}.jpg tags {im.info.get('dpi')}"
+            printed_mm = column_mm * height / width
+            assert printed_mm < 250, f"Figure{n}.jpg prints {printed_mm:.0f}mm tall"
+
+
 def test_no_editing_note_ships_with_the_capsule():
     # The editing copy argues every typesetting choice in whole-line comments,
     # and those name the target journal and the reasoning behind page breaks.

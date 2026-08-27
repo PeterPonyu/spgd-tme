@@ -13,11 +13,14 @@ Run from anywhere:
 
 from __future__ import annotations
 
+import math
 import re
 import shutil
 import subprocess
 import sys
 from pathlib import Path
+
+from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
 MANUSCRIPT = ROOT / "manuscript"
@@ -41,6 +44,13 @@ FIGURES: dict[int, str] = {
     12: "F12_keep",
 }
 FIGURE_DPI = 300
+# Frontiers asks for 300 dpi *at final size*, and final size for a full-width
+# figure is the 180 mm two-column measure. Rasterising every source at 300 dpi
+# of its own page instead pins resolution to how large the figure happened to be
+# drawn: the TikZ protocol panel is a narrow standalone and came out at 263 dpi
+# once scaled to the column. This is the pixel width that clears the rule.
+COLUMN_MM = 180.0
+MIN_COLUMN_PX = math.ceil(FIGURE_DPI * COLUMN_MM / 25.4)
 
 INPUT_RE = re.compile(r"(?:\\protect\s*)?\\input\{([^}]+)\}")
 GRAPHICS_RE = re.compile(r"\\includegraphics(\[[^\]]*\])?\{figs/rendered/([A-Za-z0-9_]+)\.pdf\}")
@@ -69,16 +79,34 @@ def render_protocol_pdf(work: Path) -> Path:
     return work / "Figure1.pdf"
 
 
+def page_width_inches(pdf: Path) -> float:
+    proc = subprocess.run(["pdfinfo", str(pdf)], capture_output=True, text=True)
+    if proc.returncode != 0:
+        sys.exit(f"FAIL: pdfinfo {pdf}\n{proc.stderr[-2000:]}")
+    match = re.search(r"^Page size:\s+([\d.]+) x ", proc.stdout, re.M)
+    if match is None:
+        sys.exit(f"FAIL: no page size in pdfinfo {pdf}")
+    return float(match.group(1)) / 72.0
+
+
 def rasterise(pdf: Path, dest: Path) -> None:
     """pdftoppm writes <prefix>-1.jpg; there is only ever one page here."""
     prefix = dest.with_suffix("")
+    dpi = max(FIGURE_DPI, math.ceil(MIN_COLUMN_PX / page_width_inches(pdf)))
     run(
-        ["pdftoppm", "-jpeg", "-r", str(FIGURE_DPI), "-jpegopt", "quality=92",
+        ["pdftoppm", "-jpeg", "-r", str(dpi), "-jpegopt", "quality=92",
          "-singlefile", str(pdf), str(prefix)],
         dest.parent,
     )
     if not dest.exists():
         sys.exit(f"FAIL: {dest.name} was not produced from {pdf}")
+    with Image.open(dest) as raster:
+        width = raster.size[0]
+        if width < MIN_COLUMN_PX:
+            sys.exit(f"FAIL: {dest.name} is {width}px, under {MIN_COLUMN_PX}px at {COLUMN_MM}mm")
+        # pdftoppm stamps the render dpi, which is what the source needed, not
+        # what the printed figure is. The portal reads this tag.
+        raster.save(dest, "JPEG", quality=92, dpi=(FIGURE_DPI, FIGURE_DPI))
 
 
 def inline_inputs(text: str, base: Path, depth: int = 0) -> str:
