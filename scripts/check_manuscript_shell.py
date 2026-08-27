@@ -74,6 +74,17 @@ REQUIRED_DIRECT_INCLUDES = {
     "F12_keep.pdf": r"\includegraphics[width=\textwidth]{figs/rendered/F12_keep.pdf}",
 }
 BANNED = ("survival", "biomarker", "0.2034", "0.1126")
+# Every .tex a reader receives. declarations.tex was outside this list when it
+# was added and reached the PDF claiming a SHA-256 column Table 1 does not print.
+PROSE_FILES = (
+    "abstract.tex",
+    "intro.tex",
+    "materials.tex",
+    "methods.tex",
+    "results.tex",
+    "discussion.tex",
+    "declarations.tex",
+)
 READER_LEAKS = (
     "sha-256",
     "sha256",
@@ -141,9 +152,7 @@ def main() -> None:
         raise SystemExit("main.tex still uses unnumbered Schematic")
     publication_text = "\n".join(
         [main_tex, contract.read_text()]
-        + [(MS / name).read_text() for name in (
-            "abstract.tex", "intro.tex", "materials.tex", "methods.tex", "results.tex", "discussion.tex"
-        )]
+        + [(MS / name).read_text() for name in PROSE_FILES]
         + [(MS / "captions" / name).read_text() for name in REQUIRED_CAPTIONS]
     ).lower()
     for marker in LOCAL_PATH_MARKERS:
@@ -153,9 +162,7 @@ def main() -> None:
         if tok in publication_text:
             raise SystemExit(f"banned token {tok} in publication text")
     reader_body = "\n".join(
-        [(MS / name).read_text() for name in (
-            "abstract.tex", "intro.tex", "materials.tex", "methods.tex", "results.tex", "discussion.tex"
-        )]
+        [(MS / name).read_text() for name in PROSE_FILES]
         + [(MS / "captions" / name).read_text() for name in REQUIRED_CAPTIONS]
         + [(MS / "tables" / name).read_text() for name in ("T1_materials.tex", "T2_timing.tex", "T3_donor_matrix.tex")]
     ).lower()

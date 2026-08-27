@@ -1,15 +1,31 @@
 \paragraph{Data availability statement.}
-This study is a reanalysis of published spatial transcriptomics data; no new data were
-generated. The four-patient CosMx basal-cell carcinoma export that carries the wound
-axis and the donor split is deposited at Zenodo, doi:10.5281/zenodo.14330691, and is
-described in the accompanying report~\cite{Andreatta2024zenodo,Yerly2025preprint}. The
-independent CosMx carcinomas, the HNSCC openST library, and the breast Xenium and
+This study is a reanalysis of public spatial transcriptomics data; no new data were
+generated, and every library below is named with the repository that serves it. The
+four-patient CosMx basal-cell carcinoma export that carries the wound axis and the donor
+split is at Zenodo, \texttt{doi:10.5281/zenodo.14330691}, and is described in the
+accompanying reports~\cite{Andreatta2024zenodo,Yerly2022,Yerly2025preprint}. The CosMx
+non-small-cell lung and human liver libraries are the NanoString NSCLC and human liver
+FFPE releases, taken from the redistribution at Zenodo
+\texttt{doi:10.5281/zenodo.15487520} and governed by the NanoString data licence
+deposited in that record~\cite{He2022,Sun2025spatial}. The CosMx colorectal sections are
+at Zenodo \texttt{doi:10.5281/zenodo.15574384}~\cite{Crowell2025preprint}. The CosMx
+pancreatic library is at NCBI GEO under accession
+\texttt{GSE277782}~\cite{Pei2025}. The HNSCC openST library and the breast Xenium and
 Xenium FLEX libraries are the public releases of their source
-publications~\cite{He2022,Crowell2025preprint,Pei2025,Schott2024,Janesick2023}. Each
-input file used here is pinned by SHA-256 in Table~\ref{tab:materials}, so a reader can
-confirm byte identity with the deposited copy before rerunning. The analysis code, the
-locked reference matrices, the plotted values behind every panel, and the scripts that
-render the figures and tables are released with the manuscript.
+publications~\cite{Schott2024,Janesick2023}. The locked reference matrices, the plotted
+values behind every panel, and the scripts that render every figure and table are
+provided as Supplementary Material with this submission, and will be deposited as a
+citable reproducibility archive at Zenodo on acceptance, in the form already used for the
+parent estimator~\cite{Fu2026spgd}. Requests for any input not covered above should go to
+the corresponding author.
+
+\paragraph{Relationship to other work.}
+The estimator whose constants this work holds fixed, SPGD, is a companion manuscript by
+the corresponding author that is under review elsewhere; its code and committed tables
+are public at Zenodo \texttt{doi:10.5281/zenodo.21869991}~\cite{Fu2026spgd}. The present
+manuscript reports the two operators added on top of that estimator and the CosMx
+evidence for them. It shares no text, no figure, and no reported number with the
+companion, and it is not under consideration at any other journal.
 
 \paragraph{Ethics statement.}
 Ethical review and informed consent were obtained in the primary studies that generated
@@ -29,7 +45,9 @@ read and approved the submitted version.
 \paragraph{Funding.}
 This work was supported by the Ministry of Science and Technology of the People's Republic
 of China (Grant No. 2024YFA1107101) and by the National Key Laboratory of Trauma and
-Chemical Poisoning (Grant No. 2024K004).
+Chemical Poisoning (Grant No. 2024K004). The funders had no role in the design of the
+study, the analysis or interpretation of the data, the writing of the manuscript, or the
+decision to submit it.
 
 \paragraph{Acknowledgments.}
 The authors thank the groups that released the CosMx, openST, and Xenium libraries
@@ -40,5 +58,11 @@ The authors declare that the research was conducted in the absence of any commer
 financial relationships that could be construed as a potential conflict of interest.
 
 \paragraph{Generative AI statement.}
-The authors declare that generative artificial intelligence was not used to generate the
-scientific content, the analyses, the figures, or the text of this manuscript.
+The authors used generative artificial-intelligence assistants inside the Cursor code
+editor (Anysphere Inc.), which routes to commercial large language models from Anthropic
+and xAI, for language editing, for writing and refactoring the analysis and
+figure-rendering scripts, and for typesetting. No scientific claim, no reported number,
+and no figure was produced by an assistant: every number in the text, tables, and figures
+is computed by the released scripts from the public inputs named above, and every figure
+is a direct render of those computed values. The authors reviewed and verified all such
+content and take full responsibility for the integrity and accuracy of the work.

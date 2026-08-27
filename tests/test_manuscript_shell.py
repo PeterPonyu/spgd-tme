@@ -36,6 +36,7 @@ def test_reader_text_has_no_internal_ledger():
         "methods.tex",
         "results.tex",
         "discussion.tex",
+        "declarations.tex",
     ]
     blob = "\n".join((ROOT / "manuscript" / n).read_text().lower() for n in names)
     for cap in (ROOT / "manuscript/captions").glob("*.tex"):
