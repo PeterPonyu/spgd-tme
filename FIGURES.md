@@ -23,4 +23,34 @@ Do **not** reprint CBC official spatial A–D as this paper’s hero.
 Do **not** add T4, 17-method rank, KM/TCGA, MERFISH/STARmap main text.
 Reader PDF does **not** print SHA hashes or internal filenames.
 
+## Submission capsule
+
+The editing copy under `manuscript/` is sectioned; the capsule is not. Build it with
+`python scripts/28_assemble_submission.py`, which writes `submission/` and refuses to
+finish if any of the contract below is violated.
+
+- One flat directory. No subdirectories.
+- One `.tex`. Every section, table body and caption is spliced in, and the resolved
+  bibliography is inline, so the capsule compiles without bibtex and without a `.bib`.
+- Figures are `Figure1.jpg`–`Figure12.jpg` at 300 dpi, named explicitly by the `.tex`.
+  Figure 1 is the TikZ protocol panel compiled and rasterised like the rest, so the
+  capsule does not depend on TikZ.
+
+| Capsule | Source |
+|---|---|
+| `Figure1.jpg` | `manuscript/figs/fig_pack.tex` |
+| `Figure2.jpg` | `F2_hero.pdf` |
+| `Figure3.jpg` | `F3_cohort.pdf` |
+| `Figure4.jpg` | `F4_ulcerated.pdf` |
+| `Figure5.jpg` | `F5_wound.pdf` |
+| `Figure6.jpg` | `F6_keep.pdf` |
+| `Figure7.jpg` | `F7_dose.pdf` |
+| `Figure8.jpg` | `F8_donor.pdf` |
+| `Figure9.jpg` | `F9_myeloid.pdf` |
+| `Figure10.jpg` | `F10_eval.pdf` |
+| `Figure11.jpg` | `F11_floor.pdf` |
+| `Figure12.jpg` | `F12_keep.pdf` |
+
+`submission/` is generated and untracked; the assembler is the tracked artifact.
+
 Post-sitting plotdata for F3–F5 and T1–T3 are complete. Cell-level maps are I/O extracts. Mixed-spot coordinates are spatial-bin centroids in the same CosMx pixel frame as the cells. Rendering uses `to_um` without swapping axes and does not quantile-crop tissue. Manuscript rendering consumes these files only; no additional fits are run.

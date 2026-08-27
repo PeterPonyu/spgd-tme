@@ -25,3 +25,7 @@ manuscript/figs/rendered/
 manuscript/*.pdf
 manuscript/*.bbl
 manuscript/*.blg
+
+# Rebuilt from the editing copy by scripts/28_assemble_submission.py. The
+# assembler is the tracked artifact; the capsule is its output.
+submission/
