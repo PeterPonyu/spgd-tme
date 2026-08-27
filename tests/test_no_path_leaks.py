@@ -19,7 +19,8 @@ PROVENANCE_RECORDS = {
 }
 
 # Agent planning notes are working material, not part of the paper package.
-EXEMPT_PREFIXES = ("docs/superpowers/",)
+# This file is exempt because it has to spell the forbidden prefixes to detect them.
+EXEMPT_PREFIXES = ("docs/superpowers/", "tests/test_no_path_leaks.py")
 
 
 def _tracked_text_files() -> list[str]:
