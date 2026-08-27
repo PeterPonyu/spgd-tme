@@ -1,69 +1,74 @@
-Four-patient CosMx basal-cell carcinoma is the mixed-spot TME object (Figure~\ref{fig:hero}). The export contains 232{,}802 cells from four patients~\cite{Andreatta2024zenodo}, and restriction to the eight shared types leaves 216{,}949 typed cells. Directed pairs A from B, B from A, and D from C yield 1194, 2020, and 3261 spots. Native CosMx calls are KEEP on BCC (cosine \(0.603666\)), on independent NSCLC (cosine \(0.648151\)), on colorectal carcinoma (cosine \(0.505826\)), and on HCC (cosine \(0.648597\)); the same frozen rule returns ABSTAIN on CosMx PDAC (\(0.861599\)), openST (\(0.972678\)), Xenium (\(0.980196\)), and Xenium FLEX (\(0.987505\)). The C-from-D metrics (overall RMSE \(0.1149\), type-level PCC \(0.7708\), spot-level PCC \(0.8773\)) are recorded in Table~\ref{tab:materials}.
+\paragraph{The four-patient CosMx mixed-spot object.}
+Four-patient CosMx basal-cell carcinoma is the mixed-spot TME object. The export contains 232{,}802 cells from four patients~\cite{Andreatta2024zenodo}, and restriction to the eight shared types leaves 216{,}949 typed cells. Directed pairs A from B, B from A, and D from C yield 1194, 2020, and 3261 spots on mixed spots of 42.6--45.7\,\(\mu\)m (Fig.~\ref{fig:hero}A, D, F), and the eight shared types carry mass on every pair (Fig.~\ref{fig:hero}B). Native CosMx calls are KEEP on BCC (cosine \(0.603666\)), on independent NSCLC (cosine \(0.648151\)), on colorectal carcinoma (cosine \(0.505826\)), and on HCC (cosine \(0.648597\)); the same frozen rule returns ABSTAIN on CosMx PDAC (\(0.861599\)), openST (\(0.972678\)), Xenium (\(0.980196\)), and Xenium FLEX (\(0.987505\)) (Fig.~\ref{fig:hero}C, E). The C-from-D metrics (overall RMSE \(0.1149\), type-level PCC \(0.7708\), spot-level PCC \(0.8773\)) are recorded in Table~\ref{tab:materials}.
 
-\begin{figure}[ht]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=\textwidth]{figs/rendered/F2_hero.pdf}
 \caption{\protect\input{captions/F2_spatial_maps.tex}}
 \label{fig:hero}
 \end{figure}
 
-Four-patient cell-level fields give a clinically separable tissue (Figure~\ref{fig:cohort}A--D). These panels are cell-level geography, not mixed-spot composition. Typed-cell cancer fractions on the same four patients are \(0.4922\) (Patient A) and \(0.8277\) (Patient B) (Figure~\ref{fig:cohort}E). On Patient D the typed-cell cancer fraction falls from \(0.8863\) at Baseline to \(0.5396\) at Wound, while fibroblast rises from \(0.0607\) to \(0.1829\) and MoMacDC from \(0.0057\) to \(0.1266\). Typed-cell counts for those patients and conditions are Figure~\ref{fig:cohort}F.
+\paragraph{Cell-level geography of the cohort.}
+Four-patient cell-level fields give a clinically separable tissue (Fig.~\ref{fig:cohort}A--D). These panels are cell-level geography, not mixed-spot composition. Typed-cell cancer fractions on the same four patients are \(0.4922\) (Patient A) and \(0.8277\) (Patient B) (Fig.~\ref{fig:cohort}E). On Patient D the typed-cell cancer fraction falls from \(0.8863\) at Baseline to \(0.5396\) at Wound, while fibroblast rises from \(0.0607\) to \(0.1829\) and MoMacDC from \(0.0057\) to \(0.1266\). Typed-cell counts for those patients and conditions are Fig.~\ref{fig:cohort}F. The two axes the operators are asked to recover are therefore already visible before any transfer.
 
-\begin{figure}[ht]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=\textwidth]{figs/rendered/F3_cohort.pdf}
 \caption{\protect\input{captions/F3_cohort.tex}}
 \label{fig:cohort}
 \end{figure}
 
-The ulcerated-nodular pair is readable as a spatial field (Figure~\ref{fig:ulcerated}). Patient A fields carry stromal and myeloid programs beside tumor; Patient B fields are tumor-rich. A-from-B and B-from-A mixed spots recover that contrast as tumor-truth maps.
+\paragraph{The ulcerated-nodular contrast is recovered at spot level.}
+The ulcerated-nodular pair is readable as a spatial field. Patient A fields carry stromal and myeloid programs beside tumor (Fig.~\ref{fig:ulcerated}A, C); Patient B fields are tumor-rich (Fig.~\ref{fig:ulcerated}B, D). A-from-B and B-from-A mixed spots recover that contrast as tumor-truth maps on the same packed geometry (Fig.~\ref{fig:ulcerated}E, F), so the operators reproduce at spot level a contrast that is visible at cell level.
 
-\begin{figure}[ht]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=\textwidth]{figs/rendered/F4_ulcerated.pdf}
 \caption{\protect\input{captions/F4_ulcerated.tex}}
 \label{fig:ulcerated}
 \end{figure}
 
-Tumor fraction falls and stromal and myeloid occupancy rise along the wound axis, read on Patient D fields and on D-from-C mixed spots (Figure~\ref{fig:wound}). Each of the 3261 spots carries the majority Condition of its pooled Patient D cells: Baseline \(n=977\), Unwound \(n=812\), Wound \(n=1472\). Mean tumor truth is \(0.8425\) at Baseline, \(0.7518\) at Unwound, and \(0.4665\) at Wound. Fibroblast rises from \(0.0881\) to \(0.2107\) and MoMacDC from \(0.0070\) to \(0.1280\).
+\paragraph{The wound axis is ordered in tumor fraction.}
+Tumor fraction falls and stromal and myeloid occupancy rise along the wound axis, read on Patient D fields (Fig.~\ref{fig:wound}A--C) and on D-from-C mixed spots (Fig.~\ref{fig:wound}D, E). Each of the 3261 spots carries the majority Condition of its pooled Patient D cells: Baseline \(n=977\), Unwound \(n=812\), Wound \(n=1472\). Mean tumor truth is \(0.8425\) at Baseline, \(0.7518\) at Unwound, and \(0.4665\) at Wound; fibroblast rises from \(0.0881\) to \(0.2107\) and MoMacDC from \(0.0070\) to \(0.1280\) (Fig.~\ref{fig:wound}F). The three conditions are monotone in tumor fraction, so the axis is ordered rather than a two-point contrast.
 
-\begin{figure}[ht]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=\textwidth]{figs/rendered/F5_wound.pdf}
 \caption{\protect\input{captions/F5_wound.tex}}
 \label{fig:wound}
 \end{figure}
 
-The protocol reports CosMx tumor coordinates and places them beside locked tumor truth (Figure~\ref{fig:keep}). On the full-\(n\) CosMx KEEP map at \(t=0\) (\(n=5686\)), estimated tumor fraction has median \(0.6739\) (quartiles \(0.0510\)--\(0.9195\); mean \(0.5428\)). The protocol reports a tumor column because the CosMx cosine is \(0.603666\).
+\paragraph{A reportable CosMx tumor column.}
+The protocol reports CosMx tumor coordinates and places them beside locked tumor truth on the same Patient C geometry (Fig.~\ref{fig:keep}A, D), truth in Fig.~\ref{fig:keep}B and estimate in Fig.~\ref{fig:keep}C. On the full-\(n\) CosMx KEEP map at \(t=0\) (\(n=5686\)), estimated tumor fraction has median \(0.6739\) (quartiles \(0.0510\)--\(0.9195\); mean \(0.5428\)). The protocol reports a tumor column at all because the CosMx cosine is \(0.603666\), below the frozen cutoff (Fig.~\ref{fig:keep}E, F).
 
-\begin{figure}[ht]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=\textwidth]{figs/rendered/F6_keep.pdf}
 \caption{\protect\input{captions/F6_keep.tex}}
 \label{fig:keep}
 \end{figure}
 
-Collinearity dose--response interpolates each malignant signature toward its neighbor (Figure~\ref{fig:dose}). At \(t=0\), the 400-spot ungated tumor RMSEs were \(0.0757\) (95\% bootstrap CI \(0.0643\)--\(0.0874\); \(B=1000\)), \(0.1558\) (\(0.1380\)--\(0.1724\)), and \(0.1542\) (\(0.1364\)--\(0.1729\)) for openST, Xenium, and CosMx. Full-\(n\) confirmation gave \(0.0903\) (\(n=6971\)), \(0.1613\) (\(n=2864\)), and \(0.1516\) (\(n=5686\)). Across the sweep, openST RMSE increased from \(0.0757\) to \(0.3357\) and CosMx from \(0.1542\) to \(0.6862\). CosMx stays KEEP at \(t=0,0.1,0.2\) and writes ABSTAIN from \(t=0.3\).
+\paragraph{The gate tracks malignant--neighbor collinearity.}
+Collinearity dose--response interpolates each malignant signature toward its neighbor (Fig.~\ref{fig:dose}A--C). At \(t=0\), the 400-spot ungated tumor RMSEs were \(0.0757\) (95\% bootstrap CI \(0.0643\)--\(0.0874\); \(B=1000\)), \(0.1558\) (\(0.1380\)--\(0.1724\)), and \(0.1542\) (\(0.1364\)--\(0.1729\)) for openST, Xenium, and CosMx. Full-\(n\) confirmation gave \(0.0903\) (\(n=6971\)), \(0.1613\) (\(n=2864\)), and \(0.1516\) (\(n=5686\)), so the 400-spot interval is not a small-sample artifact. Across the sweep, openST RMSE increased from \(0.0757\) to \(0.3357\) and CosMx from \(0.1542\) to \(0.6862\). The gate overlay tracks that rise: CosMx stays KEEP at \(t=0,0.1,0.2\) and writes ABSTAIN from \(t=0.3\) (Fig.~\ref{fig:dose}D--F), which is the dose at which the interpolated cosine reaches \(c^\star\).
 
-\begin{figure}[ht]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=\textwidth]{figs/rendered/F7_dose.pdf}
 \caption{\protect\input{captions/F7_dose.tex}}
 \label{fig:dose}
 \end{figure}
 
-Directed donor transfer recovers composition across patients (Figure~\ref{fig:donor}A; Table~\ref{tab:donor}). Overall RMSE is \(0.0659\)--\(0.1349\) (Figure~\ref{fig:donor}B), type-level PCC \(0.7034\)--\(0.7708\), and spot-level PCC \(0.8030\)--\(0.9528\) (Figure~\ref{fig:donor}C). The strongest computed edge is B from A (RMSE \(0.0659\), spot-level PCC \(0.9528\)); packed tumor-truth geography is B-from-A (Figure~\ref{fig:donor}D), D-from-C (Figure~\ref{fig:donor}E), and A-from-B on 1194 spots (Figure~\ref{fig:donor}F).
+\paragraph{Directed donor transfer recovers composition across patients.}
+Directed donor transfer recovers composition across patients (Fig.~\ref{fig:donor}A; Table~\ref{tab:donor}). Overall RMSE is \(0.0659\)--\(0.1349\) (Fig.~\ref{fig:donor}B), type-level PCC \(0.7034\)--\(0.7708\), and spot-level PCC \(0.8030\)--\(0.9528\) (Fig.~\ref{fig:donor}C). The strongest computed edge is B from A (RMSE \(0.0659\), spot-level PCC \(0.9528\)); packed tumor-truth geography is B-from-A (Fig.~\ref{fig:donor}D), D-from-C (Fig.~\ref{fig:donor}E), and A-from-B on 1194 spots (Fig.~\ref{fig:donor}F). Table~\ref{tab:donor} adds the malignant column alone (tumor RMSE \(0.1031\)--\(0.1627\), tightest on B from A) and pseudobulk Jensen--Shannon divergence between mixed-spot and reference bulk (\(0.0240\)--\(0.0432\)), so each edge carries a whole-simplex score, a malignant-column score, and a bulk-agreement score.
 
-The same frozen cosine reports KEEP on an independent CosMx non-small-cell lung carcinoma pair (tumor versus fibroblast \(0.648151\))~\cite{He2022}, on CosMx colorectal carcinoma (cosine \(0.505826\))~\cite{Crowell2025preprint}, and on CosMx HCC (cosine \(0.648597\))~\cite{He2022} (Figure~\ref{fig:keepcancers}). Directed Patient\_ID transfer on the NSCLC edge recovers composition on 4237 spots (overall RMSE \(0.1066\), type-level PCC \(0.5986\), spot-level PCC \(0.8415\)).
-
-\begin{figure}[ht]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=\textwidth]{figs/rendered/F8_donor.pdf}
 \caption{\protect\input{captions/F8_donor.tex}}
 \label{fig:donor}
 \end{figure}
 
-\begin{table}[ht]
+\begin{table}[!htbp]
 \centering
 \small
 \resizebox{\textwidth}{!}{\input{tables/T3_donor_matrix.tex}}
@@ -71,36 +76,40 @@ The same frozen cosine reports KEEP on an independent CosMx non-small-cell lung 
 \label{tab:donor}
 \end{table}
 
-MoMacDC occupancy on the three computed pairs is \(0.0803\) (A from B), \(0.0129\) (B from A), and \(0.0636\) (D from C) (Figure~\ref{fig:myeloid}A). A-from-B mixed-spot MoMacDC occupancy on packed Patient A fields is Figure~\ref{fig:myeloid}B, and D-from-C mixed-spot MoMacDC occupancy on packed Patient D fields is Figure~\ref{fig:myeloid}C. Patient A myeloid cells in one field of view are Figure~\ref{fig:myeloid}D, and Patient D wound-field myeloid cells are Figure~\ref{fig:myeloid}E. A-from-B fibroblast mixed-spot occupancy on packed Patient A fields is Figure~\ref{fig:myeloid}F. The myeloid coordinate is higher on the more stromal A-from-B face and on the wound-containing D-from-C pair.
+\paragraph{Myeloid and stromal occupancy rise where tumor falls.}
+MoMacDC occupancy separates the computed pairs: \(0.0803\) (A from B), \(0.0129\) (B from A), and \(0.0636\) (D from C) (Fig.~\ref{fig:myeloid}A). The myeloid coordinate is highest on the more stromal A-from-B face (Fig.~\ref{fig:myeloid}B) and on the wound-containing D-from-C pair (Fig.~\ref{fig:myeloid}C), and the same ordering holds at cell level on a Patient A field (Fig.~\ref{fig:myeloid}D) and a Patient D wound field (Fig.~\ref{fig:myeloid}E). Fibroblast occupancy on the same packed Patient A fields moves with it (Fig.~\ref{fig:myeloid}F), so the myeloid and stromal coordinates rise together where tumor falls.
 
-\begin{figure}[ht]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=\textwidth]{figs/rendered/F9_myeloid.pdf}
 \caption{\protect\input{captions/F9_myeloid.tex}}
 \label{fig:myeloid}
 \end{figure}
 
-The evaluation board collects the \(t=0\) interval, the full-\(n\) confirmation, donor RMSE, and the timed openST pass (Figure~\ref{fig:eval}; Table~\ref{tab:timing}).
+\paragraph{Evaluation board and operator cost.}
+The evaluation board collects the \(t=0\) interval (Fig.~\ref{fig:eval}A), the full-\(n\) confirmation (Fig.~\ref{fig:eval}B), donor RMSE (Fig.~\ref{fig:eval}C), and the timed openST pass (Fig.~\ref{fig:eval}D; Table~\ref{tab:timing}), beside the gate margin (Fig.~\ref{fig:eval}E) and the spot counts the estimates rest on (Fig.~\ref{fig:eval}F). The reportability gate costs \(0.001\) s of the \(60.252\) s pass, and the platform self-gate costs \(47.961\) s of it, so refusability is essentially free relative to the fit it guards. At whole-run scale the same conclusion holds: full-\(n\) \(t=0\) passes take \(267.696\) s on 6971 openST spots, \(234.554\) s on 5686 CosMx spots, and \(24.158\) s on 2864 Xenium spots, all on CPU.
 
-\begin{figure}[ht]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=\textwidth]{figs/rendered/F10_eval.pdf}
 \caption{\protect\input{captions/F10_eval.tex}}
 \label{fig:eval}
 \end{figure}
 
-Figure~\ref{fig:floor} places mixed-spot TME composition on the type floor. Mean truth fraction for each of eight shared types, with a builder floor of fifty reference cells per type, is the occupancy face (Figure~\ref{fig:floor}A). Wound-axis occupancy is Yerly BCC only (Figure~\ref{fig:floor}B). MoMacDC means on the three computed pairs are \(0.0803\) (A from B), \(0.0129\) (B from A), and \(0.0636\) (D from C) (Figure~\ref{fig:floor}C). Packed A-from-B, B-from-A, and D-from-C mixed-spot fields show tumor-truth fraction as spatial occupancy, not a prognostic signature (Figure~\ref{fig:floor}D--F).
+\paragraph{Every reported type clears the reference floor.}
+Every reported type clears the builder floor of fifty reference cells (Fig.~\ref{fig:floor}A), so the eight-type simplex is supported rather than extrapolated. The wound axis sits on that floor (Fig.~\ref{fig:floor}B), as does the MoMacDC ordering across the computed pairs (Fig.~\ref{fig:floor}C). Packed A-from-B, B-from-A, and D-from-C fields render the same tumor-truth fractions as spatial occupancy (Fig.~\ref{fig:floor}D--F). Occupancy on the supported simplex is nonetheless concentrated: the malignant column is nonzero on \(90.9\%\) of B-from-A and \(85.3\%\) of D-from-C spots, whereas Pericyte is absent from \(95.5\%\) and \(87.2\%\) of the same spots. Type-level PCC of \(0.7034\)--\(0.7708\) is therefore an average over one dense column and several near-empty ones.
 
-\begin{figure}[ht]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=0.92\textwidth]{figs/rendered/F11_floor.pdf}
 \caption{\protect\input{captions/F11_floor.tex}}
 \label{fig:floor}
 \end{figure}
 
-The same frozen cosine reports KEEP on independent CosMx carcinomas (Figure~\ref{fig:keepcancers}). CosMx BCC, CosMx NSCLC, CosMx CRC, and CosMx HCC sit below \(c^\star=0.80\); CosMx PDAC, openST, Xenium, and Xenium FLEX sit above it. Directed Patient\_ID transfer includes the NSCLC edge (4237 spots; overall RMSE \(0.1066\), spot-level PCC \(0.8415\)) beside the BCC edges.
+\paragraph{The same frozen cosine on independent CosMx carcinomas.}
+The same frozen cosine reports KEEP on independent CosMx carcinomas (Fig.~\ref{fig:keepcancers}A, F). CosMx BCC, CosMx NSCLC, CosMx CRC, and CosMx HCC sit below \(c^\star=0.80\); CosMx PDAC, openST, Xenium, and Xenium FLEX sit above it, so the gate splits four CosMx KEEP calls from one CosMx ABSTAIN call on the same assay (Fig.~\ref{fig:keepcancers}B). Directed Patient\_ID transfer carries the NSCLC edge (4237 spots; overall RMSE \(0.1066\), spot-level PCC \(0.8415\)) beside the three BCC edges (Fig.~\ref{fig:keepcancers}C--E). That edge resolves a seventeen-type simplex rather than the eight BCC types, and its type-level PCC of \(0.5986\) is averaged over those seventeen columns.
 
-\begin{figure}[ht]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=\textwidth]{figs/rendered/F12_keep.pdf}
 \caption{\protect\input{captions/F12_keep.tex}}
