@@ -90,7 +90,7 @@ eC <- ggplot(donor[!is.na(donor$RMSE), ], aes(pair, RMSE)) +
   geom_col(fill = oi("blue"), width = 0.62) +
   labs(x = NULL, y = "Donor RMSE") +
   theme_tme()
-timing$step <- factor(timing$step, levels = timing$step)
+timing$step <- factor(pretty_step(timing$step), levels = pretty_step(timing$step))
 eD <- ggplot(timing, aes(step, seconds)) +
   geom_col(fill = oi("orange"), width = 0.62) +
   labs(x = NULL, y = "Seconds") +

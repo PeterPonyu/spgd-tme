@@ -80,6 +80,19 @@ pretty_type <- function(x) {
   ifelse(is.na(out), as.character(x), out)
 }
 
+pretty_step <- function(x) {
+  map <- c(
+    "extract_signature" = "Signature extraction",
+    "specificity_weight" = "Specificity weights",
+    "fit_gamma" = "Weighted fit",
+    "self_gate" = "Platform self-gate",
+    "refuse" = "Reportability gate",
+    "poisson_fit" = "Poisson close"
+  )
+  out <- unname(map[as.character(x)])
+  ifelse(is.na(out), as.character(x), out)
+}
+
 as_flag <- function(x) {
   if (is.logical(x)) {
     return(x)
