@@ -150,11 +150,13 @@ Affiliated Hospital of the Army Medical University, Chongqing, China}%
 \label{tab:timing}
 \end{table}
 
-\FloatBarrier
+% No barrier here or before the discussion. Eleven full-width figures outrun the
+% prose that cites them, and a barrier at either heading flushes the backlog as
+% float pages carrying one figure each. Letting the queue drain into the sections
+% that follow puts text under every figure instead.
 \section{Recovered tissue objects and independent CosMx KEEP calls}
 \input{results.tex}
 
-\FloatBarrier
 \section{Locked operators recover mixed-spot TME composition}
 \input{discussion.tex}
 
