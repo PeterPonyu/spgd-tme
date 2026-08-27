@@ -6,7 +6,7 @@ A TME reference supplies a gene-by-type matrix \(P\), column-normalized to a pro
 w_g=1-\frac{H(q_g)}{\log K},\qquad H(q_g)=-\sum_{k=1}^{K} q_{gk}\log(q_{gk}+\varepsilon).
 \label{eq:specificity}
 \end{equation}
-Marker genes receive large \(w_g\); genes shared across neighboring types receive small \(w_g\). The weighted signature and the weighted spot matrix are \(P\odot w\) and \(Y\odot w\).
+Marker genes receive large \(w_g\) under \eqref{eq:specificity}; genes shared across neighboring types receive small \(w_g\). The weighted signature and the weighted spot matrix are \(P\odot w\) and \(Y\odot w\).
 
 \paragraph{Platform self-gate and Poisson close.}
 A per-gene platform factor \(\hat\gamma\) is fit by a bulk-ratio update on the weighted Poisson objective. The factor is applied only to the extent it generalizes across a held-out half of the spots. Let \(g\in[0,1]\) be that held-out improvement. The working signature is
@@ -14,12 +14,12 @@ A per-gene platform factor \(\hat\gamma\) is fit by a bulk-ratio update on the w
 S=e^{g\hat\gamma}\,(P\odot w).
 \label{eq:working-signature}
 \end{equation}
-Nonnegative loadings \(W^\star\) are obtained by multiplicative Poisson updates, then projected onto the simplex,
+Nonnegative loadings \(W^\star\) are obtained by multiplicative Poisson updates against \(S\) of \eqref{eq:working-signature}, then projected onto the simplex,
 \begin{equation}
 \hat\pi=\mathrm{simplex}(W^\star),\qquad \hat\pi_{s,k}\ge 0,\quad \sum_{k=1}^{K}\hat\pi_{s,k}=1.
 \label{eq:simplex}
 \end{equation}
-Index \(s\) is a mixed spot and \(k\) is a type. The matrix \(\hat\pi\) is the composition estimate. Cell-level fields in Fig.~\ref{fig:cohort}A--D are not \(\hat\pi\).
+Index \(s\) is a mixed spot and \(k\) is a type. The matrix \(\hat\pi\) of \eqref{eq:simplex} is the composition estimate. Cell-level fields in Fig.~\ref{fig:cohort}A--D are not \(\hat\pi\).
 
 \paragraph{Mixed-spot construction and predictive sizing.}
 CosMx cells are split by Patient\_ID~\cite{Andreatta2024zenodo,Yerly2025preprint}. Cells from the spot donor are aggregated from recorded coordinates into square spatial bins. Bins with fewer than five cells are dropped. The mixed-spot count vector is the gene-wise sum of member cells, and the mixed-spot coordinate is the mean of those cell coordinates. Display maps convert the native pixel frame to micrometres without exchanging axes. Let \(n_{s,k}\) be the number of typed cells of type \(k\) in spot \(s\). Locked mixed-spot truth is the cell-count share
@@ -30,17 +30,17 @@ CosMx cells are split by Patient\_ID~\cite{Andreatta2024zenodo,Yerly2025preprint
 On four-patient CosMx BCC, \(K=8\) with types Cancer.cells, Endothelial, Fibroblast, Melanocyte, MoMacDC, Normal.Kerat, Pericyte, and PlasmaCell. On the independent NSCLC edge, the same construction supplies \(\pi_{s,k}\) and \(\hat\pi_{s,k}\) on seventeen types. Approximate spot diameters are 45.7 µm (A from B), 45.1 µm (B from A), and 42.6 µm (D from C), with median cell counts 17, 21, and 19. The reference for a directed edge is built from the other patient's cells, with a builder floor of fifty reference cells per type.
 
 \paragraph{Occupancy and colour bar.}
-Spot occupancy of type \(k\) is \(\pi_{s,k}\). Mean occupancy on an edge of \(n\) spots is
+Spot occupancy of type \(k\) is \(\pi_{s,k}\) of \eqref{eq:truth-frac}. Mean occupancy on an edge of \(n\) spots is
 \begin{equation}
 \bar\pi_{k}=\frac{1}{n}\sum_{s=1}^{n}\pi_{s,k}.
 \label{eq:mean-occupancy}
 \end{equation}
-Figure~\ref{fig:myeloid}A is \(\bar\pi_{\mathrm{MoMacDC}}\). A typed cell \(\ell\) carries the indicator
+Figure~\ref{fig:myeloid}A is the \(\bar\pi_{\mathrm{MoMacDC}}\) of \eqref{eq:mean-occupancy} together with the per-spot \(\pi_{s,\mathrm{MoMacDC}}\) it averages. A typed cell \(\ell\) carries the indicator
 \begin{equation}
 I_{\ell,k}=\mathbf{1}\{\mathrm{type}(\ell)=k\}\in\{0,1\}.
 \label{eq:cell-indicator}
 \end{equation}
-The typed-cell fraction is the cell-level share \(p_{k}^{\mathrm{cell}}=\sum_{\ell}I_{\ell,k}/\sum_{\ell}1\), not mixed-spot \(\pi_{s,k}\). Figure~\ref{fig:cohort}A--D maps \(I_{\ell,\mathrm{Cancer}}\) on packed fields; panel E reports \(p_{k}^{\mathrm{cell}}\) by patient and condition; panel F reports the median number of cells pooled into a mixed spot. Figures encode \(\pi_{s,k}\) or \(I_{\ell,k}\) on a colour bar scaled to \([0,1]\). The scale is type occupancy, not gene expression.
+The typed-cell fraction is the cell-level share \(p_{k}^{\mathrm{cell}}=\sum_{\ell}I_{\ell,k}/\sum_{\ell}1\) built from \eqref{eq:cell-indicator}, not mixed-spot \(\pi_{s,k}\). Figure~\ref{fig:cohort}A--D maps \(I_{\ell,\mathrm{Cancer}}\) on packed fields; panel E reports \(p_{k}^{\mathrm{cell}}\) by patient and condition; panel F reports the median number of cells pooled into a mixed spot. Figures encode \(\pi_{s,k}\) or \(I_{\ell,k}\) on a colour bar scaled to \([0,1]\). The scale is type occupancy, not gene expression. Panels that colour cells by their annotated type instead use one fixed eight-colour key, the Okabe--Ito colourblind-safe palette, held constant across every figure so a type keeps its colour throughout. Every spatial panel also carries a black rule with its length printed beneath it, in micrometres or millimetres on the CosMx pixel-to-micrometre conversion; axes are never stretched independently, so that rule is valid in both directions.
 
 \paragraph{Reportability gate.}
 Let \(s_{\mathrm{mal}}\) and \(s_{\mathrm{nbr}}\) be the locked malignant and neighbor columns of the working signature. Native cosine is the uninterpolated column cosine
@@ -48,19 +48,19 @@ Let \(s_{\mathrm{mal}}\) and \(s_{\mathrm{nbr}}\) be the locked malignant and ne
 \cos(s_{\mathrm{mal}},s_{\mathrm{nbr}})=\frac{s_{\mathrm{mal}}^{\top}s_{\mathrm{nbr}}}{\lVert s_{\mathrm{mal}}\rVert_2\,\lVert s_{\mathrm{nbr}}\rVert_2}.
 \label{eq:native-cosine}
 \end{equation}
-The frozen threshold is \(c^\star=0.80\),
+The frozen threshold applied to \eqref{eq:native-cosine} is \(c^\star=0.80\),
 \begin{equation}
 \cos(s_{\mathrm{mal}},s_{\mathrm{nbr}})\ge c^\star \;\Rightarrow\; \text{ABSTAIN},\qquad
 \cos(s_{\mathrm{mal}},s_{\mathrm{nbr}})< c^\star \;\Rightarrow\; \text{KEEP}.
 \label{eq:keep-gate}
 \end{equation}
-On KEEP a tumor fraction \(\hat\pi_{s,\mathrm{mal}}\) is written. On ABSTAIN the malignant coordinate is held as missing and the remaining types are renormalized,
+On the KEEP branch of \eqref{eq:keep-gate} a tumor fraction \(\hat\pi_{s,\mathrm{mal}}\) is written. On ABSTAIN the malignant coordinate is held as missing and the remaining types are renormalized,
 \begin{equation}
 \hat\pi_{s,\mathrm{mal}}\leftarrow\mathrm{missing},\qquad
 \hat\pi_{s,k}\leftarrow\frac{\hat\pi_{s,k}}{\sum_{k'\neq\mathrm{mal}}\hat\pi_{s,k'}}\quad(k\neq\mathrm{mal}).
 \label{eq:abstain}
 \end{equation}
-Gated tumor RMSE on ABSTAIN is missing, not zero. Native calls at interpolation fraction \(t=0\) are CosMx BCC cosine \(0.603666\) (KEEP), CosMx NSCLC cosine \(0.648151\) (KEEP), CosMx colorectal cosine \(0.505826\) (KEEP), CosMx HCC cosine \(0.648597\) (KEEP), CosMx PDAC cosine \(0.861599\) (ABSTAIN), then openST cosine \(0.972678\), Xenium cosine \(0.980196\), and Xenium FLEX cosine \(0.987505\) (ABSTAIN).
+The renormalization in \eqref{eq:abstain} leaves gated tumor RMSE on ABSTAIN missing, not zero. Native calls at interpolation fraction \(t=0\) are CosMx BCC cosine \(0.603666\) (KEEP), CosMx NSCLC cosine \(0.648151\) (KEEP), CosMx colorectal cosine \(0.505826\) (KEEP), CosMx HCC cosine \(0.648597\) (KEEP), CosMx PDAC cosine \(0.861599\) (ABSTAIN), then openST cosine \(0.972678\), Xenium cosine \(0.980196\), and Xenium FLEX cosine \(0.987505\) (ABSTAIN).
 
 \paragraph{Interpolation dose.}
 The collinearity sweep replaces the malignant signature with
@@ -68,7 +68,7 @@ The collinearity sweep replaces the malignant signature with
 s(t)=(1-t)\,s_{\mathrm{mal}}+t\,s_{\mathrm{nbr}},\qquad t\in\{0,0.1,\ldots,1.0\}.
 \label{eq:interpolate}
 \end{equation}
-At each \(t\) the native cosine formula is evaluated on \(s(t)\) and \(s_{\mathrm{nbr}}\). Ungated tumor RMSE is recorded at every \(t\) on a 400-spot subset. The KEEP/ABSTAIN overlay leaves gated tumor RMSE missing on refused \(t\). A spot bootstrap with \(B=1000\) supplies a percentile 95\% interval on the \(t=0\) tumor fractions. Full-\(n\) confirmation repeats \(t=0\) on 6971 openST, 2864 Xenium, and 5686 CosMx spots.
+At each \(t\) of \eqref{eq:interpolate}, \eqref{eq:native-cosine} is evaluated on \(s(t)\) and \(s_{\mathrm{nbr}}\). Ungated tumor RMSE is recorded at every \(t\) on a 400-spot subset. The KEEP/ABSTAIN overlay leaves gated tumor RMSE missing on refused \(t\). A spot bootstrap with \(B=1000\) supplies a percentile 95\% interval on the \(t=0\) tumor fractions. Full-\(n\) confirmation repeats \(t=0\) on 6971 openST, 2864 Xenium, and 5686 CosMx spots.
 
 \paragraph{Donor split.}
 Directed transfer uses Patient\_ID as the donor key,
@@ -76,7 +76,7 @@ Directed transfer uses Patient\_ID as the donor key,
 \{\text{spot patient}\}\cap\{\text{reference patient}\}=\emptyset.
 \label{eq:donor-split}
 \end{equation}
-Primary pairs are condition-matched: A with B (Ulcerated nodular) and C with D (wound time course). This analysis computes A from B, B from A, and D from C. The C-from-D composition is the recorded four-edge close. The wound axis is read on Yerly BCC Patients C and D.
+Pairs satisfying \eqref{eq:donor-split} are condition-matched: A with B (Ulcerated nodular) and C with D (wound time course). This analysis computes A from B, B from A, and D from C. The C-from-D composition is the recorded four-edge close. The wound axis is read on Yerly BCC Patients C and D.
 
 \paragraph{Evaluation matrix.}
 Figure~\ref{fig:donor}A reports Overall RMSE, Tumor RMSE, Type PCC, and Spot PCC on each directed edge. With locked truth \(\pi_{s,k}\) and estimate \(\hat\pi_{s,k}\) on \(n\) spots and \(K\) types,
@@ -94,15 +94,15 @@ Figure~\ref{fig:donor}A reports Overall RMSE, Tumor RMSE, Type PCC, and Spot PCC
 &= \frac{1}{|S_+|}\sum_{s\in S_+}\mathrm{corr}(\pi_{s,\cdot},\hat\pi_{s,\cdot}).
 \label{eq:spot-pcc}
 \end{align}
-Pearson correlation is
+The correlation in \eqref{eq:type-pcc} and \eqref{eq:spot-pcc} is Pearson,
 \begin{equation}
 \mathrm{corr}(a,b)=\frac{\sum_{i}(a_i-\bar a)(b_i-\bar b)}{\sqrt{\sum_{i}(a_i-\bar a)^{2}}\,\sqrt{\sum_{i}(b_i-\bar b)^{2}}}.
 \label{eq:pearson}
 \end{equation}
-Overall RMSE averages squared error over the full \(n\times K\) matrix, including every type. Tumor RMSE evaluates the malignant column alone. \(K_+\) is the set of types with positive standard deviation in both truth and estimate, so Type PCC averages over all such types and includes the tumor column when that column varies. \(S_+\) is the set of spots with positive standard deviation across types. A computed edge also records pseudobulk Jensen--Shannon divergence between the mixed-spot bulk and the reference bulk. Figure~\ref{fig:donor}B--C plot Overall RMSE and Spot PCC; Fig.~\ref{fig:myeloid}A plots mean occupancy \(\bar\pi_{k}\).
+Equation~\eqref{eq:overall-rmse} averages squared error over the full \(n\times K\) matrix, including every type, while \eqref{eq:tumor-rmse} evaluates the malignant column alone. \(K_+\) is the set of types with positive standard deviation in both truth and estimate, so Type PCC averages over all such types and includes the tumor column when that column varies. \(S_+\) is the set of spots with positive standard deviation across types. A computed edge also records pseudobulk Jensen--Shannon divergence between the mixed-spot bulk and the reference bulk. Figure~\ref{fig:donor}B--C carry the per-spot error and the composition each edge is scored against; Fig.~\ref{fig:myeloid}A plots the occupancy of \eqref{eq:mean-occupancy}.
 
 \paragraph{Independent CosMx instantiations.}
-The same frozen gate and the same Patient\_ID equation are then read on independent CosMx carcinomas. NSCLC uses pooled tumor versus fibroblast (cosine \(0.648151\)) and a directed Patient\_ID edge of 4237 spots on 17 types (overall RMSE \(0.1066\), type-level PCC \(0.5986\), spot-level PCC \(0.8415\)). Those NSCLC donor metrics are \(\mathrm{RMSE}\), \(\mathrm{PCC}_{\mathrm{type}}\), and \(\mathrm{PCC}_{\mathrm{spot}}\) on the seventeen-type simplex. CosMx CRC and CosMx HCC return KEEP at native cosines \(0.505826\) and \(0.648597\). CosMx PDAC returns ABSTAIN at cosine \(0.861599\).
+The same frozen gate and the same Patient\_ID split \eqref{eq:donor-split} are then read on independent CosMx carcinomas. NSCLC uses pooled tumor versus fibroblast (cosine \(0.648151\)) and a directed Patient\_ID edge of 4237 spots on 17 types (overall RMSE \(0.1066\), type-level PCC \(0.5986\), spot-level PCC \(0.8415\)). Those NSCLC donor metrics are \(\mathrm{RMSE}\), \(\mathrm{PCC}_{\mathrm{type}}\), and \(\mathrm{PCC}_{\mathrm{spot}}\) on the seventeen-type simplex. CosMx CRC and CosMx HCC return KEEP at native cosines \(0.505826\) and \(0.648597\). CosMx PDAC returns ABSTAIN at cosine \(0.861599\).
 
 \paragraph{Timing.}
 Wall-clock seconds for one openST pass are Table~\ref{tab:timing}: 47.961 s in the self-gate, 8.374 s in the weighted fit, 3.058 s in the Poisson close, 0.858 s in signature extraction, 0.001 s in the reportability gate, and under 0.001 s in the specificity weights. Full-\(n\) \(t=0\) passes on the same machine take 267.696 s (openST, \(n=6971\)), 234.554 s (CosMx, \(n=5686\)), and 24.158 s (Xenium, \(n=2864\)). All timings are single-machine CPU; no accelerator is used anywhere in the protocol.
