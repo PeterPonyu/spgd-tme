@@ -220,29 +220,71 @@ dA <- ggplot(dlong[!is.na(dlong$value), ], aes(pair, value, colour = source)) +
   scale_colour_manual(values = c(computed = oi("blue"), locked = oi("orange")), name = NULL) +
   labs(x = "Directed transfer", y = "Metric") +
   theme_tme()
-dB <- ggplot(donor[!is.na(donor$RMSE), ], aes(pair, RMSE, fill = source)) +
-  geom_col(width = 0.62) +
+# Panel A already faces all four metrics on all four edges. Redrawing two of
+# them as bars says nothing new, so B and C carry the truth the metrics are
+# computed against instead: how tumor mass is spread over spots, and how the
+# three tracked types divide each edge's simplex.
+spot_truth <- dplyr::bind_rows(
+  data.frame(pair = "A from B", maps_a[, c("Cancer.cells", "Fibroblast", "MoMacDC")]),
+  data.frame(pair = "B from A", maps_b[, c("Cancer.cells", "Fibroblast", "MoMacDC")]),
+  data.frame(pair = "D from C", maps_d[, c("Cancer.cells", "Fibroblast", "MoMacDC")])
+)
+spot_truth$pair <- factor(spot_truth$pair, levels = pair_levels)
+computed_col <- PAIR_COL[c("A from B", "B from A", "D from C")]
+pure_note <- spot_truth %>%
+  dplyr::group_by(pair) %>%
+  dplyr::summarise(pure = mean(Cancer.cells == 1), .groups = "drop")
+dB <- ggplot(spot_truth, aes(Cancer.cells, colour = pair)) +
+  stat_ecdf(geom = "step", linewidth = 0.75, pad = FALSE) +
+  # The label sits at the height of each curve's final jump, which is exactly the
+  # share of spots that are pure tumor, and names its own edge so the panel needs
+  # no separate colour key.
   geom_text(
-    aes(label = sprintf("%.4f", RMSE)),
-    vjust = -0.35,
-    size = 2.6,
-    family = TME_FONT
+    data = pure_note,
+    aes(x = 0.97, y = 1 - pure, label = sprintf("%s, %.0f%% pure tumor", pair, 100 * pure), colour = pair),
+    inherit.aes = FALSE, hjust = 1, vjust = -0.55,
+    size = TME_VALUE_PT, family = TME_FONT, show.legend = FALSE
   ) +
-  scale_fill_manual(values = c(computed = oi("blue"), locked = oi("orange")), guide = "none") +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.18))) +
-  labs(x = "Directed transfer", y = "Overall RMSE") +
+  scale_colour_manual(values = computed_col, guide = "none") +
+  scale_x_continuous(limits = c(0, 1), breaks = c(0, 0.25, 0.5, 0.75, 1)) +
+  scale_y_continuous(limits = c(0, 1.04), breaks = c(0, 0.25, 0.5, 0.75, 1)) +
+  labs(x = "Spot tumor truth", y = "Share of spots at or below") +
   theme_tme()
-dC <- ggplot(donor[!is.na(donor$PCC_spot), ], aes(pair, PCC_spot, fill = source)) +
+simplex_mean <- spot_truth %>%
+  dplyr::group_by(pair) %>%
+  dplyr::summarise(
+    Cancer = mean(Cancer.cells), Fibroblast = mean(Fibroblast),
+    MoMacDC = mean(MoMacDC), .groups = "drop"
+  ) %>%
+  dplyr::mutate(`Other five types` = 1 - Cancer - Fibroblast - MoMacDC) %>%
+  tidyr::pivot_longer(-pair, names_to = "type", values_to = "share") %>%
+  dplyr::mutate(type = factor(type, levels = c("Cancer", "Fibroblast", "MoMacDC", "Other five types")))
+dC <- ggplot(simplex_mean, aes(pair, share, fill = type)) +
   geom_col(width = 0.62) +
   geom_text(
-    aes(label = sprintf("%.4f", PCC_spot)),
-    vjust = -0.35,
-    size = 2.6,
-    family = TME_FONT
+    data = simplex_mean[simplex_mean$share > 0.06, ],
+    # Fibroblast is the one light fill in this key; white on it does not read.
+    aes(label = sprintf("%.3f", share), colour = type),
+    position = position_stack(vjust = 0.5),
+    size = TME_VALUE_PT, family = TME_FONT, show.legend = FALSE
   ) +
-  scale_fill_manual(values = c(computed = oi("blue"), locked = oi("orange")), guide = "none") +
-  scale_y_continuous(limits = c(0, 1.12), expand = expansion(mult = c(0, 0))) +
-  labs(x = "Directed transfer", y = "Spot PCC") +
+  scale_colour_manual(
+    values = c(
+      Cancer = "white", Fibroblast = "grey10", MoMacDC = "white",
+      `Other five types` = "white"
+    ),
+    guide = "none"
+  ) +
+  scale_fill_manual(
+    values = c(
+      Cancer = TYPE_COL[["Cancer"]], Fibroblast = TYPE_COL[["Fibroblast"]],
+      MoMacDC = TYPE_COL[["MoMacDC"]], `Other five types` = "grey55"
+    ),
+    name = NULL
+  ) +
+  guides(fill = guide_legend(nrow = 2, byrow = TRUE)) +
+  scale_y_continuous(breaks = c(0, 0.5, 1), expand = expansion(mult = c(0, 0.02))) +
+  labs(x = "Directed transfer", y = "Mean spot occupancy") +
   theme_tme()
 dD <- spot_on_tissue(maps_b, "Cancer.cells", pb, point_size = 1.00)
 dE <- spot_on_tissue(maps_d, "Cancer.cells", pd, point_size = 0.95)
@@ -264,17 +306,37 @@ tme_save(
 ## F8_donor end
 
 myelo$pair <- factor(pretty_pair(myelo$pair), levels = pair_levels)
-mA <- ggplot(myelo, aes(pair, mean)) +
-  geom_col(fill = oi("purple"), width = 0.55) +
-  geom_text(
-    aes(label = sprintf("%.4f", mean)),
-    vjust = -0.35,
-    size = 2.6,
-    family = TME_FONT,
-    fontface = "plain"
+# Three means say nothing about a zero-inflated axis: over half these spots hold
+# no myeloid cell at all. The step curve carries the whole per-spot distribution
+# and marks where each edge's mean falls inside it.
+momac <- spot_truth[, c("pair", "MoMacDC")]
+# The mean and the empty share come from the tracked occupancy table, not from a
+# recount of the maps, so the marked values are the ones the prose reports.
+momac_mark <- myelo %>%
+  dplyr::transmute(pair, m = mean, empty = zero_rate)
+momac_mark$at <- vapply(
+  seq_len(nrow(momac_mark)),
+  function(i) mean(momac$MoMacDC[momac$pair == momac_mark$pair[i]] <= momac_mark$m[i]),
+  numeric(1)
+)
+mA <- ggplot(momac, aes(MoMacDC, colour = pair)) +
+  stat_ecdf(geom = "step", linewidth = 0.75, pad = FALSE) +
+  geom_point(
+    data = momac_mark, aes(m, at, colour = pair),
+    inherit.aes = FALSE, size = 2.3, shape = 18, show.legend = FALSE
   ) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.18))) +
-  labs(x = "Pair", y = "MoMacDC mean truth fraction") +
+  # Naming the edge on its own curve is what lets this panel drop the colour key
+  # a fourth legend row would otherwise cost the figure.
+  geom_text(
+    data = momac_mark,
+    aes(x = 0.97, y = empty, label = sprintf("%s, %.0f%% empty", pair, 100 * empty), colour = pair),
+    inherit.aes = FALSE, hjust = 1, vjust = -0.55,
+    size = TME_VALUE_PT, family = TME_FONT, show.legend = FALSE
+  ) +
+  scale_colour_manual(values = computed_col, guide = "none") +
+  scale_x_continuous(limits = c(0, 1), breaks = c(0, 0.25, 0.5, 0.75, 1)) +
+  scale_y_continuous(limits = c(0, 1.04), breaks = c(0, 0.25, 0.5, 0.75, 1)) +
+  labs(x = "Spot MoMacDC truth", y = "Share of spots at or below") +
   theme_tme()
 mB <- spot_on_tissue(maps_a, "MoMacDC", pa, point_size = 4.20, alpha = 1.00)
 mC <- spot_on_tissue(maps_d, "MoMacDC", pd, point_size = 1.75, alpha = 0.90)
