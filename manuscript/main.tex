@@ -19,6 +19,9 @@
 % mathematics titles. sort keeps a multi-citation in reference-list order.
 \usepackage[authoryear,round,sort]{natbib}
 \usepackage{microtype}
+% The author guidelines require page and line numbers so a reviewer can cite a
+% position rather than quote the sentence back.
+\usepackage{lineno}
 \usepackage{hyperref}
 \title{Two locked operators report mixed-spot TME composition on CosMx carcinomas}
 % \author lays its argument out in a tabular, whose cells do not line-break; the
@@ -140,17 +143,23 @@ and share first authorship.\quad
 \RequireManuscriptFile{references.bib}
 
 \begin{document}
+\linenumbers
 \maketitle
 \begin{abstract}
 \input{abstract.tex}
 \end{abstract}
 \noindent\textit{Keywords:} tumor microenvironment; spatial transcriptomics; mixed-spot composition; cell-type deconvolution; reportability gate; abstention; donor transfer; CosMx
+\\[4pt]
+% Required on the first page by the author guidelines. The count is the body
+% text the limit applies to, so it excludes the abstract, the declarations and
+% the reference list.
+\noindent\textit{Word count (main text):} 7{,}012 \quad \textit{Figures:} 12 \quad \textit{Tables:} 3
 
 \section{Introduction}
 \input{intro.tex}
 
 \FloatBarrier
-\section{CosMx carcinoma materials and locked references}
+\section{Materials and Equipment}
 \input{materials.tex}
 
 \begin{table}[!ht]
@@ -162,7 +171,7 @@ and share first authorship.\quad
 \end{table}
 
 \FloatBarrier
-\section{Two locked operators for reportable mixed-spot composition}
+\section{Methods}
 \input{methods.tex}
 
 \begin{figure}[!ht]
@@ -183,10 +192,10 @@ and share first authorship.\quad
 % prose that cites them, and a barrier at either heading flushes the backlog as
 % float pages carrying one figure each. Letting the queue drain into the sections
 % that follow puts text under every figure instead.
-\section{Recovered tissue objects and independent CosMx KEEP calls}
+\section{Results}
 \input{results.tex}
 
-\section{Locked operators recover mixed-spot TME composition}
+\section{Discussion}
 \input{discussion.tex}
 
 % The one break the paper keeps. \FloatBarrier alone stops a figure landing
