@@ -33,6 +33,9 @@ STATEMENTS = (
     "Conflict of interest.",
     "Generative AI statement.",
 )
+# Every body line carries a line number, so nothing starts at the left margin.
+_GUTTER = re.compile(r"^\s*\d+(\s+)(\S.*)$")
+_REFERENCES = re.compile(r"^\s*\d+\s+References\s*$", re.M)
 
 
 def _pages() -> list[str]:
@@ -59,11 +62,20 @@ def test_no_figure_or_table_interrupts_the_back_matter():
         assert stray == [], f"page {i + 1} of the back matter carries {stray}"
 
 
-def test_the_reference_list_runs_without_a_break():
+def test_every_bibliography_entry_reaches_the_reference_list():
+    # An author-year list has no numbering to count off, so the entries are
+    # found by their hanging indent: the first line of an entry sits one step
+    # left of the lines that continue it.
     pages = _pages()
-    start = next(i for i, p in enumerate(pages) if re.search(r"^\s*References\s*$", p, re.M))
-    numbered = []
-    for page in pages[start:]:
-        numbered += [int(n) for n in re.findall(r"^\s*\[(\d+)\]", page, re.M)]
-    assert numbered == list(range(1, len(numbered) + 1)), numbered
-    assert numbered, "the reference list rendered no entries"
+    start = next(i for i, p in enumerate(pages) if _REFERENCES.search(p))
+    indented = [
+        (len(m.group(1)), m.group(2))
+        for page in pages[start:]
+        for line in page.split("\n")
+        if (m := _GUTTER.match(line))
+    ]
+    assert indented, "the reference list rendered no lines"
+    hang = min(indent for indent, _ in indented)
+    entries = [text for indent, text in indented if indent == hang and text != "References"]
+    declared = (ROOT / "manuscript" / "main.bbl").read_text().count("\\bibitem")
+    assert len(entries) == declared, f"{declared} entries resolved, {len(entries)} printed"
