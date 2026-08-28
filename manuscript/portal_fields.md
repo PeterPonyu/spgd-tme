@@ -70,8 +70,8 @@ institution rather than four variants. Everything above it goes in the Departmen
 > ZF: conceptualization, methodology, funding acquisition, resources, supervision, project
 > administration, validation, writing – review and editing. RY: software, formal analysis,
 > visualization, writing – original draft. TR: data curation, investigation, formal
-> analysis. LR: validation, writing – review and editing. RY and TR contributed equally to
-> this work and share first authorship. ZF is the corresponding author and directed the
+> analysis. LR: investigation, validation, writing – review and editing. RY and TR
+> contributed equally to this work and share first authorship. ZF is the corresponding author and directed the
 > study. All authors read and approved the submitted version.
 
 ## Funding
@@ -107,32 +107,42 @@ institution rather than four variants. Everything above it goes in the Departmen
 | Supplementary Material | `supplementary.zip` |
 | Cover letter | `manuscript/cover_letter.md`, pasted as plain text |
 
+## What the four published Frontiers in Genetics papers actually do
+
+Checked against the published record rather than against a general house rule, because
+this byline has cleared this journal four times and what it did there is the only
+evidence that bears on what it should do here.
+
+| DOI | Byline | Equal-contribution mark | Corresponding |
+|-----|--------|-------------------------|---------------|
+| `10.3389/fgene.2025.1713727` | ZF, JF, CC, KZ, SW | first three | ZF, SW |
+| `10.3389/fgene.2026.1822168` | ZF, JF, CC, KZ, JW, TR, SW | first three | JW, TR, SW |
+| `10.3389/fgene.2026.1838613` | ZF, JF, KZ, TR, CC | first two | ZF, TR, CC |
+| `10.3389/fgene.2026.1863100` | ZF, JF, XW, YL, TR | first three | ZF, YL, TR |
+
+Four constants hold across all four: Zeyu Fu is first author; there is always a shared
+first authorship; Zeyu Fu is always inside the shared-first group; and correspondence is
+always shared by two or three people, never held alone.
+
+Three things a general integrity checklist would flag are already disproved here.
+Correspondence ran through `fuzeyu99@126.com` in three of the four and through a QQ
+address for a co-corresponding author in the fourth, so consumer mail is not a bar. The
+same ORCID `0009-0001-8329-0108`, with no employment record, is printed in the fourth
+paper's own footnote. And `10.3389/fgene.2026.1863100` gives all five authors a
+character-identical fourteen-role CRediT list and was published, so an identical
+contribution statement is not on its own what sinks a submission.
+
 ## Gates that are not mine to clear
 
-These are account settings and facts about who did what. Nothing in the repository can
-change them, and each one is checkable from outside by anyone who reads the paper.
-
-1. **Zeyu Fu's ORCID has no employment record.** The other three authors each resolve to
-   `Army Medical University`; the corresponding author resolves to nothing. The portal and
-   every downstream index reach an author's institution through that record, so the one
-   author a reader will look up is the one whose affiliation cannot be confirmed against
-   the paper. Add `Army Medical University` as employment.
-2. **Zeyu Fu's ORCID publishes three personal addresses and no institutional one**
-   (`1119692089@qq.com`, `fuzeyu99@126.com`, `fuzeyu09@gmail.com`). The paper's
-   correspondence line is `fuzeyu99@tmmu.edu.cn`. Add that address and make it public;
-   a corresponding author reachable only at consumer mail is a pattern integrity screens
-   weight against.
-3. **That ORCID carries 47 works** spanning fields this byline does not otherwise touch,
-   which suggests auto-claimed records from a same-name researcher. Prune the ones that are
-   not yours before an editor reads the profile as evidence of an implausible output rate.
-4. **Lei Ran's contribution is a strict subset of Zeyu Fu's.** `validation` and
-   `writing – review and editing` are both roles the corresponding author already claims, so
-   the statement gives LR no contribution that is theirs alone. That is the exact shape a
-   gift-authorship check looks for, and it is the one thing here that matches the failure
-   the last submission was rejected on. Confirm what LR actually did and name it — for a
-   dermatology and rheumatology clinician on a basal-cell carcinoma paper the likely honest
-   answer is clinical interpretation of the ulcerated-nodular and wound annotations, which
-   is CRediT `investigation`, but that has to come from LR rather than from the shape of
-   the byline.
-5. **`rui yang` is lower-cased on ORCID.** The portal renders the ORCID name beside the
+1. **This submission holds correspondence with one person and puts him last.** Every
+   published paper above shares correspondence across two or three authors and leads with
+   Zeyu Fu. Nothing forbids the arrangement here, but it is the first time this byline has
+   used it at this journal, and it removes the shared accountability the other four had.
+   If a supervising author genuinely carries part of this study, naming them
+   co-corresponding returns the byline to a shape that has already cleared four times.
+2. **`rui yang` is lower-cased on ORCID.** The portal renders the ORCID name beside the
    submitted one; make them match.
+3. **Zeyu Fu's ORCID carries 47 works** spanning fields this byline does not otherwise
+   touch, which suggests auto-claimed records from a same-name researcher. Pruning them is
+   worth doing on its own terms, though nothing in the four published papers suggests an
+   editor read the profile.
