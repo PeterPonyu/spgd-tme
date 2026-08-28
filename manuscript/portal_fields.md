@@ -89,14 +89,14 @@ institution rather than four variants. Everything above it goes in the Departmen
 
 ## Generative AI statement
 
-> The authors used generative artificial-intelligence assistants — Anthropic's Claude and
-> OpenAI's Codex, accessed through the Cursor code editor (Anysphere Inc.) — for language
-> editing, for writing and refactoring the analysis and figure-rendering scripts, and for
-> typesetting. No scientific claim, no reported number, and no figure was produced by an
-> assistant: every number in the text, tables, and figures is computed by the released
-> scripts from the public inputs named above, and every figure is a direct render of those
-> computed values. The authors reviewed and verified all such content and take full
-> responsibility for the integrity and accuracy of the work.
+> The authors used two generative artificial-intelligence coding assistants, Claude Code
+> v2.1.239 (Anthropic) and Codex CLI v0.149.0 (OpenAI), for language editing, for writing
+> and refactoring the analysis and figure-rendering scripts, and for typesetting. No
+> scientific claim, no reported number, and no figure was produced by an assistant: every
+> number in the text, tables, and figures is computed by the released scripts from the
+> public inputs named above, and every figure is a direct render of those computed values.
+> The authors reviewed and verified all such content and take full responsibility for the
+> integrity and accuracy of the work.
 
 ## Files to upload
 
