@@ -29,3 +29,9 @@ manuscript/*.blg
 # Rebuilt from the editing copy by scripts/28_assemble_submission.py. The
 # assembler is the tracked artifact; the capsule is its output.
 submission/
+
+# Rebuilt from data/plotdata/, locks/ and manuscript/scripts/ by
+# scripts/29_assemble_supplementary.py. The capsule assembler empties
+# submission/, so the reviewer archive is written beside its own bundle.
+supplementary/
+supplementary.zip
