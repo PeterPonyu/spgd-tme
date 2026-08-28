@@ -41,13 +41,10 @@ constant is frozen before use, every reported number is emitted by a released sc
 public input, and the decision the method adds is an explicit refusal that a reader can
 audit.
 
-**Related work by the corresponding author.** The estimator whose constants this work holds
-fixed, SPGD, is a companion manuscript by the corresponding author currently under review
-elsewhere; its code and committed tables are public at Zenodo
-(doi:10.5281/zenodo.21869991). The present manuscript reports only the two operators added
-on top of that estimator and the CosMx evidence for them. It shares no text, no figure, and
-no reported number with the companion. The present manuscript is not under consideration at
-any other journal and has not been published elsewhere.
+This manuscript is not under consideration at any other journal and has not been published
+elsewhere. The estimator whose constants it holds fixed, SPGD, is released software cited
+here as its public archive (doi:10.5281/zenodo.21869991), and is treated in this work the
+same way as any other prior method it builds on.
 
 **Data and reproducibility.** No new data were generated. Every library is public and named
 by repository accession in the Data availability statement. The values behind every panel,

@@ -114,7 +114,7 @@ institution rather than four variants. Everything above it goes in the Departmen
    corresponding author is not indexable against the affiliation printed on the paper.
 2. Zeyu Fu's ORCID lists three personal email addresses and no institutional one. Add
    `fuzeyu99@tmmu.edu.cn` and make it public.
-3. The prior-submission question on the form asks whether the work, or a closely related
-   work by the same authors, has been submitted elsewhere. The companion SPGD manuscript is
-   disclosed in the cover letter; confirm the wording matches what the form expects before
-   submitting.
+3. `PeterPonyu/SPGT-site` is a public page carrying this manuscript's byline, and its
+   README states that SPGT is "the TME companion to published SPGD" and that "both
+   manuscripts are under review". That page is indexable and contradicts a submission that
+   presents this work as standalone. Reconcile the two before the manuscript is uploaded.
