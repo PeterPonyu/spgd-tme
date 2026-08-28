@@ -10,6 +10,38 @@ PLOTDATA = ROOT / "data" / "plotdata"
 OUT = ROOT / "manuscript" / "tables"
 ESCAPES = {"\\": r"\textbackslash{}", "&": r"\&", "%": r"\%", "#": r"\#", "_": r"\_", "{": r"\{", "}": r"\}"}
 
+# The public name of every locked input. The supplementary assembler renames by
+# the same map, so a reader who reads "CosMx BCC reference" in Table 1 finds the
+# same words in the bundle instead of the substrate codename this repo runs on.
+ITEM_LABEL = {
+    "cells.txt": "CosMx cells",
+    "features.txt": "CosMx features",
+    "metadata.csv": "CosMx metadata",
+    "counts_genes_x_cells.mtx.gz": "CosMx counts matrix",
+    "openst_ref": "HNSCC openST reference",
+    "realgt_ref": "Breast Xenium reference",
+    "realgt2_ref": "Xenium FLEX orthogonal reference",
+    "realgt3_ref": "CosMx BCC reference",
+    "realgt4_ref": "CosMx donor-lock (recorded)",
+    "crossdonor.csv": "Donor-transfer row",
+    "type_pairs.json": "Malignant--neighbor pairs",
+    "c_star.json": "Cosine threshold",
+}
+ROLE_LABEL = {
+    "bcc_export": "CosMx export",
+    "benchmark_ref": "evaluated",
+    "orthogonal_ref": "orthogonal",
+    "cbc_lock": "recorded",
+    "type_pairs": "type pairs",
+    "c_star": "threshold",
+}
+# realgt4 carries the donor lock rather than an evaluated substrate, so its
+# CSV role would otherwise read as a benchmark this paper scores against.
+ROLE_OVERRIDE = {"realgt4_ref": "recorded"}
+# Substrate codenames as they appear inside file names and table cells. Longest
+# first: a bare "realgt" prefixes the numbered ones.
+SUBSTRATE_LABEL = {"realgt3": "CosMx", "realgt2": "Xenium FLEX", "realgt": "Xenium", "openst": "openST"}
+
 def esc(value: object) -> str:
     return "".join(ESCAPES.get(c, c) for c in str(value))
 
@@ -36,35 +68,10 @@ def table(headers: list[str], data: list[list[str]], alignment: str, rules_befor
 def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     materials_raw = rows("T1_materials.csv")
-    item_label = {
-        "cells.txt": "CosMx cells",
-        "features.txt": "CosMx features",
-        "metadata.csv": "CosMx metadata",
-        "counts_genes_x_cells.mtx.gz": "CosMx counts matrix",
-        "openst_ref": "HNSCC openST reference",
-        "realgt_ref": "Breast Xenium reference",
-        "realgt2_ref": "Xenium FLEX orthogonal reference",
-        "realgt3_ref": "CosMx BCC reference",
-        "realgt4_ref": "CosMx donor-lock (recorded)",
-        "crossdonor.csv": "Donor-transfer row",
-        "type_pairs.json": "Malignant--neighbor pairs",
-        "c_star.json": "Cosine threshold",
-    }
-    role_label = {
-        "bcc_export": "CosMx export",
-        "benchmark_ref": "evaluated",
-        "orthogonal_ref": "orthogonal",
-        "cbc_lock": "recorded",
-        "type_pairs": "type pairs",
-        "c_star": "threshold",
-    }
-    # realgt4 carries the donor lock rather than an evaluated substrate, so its
-    # CSV role would otherwise read as a benchmark this paper scores against.
-    role_override = {"realgt4_ref": "recorded"}
     materials = [
         [
-            esc(item_label.get(r["item"], r["item"])),
-            esc(role_override.get(r["item"], role_label.get(r["role"], r["role"]))),
+            esc(ITEM_LABEL.get(r["item"], r["item"])),
+            esc(ROLE_OVERRIDE.get(r["item"], ROLE_LABEL.get(r["role"], r["role"]))),
         ]
         for r in materials_raw
     ]
@@ -93,7 +100,7 @@ def main() -> None:
         for r in steps
     ]
     timing.append(["One openST pass", f"{pass_seconds:.3f}", r"100\%"])
-    substrate_label = {"openst": "openST", "realgt3": "CosMx", "realgt": "Xenium"}
+    substrate_label = SUBSTRATE_LABEL
     probes = {r["job"]: r for r in rows("timing_probe_three_substrates.csv")}
     throughput = []
     for key in ("openst", "realgt3", "realgt"):
