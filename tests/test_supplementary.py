@@ -44,3 +44,51 @@ def test_declaration_promises_only_what_the_bundle_carries():
     text = (ROOT / "manuscript" / "declarations.tex").read_text()
     assert "locked reference matrices, the plotted" not in text
     assert "identified in that bundle by digest rather than redistributed" in text
+
+
+def test_every_binding_the_bundle_rewrites_is_still_in_the_source():
+    """The rewrite is a string match against scripts that are edited elsewhere.
+    A binding that moves silently ships a script that stops on its first line, so
+    the match is asserted here rather than discovered by a reviewer."""
+    for name, rebind in supp.R_ENTRY.items():
+        body = (supp.RENDER / "R" / name).read_text()
+        for old, _ in rebind:
+            assert old in body, f"{name} no longer binds {old!r}"
+    body = (supp.RENDER / "generate_tables.py").read_text()
+    for old, _ in supp.PY_REBIND:
+        assert old in body, f"generate_tables.py no longer binds {old!r}"
+
+
+def test_bundled_entry_points_read_the_bundle_and_not_the_workbench():
+    bundle = ROOT / "supplementary"
+    if not bundle.is_dir():
+        return
+    for name in supp.R_ENTRY:
+        body = (bundle / "render" / name).read_text()
+        assert "FIGURES.md" not in body
+        assert 'file.path(root, "plotdata")' in body
+        assert 'file.path(root, "figures")' in body
+        assert "manuscript/scripts/R/" not in body
+
+
+def test_readme_names_only_commands_the_bundle_can_run():
+    """Two entry points draw the figures, not one: render_disk_faces.R stops at
+    Figure 11 and render_F12_keep.R draws the twelfth. The README said one command
+    covered 2-12, which is the kind of claim a reviewer tests first."""
+    assert "Figures 2-11" in supp.README
+    assert "render/render_F12_keep.R" in supp.README
+    assert "Figures 2-12" not in supp.README
+    bundle = ROOT / "supplementary"
+    if bundle.is_dir():
+        for script in ("render_disk_faces.R", "render_F12_keep.R", "generate_tables.py"):
+            assert (bundle / "render" / script).is_file(), script
+
+
+def test_index_does_not_call_an_emit_stage_a_figure_number():
+    """The emit stages were numbered before the figures were renumbered, so
+    F9_type_floor.csv prints as Figure 11. Heading it "Figure 9" sent a reader
+    checking one panel to another panel's tables."""
+    lines = supp.index_lines([supp.PLOTDATA / "F9_type_floor.csv", supp.PLOTDATA / "T1_materials.csv"])
+    assert any(line.strip() == "Emit stage F9" for line in lines)
+    assert not any(line.strip() == "Figure 9" for line in lines)
+    assert any(line.strip() == "Table 1" for line in lines)

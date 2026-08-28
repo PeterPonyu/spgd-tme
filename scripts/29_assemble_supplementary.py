@@ -64,9 +64,73 @@ PLOTDATA_WITHHELD = ("CBC_spatial_maps.REUSE",)
 # rewritten into a directory nobody has.
 PROVENANCE_KEYS = ("from", "out_dir", "pair_dir")
 BINARY_SUFFIXES = (".gz",)
+# The render scripts are written against the workbench: they refuse to start
+# unless FIGURES.md sits in the working directory, they source each other
+# through manuscript/scripts/R/, and they read data/plotdata. A reader who
+# unzips the bundle has none of those. Copying them verbatim shipped a README
+# whose reproduce command stops on its first line, which is a worse promise
+# than making none, so each binding is rebound to the bundle's own layout and
+# a binding that has moved fails the build rather than shipping unrewritten.
+BUNDLE_PREAMBLE = """# Rebound for the Supplementary bundle: scripts in render/, tables in
+# plotdata/, output in figures/.
+.args <- commandArgs(trailingOnly = FALSE)
+.here <- dirname(normalizePath(sub("^--file=", "", .args[grep("^--file=", .args)])[1]))
+root <- dirname(.here)
+"""
+R_COMMON = (
+    (
+        'root <- normalizePath(file.path(getwd()))\n'
+        'if (!file.exists(file.path(root, "FIGURES.md"))) {\n'
+        '  stop("run from the SPGD-TME workbench root", call. = FALSE)\n'
+        '}\n',
+        BUNDLE_PREAMBLE,
+    ),
+    ('source(file.path(root, "manuscript/scripts/R/', 'source(file.path(.here, "'),
+    ('plotdir <- file.path(root, "data/plotdata")', 'plotdir <- file.path(root, "plotdata")'),
+    (
+        'figdir <- file.path(root, "manuscript/figs/rendered")',
+        'figdir <- file.path(root, "figures")',
+    ),
+)
+# Only the two entry points are rebound. Everything else in render/ is sourced by
+# one of them and inherits its bindings. "RTX" is this workbench's name for its
+# R-first figure stack and "workbench root" is a layout the reader does not have,
+# so each entry point's first line is rewritten too: it is the first line a reader
+# of the bundle reads.
+R_ENTRY = {
+    "render_disk_faces.R": (
+        (
+            "# RTX orchestrator. Run from the SPGD-TME workbench root.",
+            "# Draws Figures 2-11 of SPGD-TME from plotdata/.",
+        ),
+    ) + R_COMMON,
+    "render_F12_keep.R": (
+        (
+            "# Independent KEEP-carcinoma board. Run from the SPGD-TME workbench root.",
+            "# Draws Figure 12 of SPGD-TME, the independent KEEP-carcinoma board, from plotdata/.",
+        ),
+    ) + R_COMMON,
+}
+PY_REBIND = (
+    ("ROOT = Path(__file__).resolve().parents[2]", "ROOT = Path(__file__).resolve().parents[1]"),
+    ('PLOTDATA = ROOT / "data" / "plotdata"', 'PLOTDATA = ROOT / "plotdata"'),
+    ('OUT = ROOT / "manuscript" / "tables"', 'OUT = ROOT / "tables"'),
+)
 # A bundle is only as good as the worst string in it. Anything here fails the
 # build rather than shipping.
-FORBIDDEN = tuple(LOCAL_PATH_MARKERS) + ("deconv-lab", "spgd-deconv", "capsules", "realgt")
+FORBIDDEN = tuple(LOCAL_PATH_MARKERS) + (
+    "deconv-lab",
+    "spgd-deconv",
+    "capsules",
+    "realgt",
+    # This workbench's own vocabulary: the name of its figure stack and the
+    # directory layout it assumes. Neither means anything to a reader, and the
+    # second one is a running instruction the bundle cannot satisfy.
+    "rtx",
+    "workbench",
+    "manuscript/scripts",
+    "data/plotdata",
+)
 
 
 def public_name(name: str) -> str:
@@ -84,6 +148,17 @@ def rewrite(text: str) -> str:
 def copy_text(src: Path, dst: Path) -> None:
     dst.parent.mkdir(parents=True, exist_ok=True)
     dst.write_text(rewrite(src.read_text(encoding="utf-8")), encoding="utf-8")
+
+
+def copy_script(src: Path, dst: Path, rebind: tuple[tuple[str, str], ...]) -> None:
+    """Copy an entry point with its workbench paths rebound to the bundle layout."""
+    body = rewrite(src.read_text(encoding="utf-8"))
+    for old, new in rebind:
+        if old not in body:
+            sys.exit(f"FAIL: {src.name} no longer binds {old!r}; the bundle rewrite is stale")
+        body = body.replace(old, new)
+    dst.parent.mkdir(parents=True, exist_ok=True)
+    dst.write_text(body, encoding="utf-8")
 
 
 def strip_provenance(node: object) -> object:
@@ -131,24 +206,35 @@ def write_materials_lock() -> None:
 
 
 def index_lines(copied: list[Path]) -> list[str]:
-    """Group the bundle by the figure or table whose numbers each file carries.
+    """Group the bundle by the stage that emitted each file.
 
     Every plotted value is named ``F<n>_`` or ``T<n>_`` by the emit scripts, so the
     prefix is the index. A file without one is listed under its own heading rather
     than dropped, which is what makes the absence of an orphan checkable.
+
+    ``T<n>`` is the printed table number, but ``F<n>`` is not the printed figure
+    number: the emit stages were numbered as they were written and the figures were
+    renumbered afterwards, so the reference floor sits in F9_type_floor.csv and
+    prints as Figure 11. Calling these headings figure numbers sent a reader
+    checking one panel to another panel's tables, so they name the stage instead
+    and the README says what the prefix is worth.
     """
     grouped: dict[str, list[str]] = {}
     for path in sorted(copied):
         stem = path.name
         match = re.match(r"([FT])(\d+)[_D]", stem)
-        key = f"{'Figure' if match.group(1) == 'F' else 'Table'} {int(match.group(2))}" if match else "Shared inputs"
+        key = (
+            f"{'Emit stage F' if match.group(1) == 'F' else 'Table '}{int(match.group(2))}"
+            if match
+            else "Shared inputs"
+        )
         grouped.setdefault(key, []).append(stem)
 
     def order(key: str) -> tuple[int, int]:
         if key == "Shared inputs":
             return (2, 0)
-        kind, number = key.split()
-        return (0 if kind == "Figure" else 1, int(number))
+        head, number = key.rsplit(" ", 1) if key.startswith("Table") else (key, key[len("Emit stage F"):])
+        return (0 if key.startswith("Emit") else 1, int(number))
 
     lines = []
     for key in sorted(grouped, key=order):
@@ -181,11 +267,19 @@ Contents
 Reproducing a figure or a table
 -------------------------------
 
-  Figures 2-12   Rscript render/render_disk_faces.R
-                 reads plotdata/, writes one PDF and one PNG per figure
+Run these from the directory this file sits in. Nothing outside the bundle is
+needed and nothing outside it is written.
+
+  Figures 2-11   Rscript render/render_disk_faces.R
+  Figure 12      Rscript render/render_F12_keep.R
+                 both read plotdata/ and write one PDF and one PNG per figure
+                 into figures/
   Figure 1       drawn in the manuscript source as a TikZ picture, not from data
-  Tables 1-3     python render/generate_tables.py
-                 reads plotdata/T1_materials.csv, T2_timing.csv, T3_donor_matrix.csv
+  Tables 1-3     python3 render/generate_tables.py
+                 reads plotdata/T1_materials.csv, T2_timing.csv and
+                 T3_donor_matrix.csv, writes the TeX table bodies into tables/
+
+R needs ggplot2, patchwork, dplyr, tidyr, ragg and Cairo.
 
 Locks
 -----
@@ -200,6 +294,14 @@ Locks
 
 Where each file belongs
 -----------------------
+
+The render reads plotdata/ as one set, so no file is private to one figure. The
+prefix below is the stage that emitted the file, and for tables it is also the
+printed table number. For figures it is not: the stages were numbered as they
+were written and the figures were renumbered afterwards, so F9_type_floor.csv is
+the reference floor that prints as Figure 11 and F10_myeloid_occupancy.csv is the
+myeloid axis that prints as Figure 9. To go from a printed panel to its numbers,
+run the commands above and read figures/ beside the submitted figure.
 
 """
 
@@ -224,9 +326,13 @@ def main() -> None:
             copy_file(src, OUT / "locks" / public_name(src.name))
     write_materials_lock()
 
-    copy_text(RENDER / "generate_tables.py", OUT / "render" / "generate_tables.py")
+    copy_script(RENDER / "generate_tables.py", OUT / "render" / "generate_tables.py", PY_REBIND)
     for src in sorted((RENDER / "R").glob("*.R")):
-        copy_text(src, OUT / "render" / public_name(src.name))
+        dst = OUT / "render" / public_name(src.name)
+        if src.name in R_ENTRY:
+            copy_script(src, dst, R_ENTRY[src.name])
+        else:
+            copy_text(src, dst)
 
     missing = [name for name in REQUIRED_EVIDENCE if not (OUT / "plotdata" / public_name(name)).is_file()]
     if missing:
