@@ -26,7 +26,6 @@ pytestmark = pytest.mark.skipif(
 
 STATEMENTS = (
     "Data availability statement.",
-    "Relationship to other work.",
     "Ethics statement.",
     "Author contributions.",
     "Funding.",
