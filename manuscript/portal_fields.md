@@ -86,7 +86,8 @@ institution rather than four variants. Everything above it goes in the Departmen
 > every figure and table are provided as Supplementary Material with this submission; the
 > reference matrices are derived from the public libraries named above and are identified
 > in that bundle by digest rather than redistributed under their source licences. The
-> bundle will be deposited as a citable reproducibility archive at Zenodo on acceptance.
+> bundle will be deposited as a citable reproducibility archive at Zenodo on acceptance, in
+> the form already used for the parent estimator (Fu et al., 2026, doi:10.5281/zenodo.21869991).
 > Requests for any input not covered above should go to the corresponding author.
 
 ## Ethics statement
@@ -138,6 +139,13 @@ institution rather than four variants. Everything above it goes in the Departmen
 | Figures 1–12 | `submission/Figure1.jpg` … `Figure12.jpg`, 300 dpi at 180 mm |
 | Supplementary Material | `supplementary.zip` |
 | Cover letter | `manuscript/cover_letter.md`, pasted as plain text |
+
+---
+
+# Below this line is working note, not portal text
+
+Nothing past this point is pasted anywhere. It is the reasoning behind the byline and the
+open questions on it, and it reads as strategy rather than science if it leaves this file.
 
 ## What the four published Frontiers in Genetics papers actually do
 
