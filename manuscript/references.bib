@@ -20,10 +20,11 @@
 
 @misc{Andreatta2024zenodo,
   author    = {Andreatta, Massimo and Yerly, Laura and Carmona, Santiago J. and Kuonen, Fran{\c{c}}ois},
-  title     = {Single-cell spatial transcriptomics (6k-plex {CosMx} {SMI}) dataset of human basal-cell carcinoma},
-  year      = {2024},
-  publisher = {Zenodo},
-  doi       = {10.5281/zenodo.14330691}
+  title        = {Single-cell spatial transcriptomics (6k-plex {CosMx} {SMI}) dataset of human basal-cell carcinoma},
+  year         = {2024},
+  publisher    = {Zenodo},
+  howpublished = {Zenodo, \url{https://doi.org/10.5281/zenodo.14330691}},
+  doi          = {10.5281/zenodo.14330691}
 }
 
 @article{Schott2024,
@@ -309,14 +310,18 @@
   doi     = {10.1093/nar/gkz543}
 }
 
+% unsrtnat prints howpublished for a misc entry and drops doi, so the archive
+% each of these exists to point at has to be written into the field that prints.
+% Writing an at-sign here would start an entry: BibTeX scans for one anywhere.
 @misc{Fu2026spgd,
-  author    = {Fu, Zeyu},
-  title     = {{SPGD}: a training-free, self-gating deconvolution method for spatial
-               transcriptomics --- reproducibility archive (manuscript code and committed data)},
-  year      = {2026},
-  publisher = {Zenodo},
-  note      = {Software archive of the parent estimator; the companion manuscript is under review},
-  doi       = {10.5281/zenodo.21869991}
+  author       = {Fu, Zeyu},
+  title        = {{SPGD}: a training-free, self-gating deconvolution method for spatial
+                  transcriptomics --- reproducibility archive (manuscript code and committed data)},
+  year         = {2026},
+  publisher    = {Zenodo},
+  howpublished = {Zenodo, \url{https://doi.org/10.5281/zenodo.21869991}},
+  note         = {Released software archive of the estimator whose constants this work holds fixed},
+  doi          = {10.5281/zenodo.21869991}
 }
 
 @misc{Sun2025spatial,
@@ -324,9 +329,10 @@
                and Kiessling, Paul and Turner, Meghan},
   title     = {Beyond benchmarking: an expert-guided consensus approach to spatially aware
                clustering --- supporting data},
-  year      = {2025},
-  publisher = {Zenodo},
-  note      = {Redistributes the NanoString {CosMx} human {NSCLC} and human liver {FFPE} releases
-               under the NanoString data licence},
-  doi       = {10.5281/zenodo.15487520}
+  year         = {2025},
+  publisher    = {Zenodo},
+  howpublished = {Zenodo, \url{https://doi.org/10.5281/zenodo.15487520}},
+  note         = {Redistributes the NanoString {CosMx} human {NSCLC} and human liver {FFPE} releases
+                  under the NanoString data licence},
+  doi          = {10.5281/zenodo.15487520}
 }
