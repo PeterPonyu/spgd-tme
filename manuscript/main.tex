@@ -14,7 +14,10 @@
 \usepackage{tikz}
 \usetikzlibrary{arrows.meta,positioning,calc,fit}
 \usepackage{placeins}
-\usepackage[numbers]{natbib}
+% sort&compress, because unsrtnat numbers by first appearance: a multi-citation
+% written in the order the argument needs it prints as an unsorted run of ten
+% numbers, which reads as a citation dump rather than as one supporting group.
+\usepackage[numbers,sort&compress]{natbib}
 \usepackage{microtype}
 \usepackage{hyperref}
 \title{Two locked operators report mixed-spot TME composition on CosMx carcinomas}
@@ -28,12 +31,11 @@
 Rui Yang\textsuperscript{1,\dag} \quad Tianfei Ran\textsuperscript{2,\dag} \quad
 Lei Ran\textsuperscript{3} \quad Zeyu Fu\textsuperscript{4,*}%
 \\[5pt]
-{\normalsize\textsuperscript{1}Department of Preventive Health Care, The Second
-Affiliated Hospital of Army Medical University (Xinqiao Hospital), Chongqing,
-China}%
+{\normalsize\textsuperscript{1}Department of Medical Engineering, Army Medical
+University, Chongqing, China}%
 \\
-{\normalsize\textsuperscript{2}The Second Affiliated Hospital of Army Medical
-University (Xinqiao Hospital), Chongqing, China}%
+{\normalsize\textsuperscript{2}Xinqiao Hospital, Second Affiliated Hospital of
+Army Medical University, Chongqing, China}%
 \\
 {\normalsize\textsuperscript{3}Department of Dermatology and Rheumatology, Army
 Medical University, Chongqing, China}%
@@ -187,7 +189,7 @@ and share first authorship.\quad
 % The one break the paper keeps. \FloatBarrier alone stops a figure landing
 % between the declarations and the reference list, but the declarations then
 % start in whatever strip is left under the last figure and finish overleaf.
-% Seven statements a reader is meant to check in one pass have to arrive
+% The statements a reader is meant to check in one pass have to arrive
 % together, and the last figure block plus the statements do not share a page.
 \clearpage
 
@@ -195,8 +197,8 @@ and share first authorship.\quad
 % author contributions and funding must be in the source file, and a reviewer reading
 % the PDF alone should see all of them.
 %
-% Grouped and tightened. Eight statements at the body paragraph skip run one
-% statement past the page, and the reader who checks them checks them together.
+% Grouped and tightened. At the body paragraph skip they run one statement past
+% the page, and the reader who checks them checks them together.
 % They are a list of short labelled blocks rather than running prose, so a
 % shorter skip between them costs no legibility.
 \begingroup
