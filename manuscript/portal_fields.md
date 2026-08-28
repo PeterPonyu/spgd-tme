@@ -109,12 +109,30 @@ institution rather than four variants. Everything above it goes in the Departmen
 
 ## Gates that are not mine to clear
 
-1. Zeyu Fu's ORCID has no employment record. The portal resolves an author to an
-   institution through that record, so until `Army Medical University` is added there the
-   corresponding author is not indexable against the affiliation printed on the paper.
-2. Zeyu Fu's ORCID lists three personal email addresses and no institutional one. Add
-   `fuzeyu99@tmmu.edu.cn` and make it public.
-3. `PeterPonyu/SPGT-site` is a public page carrying this manuscript's byline, and its
-   README states that SPGT is "the TME companion to published SPGD" and that "both
-   manuscripts are under review". That page is indexable and contradicts a submission that
-   presents this work as standalone. Reconcile the two before the manuscript is uploaded.
+These are account settings and facts about who did what. Nothing in the repository can
+change them, and each one is checkable from outside by anyone who reads the paper.
+
+1. **Zeyu Fu's ORCID has no employment record.** The other three authors each resolve to
+   `Army Medical University`; the corresponding author resolves to nothing. The portal and
+   every downstream index reach an author's institution through that record, so the one
+   author a reader will look up is the one whose affiliation cannot be confirmed against
+   the paper. Add `Army Medical University` as employment.
+2. **Zeyu Fu's ORCID publishes three personal addresses and no institutional one**
+   (`1119692089@qq.com`, `fuzeyu99@126.com`, `fuzeyu09@gmail.com`). The paper's
+   correspondence line is `fuzeyu99@tmmu.edu.cn`. Add that address and make it public;
+   a corresponding author reachable only at consumer mail is a pattern integrity screens
+   weight against.
+3. **That ORCID carries 47 works** spanning fields this byline does not otherwise touch,
+   which suggests auto-claimed records from a same-name researcher. Prune the ones that are
+   not yours before an editor reads the profile as evidence of an implausible output rate.
+4. **Lei Ran's contribution is a strict subset of Zeyu Fu's.** `validation` and
+   `writing – review and editing` are both roles the corresponding author already claims, so
+   the statement gives LR no contribution that is theirs alone. That is the exact shape a
+   gift-authorship check looks for, and it is the one thing here that matches the failure
+   the last submission was rejected on. Confirm what LR actually did and name it — for a
+   dermatology and rheumatology clinician on a basal-cell carcinoma paper the likely honest
+   answer is clinical interpretation of the ulcerated-nodular and wound annotations, which
+   is CRediT `investigation`, but that has to come from LR rather than from the shape of
+   the byline.
+5. **`rui yang` is lower-cased on ORCID.** The portal renders the ORCID name beside the
+   submitted one; make them match.
