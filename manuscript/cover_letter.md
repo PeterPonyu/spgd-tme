@@ -52,8 +52,7 @@ the frozen constants, the content digest of every locked input, and the scripts 
 every figure and table accompany the submission as Supplementary Material.
 
 All authors have read and approved the submitted version and declare no competing
-interests. Our use of generative AI assistants is disclosed in full in the Generative AI
-statement.
+interests. Our use of generative AI assistants is disclosed in the Generative AI statement.
 
 Thank you for your consideration.
 
