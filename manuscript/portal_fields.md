@@ -70,7 +70,8 @@ institution rather than four variants. Everything above it goes in the Departmen
 > ZF: conceptualization, methodology, funding acquisition, resources, supervision, project
 > administration, validation, writing – review and editing. RY: software, formal analysis,
 > visualization, writing – original draft. TR: data curation, investigation, formal
-> analysis. LR: investigation, validation, writing – review and editing. RY and TR
+> analysis, writing – original draft. LR: investigation, validation, writing – review and
+> editing. RY and TR
 > contributed equally to this work and share first authorship. ZF is the corresponding author and directed the
 > study. All authors read and approved the submitted version.
 
