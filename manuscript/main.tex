@@ -3,6 +3,11 @@
 \usepackage{booktabs}
 \usepackage{caption}
 \captionsetup{font=small,labelfont=bf,skip=4pt}
+% Stated rather than left to the package's auto-detection, so the 4pt skip lands
+% under a table caption and over a figure caption no matter where a journal
+% template moves the \caption call.
+\captionsetup[table]{position=top}
+\captionsetup[figure]{position=bottom}
 \usepackage{graphicx}
 \usepackage{float}
 \usepackage{amsmath}
@@ -134,10 +139,10 @@ and share first authorship.\quad
 
 \begin{table}[!ht]
 \centering
-\small
-\input{tables/T1_materials.tex}
 \caption{\protect\input{captions/T1_materials.tex}}
 \label{tab:materials}
+\small
+\input{tables/T1_materials.tex}
 \end{table}
 
 \FloatBarrier
@@ -153,9 +158,9 @@ and share first authorship.\quad
 
 \begin{table}[!ht]
 \centering
-\input{tables/T2_timing.tex}
 \caption{\protect\input{captions/T2_timing.tex}}
 \label{tab:timing}
+\input{tables/T2_timing.tex}
 \end{table}
 
 % No barrier here or before the discussion. Eleven full-width figures outrun the
