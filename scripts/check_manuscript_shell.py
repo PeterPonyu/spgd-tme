@@ -2,6 +2,7 @@
 """Manuscript shell contract. Does not compile the PDF and does not fit SPGD."""
 from __future__ import annotations
 
+import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -94,6 +95,56 @@ READER_LEAKS = (
     "run_tissue_name",
 )
 LOCAL_PATH_MARKERS = ("/home/", "desktop/labs", "file://")
+# A table caption reads above its rules and a figure caption reads below its
+# panels. Moving one \caption line breaks the convention everywhere and shows up
+# nowhere in the source diff, so the placement is a contract rather than a habit.
+FLOAT_BODY_MARKERS = {
+    "table": (r"\input{tables/", r"\resizebox"),
+    "figure": (r"\includegraphics", r"\input{figs/"),
+}
+
+
+LABEL_TABLE = {
+    "tab:materials": "T1_materials.tex",
+    "tab:timing": "T2_timing.tex",
+    "tab:donor": "T3_donor_matrix.tex",
+}
+_SENTENCE = re.compile(r"(?<=\.)\s+(?=[A-Z\\])")
+_METRIC = re.compile(r"\\\((0\.\d{4})\\\)")
+
+
+def _check_table_claims() -> None:
+    """A sentence that sends the reader to a table for a score has to send them
+    to the table that prints it. Table 1 lists materials and Table 3 scores them,
+    and the four-edge metrics were attributed to Table 1 in two places."""
+    bodies = {
+        label: (MS / "tables" / name).read_text() for label, name in LABEL_TABLE.items()
+    }
+    for name in PROSE_FILES:
+        for sentence in _SENTENCE.split((MS / name).read_text()):
+            labels = re.findall(r"Table~\\ref\{([^}]+)\}", sentence)
+            if not labels:
+                continue
+            unknown = [label for label in labels if label not in bodies]
+            if unknown:
+                raise SystemExit(f"{name} references unknown table label {unknown}")
+            printed = "".join(bodies[label] for label in labels)
+            missing = [n for n in _METRIC.findall(sentence) if n not in printed]
+            if missing:
+                raise SystemExit(f"{name} sends {missing} to {labels}, which do not print them")
+
+
+def _check_caption_placement(body: str) -> None:
+    for env, markers in FLOAT_BODY_MARKERS.items():
+        for block in re.findall(rf"\\begin{{{env}}}(.*?)\\end{{{env}}}", body, re.S):
+            caption = block.find(r"\caption")
+            content = min((i for i in (block.find(m) for m in markers) if i >= 0), default=-1)
+            if caption < 0 or content < 0:
+                raise SystemExit(f"a {env} float carries no caption or no content")
+            above = caption < content
+            if above is not (env == "table"):
+                where = "above" if above else "below"
+                raise SystemExit(f"a {env} caption sits {where} its content")
 
 
 def main() -> None:
@@ -150,6 +201,8 @@ def main() -> None:
         raise SystemExit(f"manuscript must contain exactly 12 numbered figures, found {n_fig}")
     if "\\textbf{Schematic.}" in main_tex:
         raise SystemExit("main.tex still uses unnumbered Schematic")
+    _check_caption_placement(body)
+    _check_table_claims()
     publication_text = "\n".join(
         [main_tex, contract.read_text()]
         + [(MS / name).read_text() for name in PROSE_FILES]

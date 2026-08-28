@@ -1,10 +1,22 @@
 from __future__ import annotations
 
+import importlib.util
 import subprocess
 import sys
 from pathlib import Path
 
+import pytest
+
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def _shell_module():
+    spec = importlib.util.spec_from_file_location(
+        "check_manuscript_shell", ROOT / "scripts/check_manuscript_shell.py"
+    )
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
 
 
 def test_manuscript_shell_contract():
@@ -16,6 +28,25 @@ def test_manuscript_shell_contract():
     )
     assert proc.returncode == 0, proc.stderr or proc.stdout
     assert "MANUSCRIPT_SHELL_OK" in proc.stdout
+
+
+def test_table_captions_read_above_and_figure_captions_below():
+    check = _shell_module()._check_caption_placement
+    body = (
+        (ROOT / "manuscript/main.tex").read_text()
+        + "\n"
+        + (ROOT / "manuscript/results.tex").read_text()
+    )
+    check(body)
+    flipped_table = (
+        r"\begin{table}" "\n" r"\input{tables/T1_materials.tex}" "\n" r"\caption{x}" "\n" r"\end{table}"
+    )
+    flipped_figure = (
+        r"\begin{figure}" "\n" r"\caption{x}" "\n" r"\includegraphics{a.pdf}" "\n" r"\end{figure}"
+    )
+    for bad in (flipped_table, flipped_figure):
+        with pytest.raises(SystemExit):
+            check(bad)
 
 
 def test_main_tex_has_fail_closed_errmessage():
