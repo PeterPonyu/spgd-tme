@@ -20,9 +20,16 @@ def rows(name: str) -> list[dict[str, str]]:
 def num(value: str, digits: int = 4) -> str:
     return "--" if value == "" else f"{float(value):.{digits}f}"
 
-def table(headers: list[str], data: list[list[str]], alignment: str) -> str:
+def floor_num(value: float, digits: int) -> str:
+    """A step that costs less than the printed resolution must not read as free."""
+    return f"\\(<\\){10 ** -digits:.{digits}f}" if 0 < value < 10 ** -digits / 2 else f"{value:.{digits}f}"
+
+def table(headers: list[str], data: list[list[str]], alignment: str, rules_before: tuple[int, ...] = ()) -> str:
     out = [f"\\begin{{tabular}}{{{alignment}}}", r"\toprule", " & ".join(headers) + r" \\", r"\midrule"]
-    out.extend(" & ".join(row) + r" \\" for row in data)
+    for index, row in enumerate(data):
+        if index in rules_before:
+            out.append(r"\midrule")
+        out.append(" & ".join(row) + r" \\")
     out.extend([r"\bottomrule", r"\end{tabular}", ""])
     return "\n".join(out)
 
@@ -38,8 +45,8 @@ def main() -> None:
         "realgt_ref": "Breast Xenium reference",
         "realgt2_ref": "Xenium FLEX orthogonal reference",
         "realgt3_ref": "CosMx BCC reference",
-        "realgt4_ref": "CosMx donor-lock (provenance)",
-        "crossdonor.csv": "Donor-transfer ledger",
+        "realgt4_ref": "CosMx donor-lock (recorded)",
+        "crossdonor.csv": "Donor-transfer row",
         "type_pairs.json": "Malignant--neighbor pairs",
         "c_star.json": "Cosine threshold",
     }
@@ -47,14 +54,17 @@ def main() -> None:
         "bcc_export": "CosMx export",
         "benchmark_ref": "evaluated",
         "orthogonal_ref": "orthogonal",
-        "cbc_lock": "ledger",
+        "cbc_lock": "recorded",
         "type_pairs": "type pairs",
         "c_star": "threshold",
     }
+    # realgt4 carries the donor lock rather than an evaluated substrate, so its
+    # CSV role would otherwise read as a benchmark this paper scores against.
+    role_override = {"realgt4_ref": "recorded"}
     materials = [
         [
             esc(item_label.get(r["item"], r["item"])),
-            esc("provenance" if r["item"] == "realgt4_ref" else role_label.get(r["role"], r["role"])),
+            esc(role_override.get(r["item"], role_label.get(r["role"], r["role"]))),
         ]
         for r in materials_raw
     ]
@@ -67,16 +77,43 @@ def main() -> None:
         "specificity_weight": "Specificity weights",
         "fit_gamma": "Weighted fit",
         "self_gate": "Platform self-gate",
-        "refuse": "Collinearity refusal",
+        "refuse": "Reportability gate",
         "poisson_fit": "Poisson close",
     }
+    steps = rows("T2_timing.csv")
+    pass_seconds = sum(float(r["seconds"]) for r in steps)
+    # The claim the table supports is that refusability is cheap relative to the
+    # fit it guards, which is a share of the pass and not an absolute duration.
     timing = [
-        [esc(timing_label.get(r["step"], r["step"])), num(r["seconds"], 3)]
-        for r in rows("T2_timing.csv")
+        [
+            esc(timing_label.get(r["step"], r["step"])),
+            floor_num(float(r["seconds"]), 3),
+            floor_num(100 * float(r["seconds"]) / pass_seconds, 2) + r"\%",
+        ]
+        for r in steps
     ]
-    (OUT / "T2_timing.tex").write_text(table(["Operator step", "Seconds"], timing, "lr"), encoding="utf-8")
+    timing.append(["One openST pass", f"{pass_seconds:.3f}", r"100\%"])
+    substrate_label = {"openst": "openST", "realgt3": "CosMx", "realgt": "Xenium"}
+    probes = {r["job"]: r for r in rows("timing_probe_three_substrates.csv")}
+    throughput = []
+    for key in ("openst", "realgt3", "realgt"):
+        probe = probes[f"{key}_t0_fulln"]
+        spots, seconds = int(probe["n_spots"]), float(probe["seconds"])
+        throughput.append(
+            [substrate_label[key], str(spots), f"{seconds:.3f}", f"{1000 * seconds / spots:.1f}"]
+        )
+    (OUT / "T2_timing.tex").write_text(
+        table(["Operator step", "Seconds", "Share of pass"], timing, "lrr", rules_before=(len(steps),))
+        + "\n\\vspace{4pt}\n\n"
+        + table(
+            [r"Full-\(n\) \(t=0\) pass", "Spots", "Seconds", "ms per spot"],
+            throughput,
+            "lrrr",
+        ),
+        encoding="utf-8",
+    )
     source_label = {
-        "locked": "ledger",
+        "locked": "recorded",
         "computed": "this analysis",
     }
     donors = [
