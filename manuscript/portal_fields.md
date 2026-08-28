@@ -12,6 +12,40 @@ form must say the same thing.
 
 Methods
 
+## Research Topic
+
+Decoding Tumor Complexity: Broad Perspectives from Integrative Multi-Omics and Single-Cell
+Technologies in Cancer Genetics (topic 73845, deadline 21 December 2026). The topic runs
+under both Cancer Genetics and Oncogenomics and Computational Genomics, so it can be
+selected without moving the submission off the section it was created under. None of its
+three topic editors share an institution with any author.
+
+## Scope statement
+
+> This manuscript describes two computational operators added to a training-free cell-type
+> composition estimator for spatial transcriptomics, which places it within Computational
+> Genomics: methods and applications of analytical platforms for complex biological data.
+>
+> The first operator is a KEEP/ABSTAIN reportability gate that withholds the malignant
+> coordinate once the malignant-neighbour cosine of the reference reaches a cutoff frozen
+> before any sweep. The second is a Patient_ID donor split that builds mixed spots and
+> reference from disjoint patients, so transfer is measured across donors rather than
+> within one. Both are evaluated on eight public spatial libraries spanning CosMx, openST
+> and Xenium, covering basal-cell carcinoma, non-small-cell lung, colorectal,
+> hepatocellular, pancreatic, head-and-neck and breast tissue.
+>
+> The contribution is a statement of where a per-spot tumour fraction can be trusted and
+> where it must be refused, with evidence that the refusal boundary tracks collinearity
+> between reference programs rather than assay platform. Plotted values, frozen constants,
+> input digests and the rendering scripts are supplied as Supplementary Material, so every
+> reported number is recomputable from public inputs.
+>
+> For the Research Topic "Decoding Tumor Complexity", this is spatial transcriptomics used
+> to decipher tumour ecosystems, and a cross-cancer framework applied unchanged to seven
+> tumour types.
+
+195 words against the 200-word cap.
+
 ## Title
 
 Two locked operators report mixed-spot TME composition on CosMx carcinomas
