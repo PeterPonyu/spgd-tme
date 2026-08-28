@@ -1,4 +1,4 @@
-The estimator is the locked SPGD stack \cite{Fu2026spgd} plus two operators: a KEEP/ABSTAIN reportability gate and a patient-identity donor split (Fig.~\ref{fig:protocol}A--F). Related mixed-spot readers recover composition, including RCTD, cell2location, DestVI, and CARD~\cite{Cable2022,Kleshchevnikov2022,Lopez2022,Ma2022}. This protocol adds an explicit rule for when the malignant coordinate is reportable.
+The estimator is the locked SPGD stack \citep{Fu2026spgd} plus two operators: a KEEP/ABSTAIN reportability gate and a patient-identity donor split (Fig.~\ref{fig:protocol}A--F). Related mixed-spot readers recover composition, including RCTD, cell2location, DestVI, and CARD~\citep{Cable2022,Kleshchevnikov2022,Lopez2022,Ma2022}. This protocol adds an explicit rule for when the malignant coordinate is reportable.
 
 \paragraph{Signatures and specificity weights.}
 A TME reference supplies a gene-by-type matrix \(P\), column-normalized to a probability profile. The specificity of gene \(g\) across \(K\) types is one minus the normalized entropy of that gene's type profile \(q_g\),
@@ -22,7 +22,7 @@ Nonnegative loadings \(W^\star\) are obtained by multiplicative Poisson updates 
 Index \(s\) is a mixed spot and \(k\) is a type. The matrix \(\hat\pi\) of \eqref{eq:simplex} is the composition estimate. Cell-level fields in Fig.~\ref{fig:cohort}A--D are not \(\hat\pi\).
 
 \paragraph{Mixed-spot construction and predictive sizing.}
-CosMx cells are split by Patient\_ID~\cite{Andreatta2024zenodo,Yerly2025preprint}. Cells from the spot donor are aggregated from recorded coordinates into square spatial bins. Bins with fewer than five cells are dropped. The mixed-spot count vector is the gene-wise sum of member cells, and the mixed-spot coordinate is the mean of those cell coordinates. Display maps convert the native pixel frame to micrometres without exchanging axes. Let \(n_{s,k}\) be the number of typed cells of type \(k\) in spot \(s\). Locked mixed-spot truth is the cell-count share
+CosMx cells are split by Patient\_ID~\citep{Andreatta2024zenodo,Yerly2025preprint}. Cells from the spot donor are aggregated from recorded coordinates into square spatial bins. Bins with fewer than five cells are dropped. The mixed-spot count vector is the gene-wise sum of member cells, and the mixed-spot coordinate is the mean of those cell coordinates. Display maps convert the native pixel frame to micrometres without exchanging axes. Let \(n_{s,k}\) be the number of typed cells of type \(k\) in spot \(s\). Locked mixed-spot truth is the cell-count share
 \begin{equation}
 \pi_{s,k}=\frac{n_{s,k}}{\sum_{k'=1}^{K}n_{s,k'}},\qquad \pi_{s,k}\ge 0,\quad \sum_{k=1}^{K}\pi_{s,k}=1.
 \label{eq:truth-frac}

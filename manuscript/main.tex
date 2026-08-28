@@ -14,10 +14,10 @@
 \usepackage{tikz}
 \usetikzlibrary{arrows.meta,positioning,calc,fit}
 \usepackage{placeins}
-% sort&compress, because unsrtnat numbers by first appearance: a multi-citation
-% written in the order the argument needs it prints as an unsorted run of ten
-% numbers, which reads as a citation dump rather than as one supporting group.
-\usepackage[numbers,sort&compress]{natbib}
+% Frontiers in Genetics prints author-year in round brackets against an
+% alphabetical list; square-bracket numbers are reserved for the physics and
+% mathematics titles. sort keeps a multi-citation in reference-list order.
+\usepackage[authoryear,round,sort]{natbib}
 \usepackage{microtype}
 \usepackage{hyperref}
 \title{Two locked operators report mixed-spot TME composition on CosMx carcinomas}
@@ -220,7 +220,7 @@ and share first authorship.\quad
 % lists are read by lookup rather than by line, so they take the smaller face.
 \renewcommand{\bibfont}{\small}
 \setlength{\bibsep}{1pt plus 0.5pt minus 0.5pt}
-\bibliographystyle{unsrtnat}
+\bibliographystyle{plainnat}
 \bibliography{references}
 
 \end{document}
