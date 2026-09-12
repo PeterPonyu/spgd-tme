@@ -1,0 +1,61 @@
+{
+  "source": "GSE277782_CosMx_PDAC",
+  "n_cells": 82348,
+  "n_genes": 1000,
+  "n_types": 7,
+  "types": [
+    "CAF",
+    "Hepatocyte",
+    "Macrophage",
+    "Pancreatic islet",
+    "Plasma cell",
+    "Undetermined",
+    "tumor"
+  ],
+  "malignant": "tumor",
+  "neighbor": "CAF",
+  "cosine": 0.861599,
+  "c_star": 0.8,
+  "decision": "ABSTAIN",
+  "n_patients": 3,
+  "patients": [
+    "Pt-13",
+    "Pt-5",
+    "Pt-8"
+  ],
+  "n_samples": 7,
+  "neighbor_scan": [
+    {
+      "neighbor": "CAF",
+      "cosine": 0.861599,
+      "decision": "ABSTAIN"
+    },
+    {
+      "neighbor": "Macrophage",
+      "cosine": 0.905088,
+      "decision": "ABSTAIN"
+    },
+    {
+      "neighbor": "Hepatocyte",
+      "cosine": 0.803608,
+      "decision": "ABSTAIN"
+    },
+    {
+      "neighbor": "Pancreatic islet",
+      "cosine": 0.87719,
+      "decision": "ABSTAIN"
+    },
+    {
+      "neighbor": "Plasma cell",
+      "cosine": 0.852177,
+      "decision": "ABSTAIN"
+    },
+    {
+      "neighbor": "Undetermined",
+      "cosine": 0.882464,
+      "decision": "ABSTAIN"
+    }
+  ],
+  "sct_bytes": 13208408,
+  "meta_bytes": 569141
+}

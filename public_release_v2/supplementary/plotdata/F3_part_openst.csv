@@ -1,0 +1,12 @@
+substrate,t,cosine,tumor_rmse,malignant,neighbor,c_star,abstain,n_spots,subsample_seed
+openst,0.0,0.972678,0.075661,Tumor,Tumor_Keratin_Pearl,0.8,True,400,0
+openst,0.1,0.977787,0.074521,Tumor,Tumor_Keratin_Pearl,0.8,True,400,0
+openst,0.2,0.982398,0.080219,Tumor,Tumor_Keratin_Pearl,0.8,True,400,0
+openst,0.3,0.986495,0.087506,Tumor,Tumor_Keratin_Pearl,0.8,True,400,0
+openst,0.4,0.990066,0.094556,Tumor,Tumor_Keratin_Pearl,0.8,True,400,0
+openst,0.5,0.993098,0.103797,Tumor,Tumor_Keratin_Pearl,0.8,True,400,0
+openst,0.6,0.995584,0.115084,Tumor,Tumor_Keratin_Pearl,0.8,True,400,0
+openst,0.7,0.997519,0.128911,Tumor,Tumor_Keratin_Pearl,0.8,True,400,0
+openst,0.8,0.9989,0.146157,Tumor,Tumor_Keratin_Pearl,0.8,True,400,0
+openst,0.9,0.999726,0.171118,Tumor,Tumor_Keratin_Pearl,0.8,True,400,0
+openst,1.0,1.0,0.335725,Tumor,Tumor_Keratin_Pearl,0.8,True,400,0

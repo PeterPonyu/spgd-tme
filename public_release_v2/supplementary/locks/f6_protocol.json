@@ -1,0 +1,10 @@
+{
+  "object": "troubleshooting protocol, not a results table",
+  "gates": [
+    "cosine >= c_star writes ABSTAIN, never RMSE 0",
+    "overlapping Patient_ID refuses the donor build",
+    "missing unique plotdata stops manuscript compile"
+  ],
+  "figure": "manuscript/figs/fig_troubleshoot.tex",
+  "caption": "manuscript/captions/F6_troubleshooting.tex"
+}

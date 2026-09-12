@@ -1,0 +1,47 @@
+library,malignant,neighbor,cosine,c_star,decision,designated,library_decision
+CosMx CRC,tumor,fibroblast,0.505826,0.8,KEEP,True,KEEP
+CosMx CRC,tumor,neutrophil,0.589742,0.8,KEEP,False,KEEP
+CosMx CRC,tumor,B.activated,0.677968,0.8,KEEP,False,KEEP
+CosMx CRC,tumor,BEC,0.791305,0.8,KEEP,False,KEEP
+CosMx CRC,tumor,IAF_MMP,0.668075,0.8,KEEP,False,KEEP
+CosMx CRC,tumor,LEC,0.722185,0.8,KEEP,False,KEEP
+CosMx CRC,tumor,PC_IgA1,0.070678,0.8,KEEP,False,KEEP
+CosMx CRC,tumor,PC_IgD,0.324504,0.8,KEEP,False,KEEP
+CosMx NSCLC,tumor,fibroblast,0.648151,0.8,KEEP,True,KEEP
+CosMx NSCLC,tumor,macrophage,0.648776,0.8,KEEP,False,KEEP
+CosMx NSCLC,tumor,endothelial,0.787382,0.8,KEEP,False,KEEP
+CosMx NSCLC,tumor,neutrophil,0.733664,0.8,KEEP,False,KEEP
+CosMx NSCLC,tumor,T CD4 memory,0.683399,0.8,KEEP,False,KEEP
+CosMx NSCLC,tumor,T CD4 naive,0.814309,0.8,ABSTAIN,False,KEEP
+CosMx NSCLC,tumor,B-cell,0.779039,0.8,KEEP,False,KEEP
+CosMx NSCLC,tumor,NK,0.792788,0.8,KEEP,False,KEEP
+CosMx NSCLC,tumor,monocyte,0.759146,0.8,KEEP,False,KEEP
+CosMx NSCLC,tumor,mast,0.624016,0.8,KEEP,False,KEEP
+CosMx NSCLC,tumor,T CD8 memory,0.629121,0.8,KEEP,False,KEEP
+CosMx NSCLC,tumor,T CD8 naive,0.790527,0.8,KEEP,False,KEEP
+CosMx NSCLC,tumor,Treg,0.661733,0.8,KEEP,False,KEEP
+CosMx NSCLC,tumor,epithelial,0.847336,0.8,ABSTAIN,False,KEEP
+CosMx NSCLC,tumor,mDC,0.652399,0.8,KEEP,False,KEEP
+CosMx NSCLC,tumor,pDC,0.694951,0.8,KEEP,False,KEEP
+CosMx NSCLC,tumor,plasmablast,0.544303,0.8,KEEP,False,KEEP
+CosMx HCC,tumor,Stellate.cells,0.648597,0.8,KEEP,True,KEEP
+CosMx HCC,tumor,Inflammatory.macrophages,0.828847,0.8,ABSTAIN,False,KEEP
+CosMx HCC,tumor,Non.inflammatory.macrophages,0.814175,0.8,ABSTAIN,False,KEEP
+CosMx HCC,tumor,Portal.endothelial.cells,0.842196,0.8,ABSTAIN,False,KEEP
+CosMx HCC,tumor,NK.like.cells,0.801224,0.8,ABSTAIN,False,KEEP
+CosMx HCC,tumor,Antibody.secreting.B.cells,0.261389,0.8,KEEP,False,KEEP
+CosMx HCC,tumor,CD3+.alpha.beta.T.cells,0.854095,0.8,ABSTAIN,False,KEEP
+CosMx HCC,tumor,Central.venous.LSECs,0.825098,0.8,ABSTAIN,False,KEEP
+CosMx HCC,tumor,Cholangiocytes,0.611077,0.8,KEEP,False,KEEP
+CosMx HCC,tumor,Erthyroid.cells,0.417553,0.8,KEEP,False,KEEP
+CosMx HCC,tumor,Hep,0.571128,0.8,KEEP,False,KEEP
+CosMx HCC,tumor,Mature.B.cells,0.812665,0.8,ABSTAIN,False,KEEP
+CosMx HCC,tumor,NotDet,0.5022,0.8,KEEP,False,KEEP
+CosMx HCC,tumor,Periportal.LSECs,0.773915,0.8,KEEP,False,KEEP
+CosMx HCC,tumor,gamma.delta.T.cells.1,0.849754,0.8,ABSTAIN,False,KEEP
+CosMx PDAC,tumor,CAF,0.861599,0.8,ABSTAIN,True,ABSTAIN
+CosMx PDAC,tumor,Macrophage,0.905088,0.8,ABSTAIN,False,ABSTAIN
+CosMx PDAC,tumor,Hepatocyte,0.803608,0.8,ABSTAIN,False,ABSTAIN
+CosMx PDAC,tumor,Pancreatic islet,0.87719,0.8,ABSTAIN,False,ABSTAIN
+CosMx PDAC,tumor,Plasma cell,0.852177,0.8,ABSTAIN,False,ABSTAIN
+CosMx PDAC,tumor,Undetermined,0.882464,0.8,ABSTAIN,False,ABSTAIN

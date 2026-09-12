@@ -1,0 +1,12 @@
+substrate,t,cosine,tumor_rmse,malignant,neighbor,c_star,abstain,n_spots,subsample_seed
+cosmx,0.0,0.603666,0.154243,Cancer.cells,Normal.Kerat,0.8,False,400,0
+cosmx,0.1,0.702775,0.202626,Cancer.cells,Normal.Kerat,0.8,False,400,0
+cosmx,0.2,0.787132,0.280475,Cancer.cells,Normal.Kerat,0.8,False,400,0
+cosmx,0.3,0.854764,0.360413,Cancer.cells,Normal.Kerat,0.8,True,400,0
+cosmx,0.4,0.906055,0.432907,Cancer.cells,Normal.Kerat,0.8,True,400,0
+cosmx,0.5,0.942984,0.494002,Cancer.cells,Normal.Kerat,0.8,True,400,0
+cosmx,0.6,0.968217,0.541954,Cancer.cells,Normal.Kerat,0.8,True,400,0
+cosmx,0.7,0.984433,0.578367,Cancer.cells,Normal.Kerat,0.8,True,400,0
+cosmx,0.8,0.993965,0.605819,Cancer.cells,Normal.Kerat,0.8,True,400,0
+cosmx,0.9,0.99868,0.626504,Cancer.cells,Normal.Kerat,0.8,True,400,0
+cosmx,1.0,1.0,0.686233,Cancer.cells,Normal.Kerat,0.8,True,400,0

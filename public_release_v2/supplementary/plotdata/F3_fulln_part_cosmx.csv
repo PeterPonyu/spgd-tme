@@ -1,0 +1,2 @@
+substrate,t,n_spots,n_pred,n_truth,cosine,tumor_rmse,malignant,neighbor,c_star,abstain,source
+cosmx,0.0,5686,5686,5686,0.603666,0.151633,Cancer.cells,Normal.Kerat,0.8,False,confirm_t0_fulln

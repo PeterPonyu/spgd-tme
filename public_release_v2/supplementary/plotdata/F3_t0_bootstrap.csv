@@ -1,0 +1,4 @@
+substrate,n_spots,B,tumor_rmse,ci95_lo,ci95_hi,abstain
+openst,400,1000,0.075661,0.064348,0.087384,True
+xenium,400,1000,0.155754,0.138,0.17235,True
+cosmx,400,1000,0.154243,0.136369,0.172881,False

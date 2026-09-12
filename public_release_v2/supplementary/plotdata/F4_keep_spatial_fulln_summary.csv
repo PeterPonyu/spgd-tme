@@ -1,0 +1,2 @@
+substrate,t,decision,n_spots,tumor_hat_mean,tumor_hat_median,tumor_hat_q25,tumor_hat_q75,source
+cosmx,0.0,KEEP,5686,0.542832,0.673905,0.051042,0.919512,fulln_pi_probe

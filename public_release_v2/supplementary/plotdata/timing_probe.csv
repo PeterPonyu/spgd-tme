@@ -1,0 +1,4 @@
+job,n_spots,seconds,source,started_utc
+cosmx_t0_n400,400,57.96,timing_probe,2026-08-27T06:38:01.147455+00:00
+cosmx_t0_fulln,5686,234.554,timing_probe,2026-08-27T06:38:01.147455+00:00
+projected_fulln_x11_x3_hours,33,2.15,33 * cosmx_fulln / 3600,2026-08-27T06:38:01.147455+00:00

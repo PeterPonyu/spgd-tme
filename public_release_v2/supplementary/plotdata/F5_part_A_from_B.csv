@@ -1,0 +1,2 @@
+pair,spot_donor,ref_donor,RMSE,PCC_type,PCC_spot,tumor_rmse,pseudobulk_jsd,source
+A_from_B,PatientA,PatientB,0.134904,0.703361,0.802955,0.162741,0.023958,computed

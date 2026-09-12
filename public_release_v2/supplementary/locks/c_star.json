@@ -1,0 +1,5 @@
+{
+  "value": 0.8,
+  "locked_before": "sweep",
+  "rule": "refuse malignant type when cosine with locked neighbor >= 0.8"
+}

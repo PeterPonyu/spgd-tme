@@ -1,0 +1,132 @@
+{
+  "source": "He2022_CosMx_NSCLC_zenodo15487520",
+  "n_cells": 100335,
+  "n_genes": 960,
+  "n_types": 18,
+  "types": [
+    "B-cell",
+    "NK",
+    "T CD4 memory",
+    "T CD4 naive",
+    "T CD8 memory",
+    "T CD8 naive",
+    "Treg",
+    "endothelial",
+    "epithelial",
+    "fibroblast",
+    "mDC",
+    "macrophage",
+    "mast",
+    "monocyte",
+    "neutrophil",
+    "pDC",
+    "plasmablast",
+    "tumor"
+  ],
+  "malignant": "tumor",
+  "neighbor": "fibroblast",
+  "cosine": 0.648151,
+  "c_star": 0.8,
+  "decision": "KEEP",
+  "n_patients": 5,
+  "sample": "Lung5_Rep2",
+  "layout": "mtx+labels",
+  "neighbor_scan": [
+    {
+      "neighbor": "fibroblast",
+      "cosine": 0.648151,
+      "decision": "KEEP"
+    },
+    {
+      "neighbor": "macrophage",
+      "cosine": 0.648776,
+      "decision": "KEEP"
+    },
+    {
+      "neighbor": "endothelial",
+      "cosine": 0.787382,
+      "decision": "KEEP"
+    },
+    {
+      "neighbor": "neutrophil",
+      "cosine": 0.733664,
+      "decision": "KEEP"
+    },
+    {
+      "neighbor": "T CD4 memory",
+      "cosine": 0.683399,
+      "decision": "KEEP"
+    },
+    {
+      "neighbor": "T CD4 naive",
+      "cosine": 0.814309,
+      "decision": "ABSTAIN"
+    },
+    {
+      "neighbor": "B-cell",
+      "cosine": 0.779039,
+      "decision": "KEEP"
+    },
+    {
+      "neighbor": "NK",
+      "cosine": 0.792788,
+      "decision": "KEEP"
+    },
+    {
+      "neighbor": "monocyte",
+      "cosine": 0.759146,
+      "decision": "KEEP"
+    },
+    {
+      "neighbor": "mast",
+      "cosine": 0.624016,
+      "decision": "KEEP"
+    },
+    {
+      "neighbor": "T CD8 memory",
+      "cosine": 0.629121,
+      "decision": "KEEP"
+    },
+    {
+      "neighbor": "T CD8 naive",
+      "cosine": 0.790527,
+      "decision": "KEEP"
+    },
+    {
+      "neighbor": "Treg",
+      "cosine": 0.661733,
+      "decision": "KEEP"
+    },
+    {
+      "neighbor": "epithelial",
+      "cosine": 0.847336,
+      "decision": "ABSTAIN"
+    },
+    {
+      "neighbor": "mDC",
+      "cosine": 0.652399,
+      "decision": "KEEP"
+    },
+    {
+      "neighbor": "pDC",
+      "cosine": 0.694951,
+      "decision": "KEEP"
+    },
+    {
+      "neighbor": "plasmablast",
+      "cosine": 0.544303,
+      "decision": "KEEP"
+    }
+  ],
+  "zip_bytes": 285358421,
+  "gene_head": [
+    "AATK",
+    "ABL1",
+    "ABL2",
+    "ACE",
+    "ACE2",
+    "ACKR1",
+    "ACKR3",
+    "ACKR4"
+  ]
+}

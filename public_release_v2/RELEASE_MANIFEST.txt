@@ -1,0 +1,12 @@
+SPGD-TME V2 public reproducibility release
+Created: 2026-09-12
+
+manuscript/SPGD_TME_manuscript_V2_review_build.pdf
+manuscript/source/                 LaTeX manuscript source and references
+responses/Reviewer1_point_to_point_V2.pdf
+responses/Reviewer2_point_to_point_V2.pdf
+responses/Rebuttal_Lighthouse_V2.pdf
+supplementary/                     locked plot data, constants, renderers, and table generators
+README.md                          public release description
+CITATION.cff                       citation metadata
+LICENSES.md                        code and derived-data licensing boundary

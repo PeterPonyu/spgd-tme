@@ -1,0 +1,142 @@
+\paragraph{The four-patient CosMx mixed-spot object.}
+Four-patient CosMx basal-cell carcinoma is the mixed-spot TME object. The export contains 232{,}802 cells from four patients~\citep{Andreatta2024zenodo}, and restriction to the eight shared types leaves 216{,}949 typed cells. Directed pairs A from B, B from A, and D from C yield 1194, 2020, and 3261 spots on mixed spots of 42.6--45.7\,\(\mu\)m pooling 17--21 cells each (Fig.~\ref{fig:hero}A, F), and the eight shared types carry mass on every pair (Fig.~\ref{fig:hero}B). On this object the frozen rule returns KEEP, because the CosMx malignant--neighbor cosine is \(0.6037\), below the cutoff \(c^\star=0.80\), while the three sweep substrates read against the same rule sit above it and abstain: openST \(0.9727\), Xenium \(0.9802\), and Xenium FLEX \(0.9875\) (Fig.~\ref{fig:hero}C). The four independent CosMx carcinomas the same cutoff is later asked to call are collected in Fig.~\ref{fig:keepcancers}A. Each pair is a distribution and not a mean: per-spot tumor truth has median \(0.2500\) on A from B, \(0.9661\) on B from A, and \(0.8824\) on D from C (Fig.~\ref{fig:hero}D). Occupancy is uneven across the simplex, each type holding between \(4.5\%\) and \(90.9\%\) of a pair's spots (Fig.~\ref{fig:hero}E), which is the sparsity every type-averaged score below is computed over. The C-from-D metrics (overall RMSE \(0.1149\), type-level PCC \(0.7708\), spot-level PCC \(0.8773\)) are recorded in Table~\ref{tab:donor}.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\textwidth]{figs/rendered/F2_hero.pdf}
+\caption{\protect\input{captions/F2_spatial_maps.tex}}
+\label{fig:hero}
+\end{figure}
+
+\paragraph{Cell-level geography of the cohort.}
+Four-patient cell-level fields give a spatially separable tissue (Fig.~\ref{fig:cohort}A--D). These panels are cell-level geography, not mixed-spot composition. The whole eight-type composition separates the donors and orders the wound course (Fig.~\ref{fig:cohort}E): typed-cell cancer fractions are \(0.4922\) (Patient A) and \(0.8277\) (Patient B), and on Patient D the cancer fraction falls from \(0.8863\) at Baseline to \(0.5396\) at Wound while fibroblast rises from \(0.0607\) to \(0.1829\) and MoMacDC from \(0.0057\) to \(0.1266\). All 32 donor-by-type cells clear the fifty-cell builder floor, the smallest being 137 Pericytes on Patient B (Fig.~\ref{fig:cohort}F). The two axes the operators are asked to recover are therefore already visible, on a supported simplex, before any transfer.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\textwidth]{figs/rendered/F3_cohort.pdf}
+\caption{\protect\input{captions/F3_cohort.tex}}
+\label{fig:cohort}
+\end{figure}
+
+\paragraph{The ulcerated-nodular contrast is recovered at spot level.}
+The ulcerated-nodular pair is readable as a spatial field. Patient A fields carry stromal and myeloid programs beside tumor (Fig.~\ref{fig:ulcerated}A, C); Patient B fields are tumor-rich (Fig.~\ref{fig:ulcerated}B, D). A-from-B and B-from-A mixed spots recover that contrast as tumor-truth maps on the same packed geometry (Fig.~\ref{fig:ulcerated}E, F), so the operators reproduce at spot level a contrast that is visible at cell level.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\textwidth]{figs/rendered/F4_ulcerated.pdf}
+\caption{\protect\input{captions/F4_ulcerated.tex}}
+\label{fig:ulcerated}
+\end{figure}
+
+\paragraph{The wound axis is ordered in tumor fraction.}
+Tumor fraction falls and stromal and myeloid occupancy rise along the wound axis, read on Patient D fields (Fig.~\ref{fig:wound}A--C) and on D-from-C mixed spots (Fig.~\ref{fig:wound}D, E). Each of the 3261 spots carries the majority Condition of its pooled Patient D cells: Baseline \(n=977\), Unwound \(n=812\), Wound \(n=1472\). Mean tumor truth is \(0.8425\) at Baseline, \(0.7518\) at Unwound, and \(0.4665\) at Wound; fibroblast rises from \(0.0881\) to \(0.2107\) and MoMacDC from \(0.0070\) to \(0.1280\). The per-spot distributions carry the same order and show what those means average over (Fig.~\ref{fig:wound}F): median tumor truth runs \(1.0000\), \(0.9310\), \(0.3846\), the share of spots holding no tumor at all rises from \(3.9\%\) to \(26.8\%\), and the share holding any MoMacDC rises from \(6.9\%\) to \(49.3\%\). The three conditions are monotone in tumor fraction, so the axis is ordered rather than a two-point contrast.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\textwidth]{figs/rendered/F5_wound.pdf}
+\caption{\protect\input{captions/F5_wound.tex}}
+\label{fig:wound}
+\end{figure}
+
+\paragraph{A reportable CosMx tumor column.}
+The protocol reports CosMx tumor coordinates and places them beside locked tumor truth on the same Patient C geometry (Fig.~\ref{fig:keep}A, D), truth in Fig.~\ref{fig:keep}B and estimate in Fig.~\ref{fig:keep}C. On the full-\(n\) CosMx KEEP map at \(t=0\) (\(n=5686\)), estimated tumor fraction has median \(0.6739\) (quartiles \(0.0510\)--\(0.9195\); mean \(0.5428\)). The two columns agree spot by spot over all 5686 paired values: tumor RMSE is \(0.1516\) and the Pearson correlation is \(0.9464\) (Fig.~\ref{fig:keep}E). Their cumulative distributions run together up to about half occupancy and separate in the upper tail, where locked truth saturates at 1 on \(27.3\%\) of spots against \(7.0\%\) of estimates at or above \(0.99\) (Fig.~\ref{fig:keep}F). The protocol writes that column at all because the CosMx malignant--neighbor cosine is \(0.6037\), below the frozen cutoff.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\textwidth]{figs/rendered/F6_keep.pdf}
+\caption{\protect\input{captions/F6_keep.tex}}
+\label{fig:keep}
+\end{figure}
+
+\paragraph{The gate tracks malignant--neighbor collinearity.}
+Collinearity dose--response interpolates each malignant signature toward its neighbor (Fig.~\ref{fig:dose}A--C). At \(t=0\), the 400-spot ungated tumor RMSEs were \(0.0757\) (95\% bootstrap CI \(0.0643\)--\(0.0874\); \(B=1000\)), \(0.1558\) (\(0.1380\)--\(0.1724\)), and \(0.1542\) (\(0.1364\)--\(0.1729\)) for openST, Xenium, and CosMx. Full-\(n\) confirmation gave \(0.0903\) (\(n=6971\)), \(0.1613\) (\(n=2864\)), and \(0.1516\) (\(n=5686\)), so the 400-spot interval is not a small-sample artifact; both the interval and the full-\(n\) point sit at \(t=0\) on the same axis as the sweep. Across the sweep, openST RMSE increased from \(0.0757\) to \(0.3357\) and CosMx from \(0.1542\) to \(0.6862\). Read in the cutoff's own coordinate, that rise is monotone in the malignant--neighbor cosine and the refusal is a threshold on it (Fig.~\ref{fig:dose}D--F): CosMx travels from \(0.6037\) to \(1.0000\) and stays KEEP at \(t=0,0.1,0.2\), writing ABSTAIN from \(t=0.3\), while openST and Xenium start at \(0.9727\) and \(0.9802\) and therefore refuse across the whole sweep.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\textwidth]{figs/rendered/F7_dose.pdf}
+\caption{\protect\input{captions/F7_dose.tex}}
+\label{fig:dose}
+\end{figure}
+
+\paragraph{Directed donor transfer recovers composition across patients.}
+Directed donor transfer recovers composition across patients (Fig.~\ref{fig:donor}A; Table~\ref{tab:donor}). Overall RMSE is \(0.0659\)--\(0.1349\), type-level PCC \(0.7034\)--\(0.7708\), and spot-level PCC \(0.8030\)--\(0.9528\). Those three numbers are scored against edges that differ in how mixed they are: the per-spot tumor-truth distribution puts 13\% of A-from-B spots at pure tumor against 49\% on B from A and 35\% on D from C (Fig.~\ref{fig:donor}B), and mean occupancy divides each edge's simplex differently, with cancer at \(0.403\), \(0.776\), and \(0.650\) and the residual five types at \(0.253\), \(0.085\), and \(0.135\) (Fig.~\ref{fig:donor}C). The tightest edge is the least mixed one, so edge difficulty tracks composition rather than patient identity. The strongest computed edge is B from A (RMSE \(0.0659\), spot-level PCC \(0.9528\)); packed tumor-truth geography is B-from-A (Fig.~\ref{fig:donor}D), D-from-C (Fig.~\ref{fig:donor}E), and A-from-B on 1194 spots (Fig.~\ref{fig:donor}F). Table~\ref{tab:donor} adds the malignant column alone (tumor RMSE \(0.1031\)--\(0.1627\), tightest on B from A) and pseudobulk Jensen--Shannon divergence between mixed-spot and reference bulk (\(0.0240\)--\(0.0432\)), so each edge carries a whole-simplex score, a malignant-column score, and a bulk-agreement score.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\textwidth]{figs/rendered/F8_donor.pdf}
+\caption{\protect\input{captions/F8_donor.tex}}
+\label{fig:donor}
+\end{figure}
+
+\begin{table}[!htbp]
+\centering
+\small
+\caption{\protect\input{captions/T3_donor_matrix.tex}}
+\label{tab:donor}
+\resizebox{\textwidth}{!}{\input{tables/T3_donor_matrix.tex}}
+\end{table}
+
+\paragraph{Myeloid and stromal occupancy rise where tumor falls.}
+MoMacDC occupancy separates the computed pairs: \(0.0803\) (A from B), \(0.0129\) (B from A), and \(0.0636\) (D from C). The axis behind those means is zero-inflated rather than smooth, with 54\%, 86\%, and 73\% of spots holding no myeloid cell at all, so each mean sits well above its median (Fig.~\ref{fig:myeloid}A). The myeloid coordinate is highest on the more stromal A-from-B face (Fig.~\ref{fig:myeloid}B) and on the wound-containing D-from-C pair (Fig.~\ref{fig:myeloid}C), and the same ordering holds at cell level on a Patient A field (Fig.~\ref{fig:myeloid}D) and a Patient D wound field (Fig.~\ref{fig:myeloid}E). Fibroblast occupancy on the same packed Patient A fields moves with it (Fig.~\ref{fig:myeloid}F), so the myeloid and stromal coordinates rise together where tumor falls.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\textwidth]{figs/rendered/F9_myeloid.pdf}
+\caption{\protect\input{captions/F9_myeloid.tex}}
+\label{fig:myeloid}
+\end{figure}
+
+\paragraph{Evaluation board and operator cost.}
+The evaluation board collects the \(t=0\) interval, the full-\(n\) confirmation, donor RMSE, and the timing profile, beside the margin each native call holds against the cutoff and the pseudobulk agreement of each computed edge. The original single-run decomposition is retained as historical context in the timing table; the reproducibility estimate used for this revision is a warm repeated 400-spot openST build of \(22.565\pm2.861\) s across five runs (CV \(12.68\%\), range \(19.026\)--\(25.588\) s). The in-memory refusal operation takes \(0.455\) s for 1,000 applications. Thus the reportability operation remains small relative to the fixed baseline fit, while the timing claim is now reported at the precision supported by repeated measurement.
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\textwidth]{figs/rendered/F10_eval.pdf}
+\caption{\protect\input{captions/F10_eval.tex}}
+\label{fig:eval}
+\end{figure}
+
+\paragraph{Every reported type clears the reference floor.}
+Every reported type clears the builder floor of fifty reference cells (Fig.~\ref{fig:floor}A), so the eight-type simplex is supported rather than extrapolated. Occupancy on that supported simplex is nonetheless concentrated, and the concentration is a matter of presence rather than of size: the malignant column is nonzero on \(90.9\%\) of B-from-A and \(85.3\%\) of D-from-C spots, whereas Pericyte is absent from \(95.5\%\) and \(87.2\%\) of the same spots (Fig.~\ref{fig:floor}B). Type-level PCC of \(0.7034\)--\(0.7708\) is therefore an average over one dense column and several near-empty ones. The wound axis sits on the same floor (Fig.~\ref{fig:floor}C), and packed A-from-B, B-from-A, and D-from-C fields render the same tumor-truth fractions as spatial occupancy (Fig.~\ref{fig:floor}D--F).
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\textwidth]{figs/rendered/F11_floor.pdf}
+\caption{\protect\input{captions/F11_floor.tex}}
+\label{fig:floor}
+\end{figure}
+
+\paragraph{The same frozen cosine on independent CosMx carcinomas.}
+The same frozen cosine reports KEEP on independent CosMx carcinomas (Fig.~\ref{fig:keepcancers}A). CosMx BCC, CosMx NSCLC, CosMx CRC, and CosMx HCC sit below \(c^\star=0.80\); CosMx PDAC, openST, Xenium, and Xenium FLEX sit above it, so the historical gate calls four CosMx libraries KEEP and one CosMx library ABSTAIN on the same assay. Where a complete eligible-neighbor scan was available, the malignant program was compared with every eligible annotated non-malignant type (Fig.~\ref{fig:keepcancers}B). The historical stored scans are reported separately: two of seventeen NSCLC neighbors reach the cutoff, none of the eight stored colorectal rows does, eight of fifteen stored hepatocellular rows do, and all six stored PDAC rows do (Fig.~\ref{fig:keepcancers}F). The complete eligible scan gives maxima of \(0.847\), \(0.791\), \(0.854\), and \(0.905\) for NSCLC, CRC, HCC, and PDAC, respectively; these values are descriptive until the neighbor-selection rule is author-locked. The observed PDAC elevation is consistent with malignant--neighbor collinearity, but platform identity and neighbor-pair identity are confounded, so it does not establish an assay-independent explanation. Directed Patient\_ID transfer carries the NSCLC edge (4237 spots; overall RMSE \(0.1066\), spot-level PCC \(0.8415\)) beside the three BCC edges (Fig.~\ref{fig:keepcancers}C--E). That edge resolves a seventeen-type simplex rather than the eight BCC types, and its type-level PCC of \(0.5986\) is averaged over those seventeen columns.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\textwidth]{figs/rendered/F12_keep.pdf}
+\caption{\protect\input{captions/F12_keep.tex}}
+\label{fig:keepcancers}
+\end{figure}
+
+
+\paragraph{Revision audit results.}
+The revision separates the historical designated-pair calls from the complete eligible-neighbor scan. Across the prespecified \(c^\star=0.75\)--\(0.85\) neighborhood, all eight historical designated calls remain unchanged. The complete scan is more sensitive: at \(c^\star=0.80\), the maximum eligible cosine is \(0.847\) for NSCLC, \(0.791\) for CRC, \(0.854\) for HCC, and \(0.905\) for PDAC. The CRC reconstruction contains fifteen eligible neighbors in the existing H5AD, whereas the historical export stored eight rows; the historical and candidate corrected rules are therefore reported separately until the corrected rule is locked.
+
+A candidate corrected library-clustered bootstrap of the complete eligible CosMx table (51 rows: CRC 15, HCC 14, NSCLC 17, PDAC 5; 10,000 resamples of libraries rather than individual neighbor rows) gives a descriptive mean cosine of \(0.674\) with a 95\% interval of \(0.579\)--\(0.781\), a median of \(0.725\) with interval \(0.678\)--\(0.814\), and a fraction of eligible pairs at or above \(0.80\) of \(0.294\) with interval \(0.063\)--\(0.684\). These intervals quantify within-CosMx library heterogeneity; they do not establish a causal platform effect.
+
+The ABSTAIN sensitivity audit preserves the retained simplex (maximum absolute sum error \(1.1\times10^{-15}\)) but shows conditional malignant-neighbor RMSE of \(0.186\), \(0.176\), and \(0.189\) on openST, realgt, and realgt3, respectively. The corresponding positive conditional biases are \(0.0507\), \(0.0249\), and \(0.0308\), with bootstrap intervals excluding zero. The withheld malignant coordinate is consequently treated as missing, while the retained coordinates are interpreted conditionally after malignant withholding.
+
+Repeated timing on the 400-spot openST probe is \(22.565\pm2.861\) s across five warm runs (CV \(12.68\%\)); the in-memory refusal operation takes \(0.455\) s for 1,000 applications. The source-count floor audit retains 9/9/10 shared types at a floor of 25 and 8/8/8 at floors 50, 75, and 100. The bounded downstream extension completed all three directed edges at floors 25, 50, 75, and 100. Floors 50, 75, and 100 produced identical estimates on each edge because the retained reference support did not change. Moving from floor 25 to 50 changed malignant RMSE from 0.159 to 0.163 for A-from-B, from 0.102 to 0.103 for B-from-A, and from 0.138 to 0.122 for D-from-C; corresponding PCC values were 0.853 to 0.850, 0.976 to 0.975, and 0.941 to 0.945. These results support a bounded, edge-dependent sensitivity statement for this donor construction. For the saved realgt3 estimates, the 400-spot malignant RMSE is \(0.154\) (95\% CI \(0.135\)--\(0.175\)) and the full-\(n\) sensitivity is \(0.152\) (95\% CI \(0.148\)--\(0.156\)).
+
+On the common 400 spots used for the matched diagnostic audit, malignant-coordinate RMSE is \(0.154\) for SPGD, \(0.249\) for cell2location, and \(0.121\) for RCTD. cell2location native interval width has mean \(0.0593\), while the saved RCTD output contains no matched per-spot interval or confidence column. These fields are method-specific and are not treated as interchangeable with a missing-coordinate reportability state.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\textwidth]{figs/rendered/F13_revision_audit.pdf}
+\caption{\protect\input{captions/F13_revision_audit.tex}}
+\label{fig:revision-audit}
+\end{figure}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\textwidth]{figs/rendered/F14_revision_support.pdf}
+\caption{\protect\input{captions/F14_revision_support.tex}}
+\label{fig:revision-support}
+\end{figure}
