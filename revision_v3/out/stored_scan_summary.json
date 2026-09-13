@@ -1,0 +1,54 @@
+{
+  "scan": "historical stored CosMx reference export, four libraries",
+  "c_star": 0.8,
+  "n_all_rows": 46,
+  "n_eligible_rows": 44,
+  "n_excluded_rows": 2,
+  "excluded_labels": [
+    "NotDet",
+    "Undetermined"
+  ],
+  "n_libraries": 4,
+  "per_library": [
+    {
+      "library": "CosMx CRC",
+      "n_eligible_rows": 8,
+      "n_ge_cstar": 0,
+      "mean_cosine": 0.543785,
+      "max_cosine": 0.791305
+    },
+    {
+      "library": "CosMx HCC",
+      "n_eligible_rows": 14,
+      "n_ge_cstar": 8,
+      "mean_cosine": 0.70798,
+      "max_cosine": 0.854095
+    },
+    {
+      "library": "CosMx NSCLC",
+      "n_eligible_rows": 17,
+      "n_ge_cstar": 2,
+      "mean_cosine": 0.711238,
+      "max_cosine": 0.847336
+    },
+    {
+      "library": "CosMx PDAC",
+      "n_eligible_rows": 5,
+      "n_ge_cstar": 5,
+      "mean_cosine": 0.859932,
+      "max_cosine": 0.905088
+    }
+  ],
+  "mean_cosine": 0.696652,
+  "mean_cosine_ci95_library_clustered": [
+    0.604278,
+    0.780938
+  ],
+  "frac_ge_cstar": 0.340909,
+  "frac_ge_cstar_ci95_library_clustered": [
+    0.08,
+    0.684211
+  ],
+  "n_bootstrap": 10000,
+  "note": "Denominators differ from the complete eight-library scan on purpose: this table is the stored export the historical calls were read from."
+}

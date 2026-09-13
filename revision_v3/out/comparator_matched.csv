@@ -1,0 +1,9 @@
+benchmark,method,n_spots,malignant,overall_RMSE,tumor_RMSE,PCC_type,PCC_spot,JSD
+Xenium (realgt),SPGD (build_v4),2864,Invasive_Tumor,0.086927,0.161294,0.528908,0.803101,0.144152
+Xenium (realgt),RCTD,2864,Invasive_Tumor,0.08754,0.125821,0.546853,0.79353,0.151973
+Xenium FLEX (realgt2),SPGD (build_v4),2864,Invasive_Tumor,0.092838,0.157153,0.56279,0.781844,0.159246
+Xenium FLEX (realgt2),RCTD,2864,Invasive_Tumor,0.08858,0.150992,0.554641,0.788463,0.150309
+openST (openst),SPGD (build_v4),6971,Tumor,0.093239,0.090296,0.721088,0.856613,0.10217
+openST (openst),cell2location,6971,Tumor,0.121441,0.122328,0.627761,0.771723,0.152388
+CosMx BCC (realgt3),SPGD (build_v4),800,Cancer.cells,0.108186,0.157379,0.604864,0.84359,0.09409
+CosMx BCC (realgt3),Tangram,800,Cancer.cells,0.205869,0.490728,0.329791,0.55057,0.253531

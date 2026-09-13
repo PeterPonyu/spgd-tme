@@ -1,0 +1,90 @@
+[
+  {
+    "benchmark": "Xenium (realgt)",
+    "method": "SPGD (build_v4)",
+    "n_spots": 2864,
+    "malignant": "Invasive_Tumor",
+    "overall_RMSE": 0.086927,
+    "tumor_RMSE": 0.161294,
+    "PCC_type": 0.528908,
+    "PCC_spot": 0.803101,
+    "JSD": 0.144152
+  },
+  {
+    "benchmark": "Xenium (realgt)",
+    "method": "RCTD",
+    "n_spots": 2864,
+    "malignant": "Invasive_Tumor",
+    "overall_RMSE": 0.08754,
+    "tumor_RMSE": 0.125821,
+    "PCC_type": 0.546853,
+    "PCC_spot": 0.79353,
+    "JSD": 0.151973
+  },
+  {
+    "benchmark": "Xenium FLEX (realgt2)",
+    "method": "SPGD (build_v4)",
+    "n_spots": 2864,
+    "malignant": "Invasive_Tumor",
+    "overall_RMSE": 0.092838,
+    "tumor_RMSE": 0.157153,
+    "PCC_type": 0.56279,
+    "PCC_spot": 0.781844,
+    "JSD": 0.159246
+  },
+  {
+    "benchmark": "Xenium FLEX (realgt2)",
+    "method": "RCTD",
+    "n_spots": 2864,
+    "malignant": "Invasive_Tumor",
+    "overall_RMSE": 0.08858,
+    "tumor_RMSE": 0.150992,
+    "PCC_type": 0.554641,
+    "PCC_spot": 0.788463,
+    "JSD": 0.150309
+  },
+  {
+    "benchmark": "openST (openst)",
+    "method": "SPGD (build_v4)",
+    "n_spots": 6971,
+    "malignant": "Tumor",
+    "overall_RMSE": 0.093239,
+    "tumor_RMSE": 0.090296,
+    "PCC_type": 0.721088,
+    "PCC_spot": 0.856613,
+    "JSD": 0.10217
+  },
+  {
+    "benchmark": "openST (openst)",
+    "method": "cell2location",
+    "n_spots": 6971,
+    "malignant": "Tumor",
+    "overall_RMSE": 0.121441,
+    "tumor_RMSE": 0.122328,
+    "PCC_type": 0.627761,
+    "PCC_spot": 0.771723,
+    "JSD": 0.152388
+  },
+  {
+    "benchmark": "CosMx BCC (realgt3)",
+    "method": "SPGD (build_v4)",
+    "n_spots": 800,
+    "malignant": "Cancer.cells",
+    "overall_RMSE": 0.108186,
+    "tumor_RMSE": 0.157379,
+    "PCC_type": 0.604864,
+    "PCC_spot": 0.84359,
+    "JSD": 0.09409
+  },
+  {
+    "benchmark": "CosMx BCC (realgt3)",
+    "method": "Tangram",
+    "n_spots": 800,
+    "malignant": "Cancer.cells",
+    "overall_RMSE": 0.205869,
+    "tumor_RMSE": 0.490728,
+    "PCC_type": 0.329791,
+    "PCC_spot": 0.55057,
+    "JSD": 0.253531
+  }
+]
