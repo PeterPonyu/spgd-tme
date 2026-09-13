@@ -68,15 +68,15 @@
       "reviewer_point": "R2-4",
       "estimand": "complete eligible-pair stress estimand",
       "library_universe": "8 libraries",
-      "denominator": "112 eligible pairs",
-      "spot_count": 112,
+      "denominator": "109 eligible pairs",
+      "spot_count": 109,
       "metric": "fraction cosine \u2265 c*",
-      "value": "0.241071",
-      "interval": "0.118182\u20130.409639",
+      "value": "0.238532",
+      "interval": "0.119024\u20130.400000",
       "source_artifact": "revision_v3/out/cutoff_separability.json; clustered_bootstrap.json",
       "manuscript_location": "Results \u00a7 full-input audit; F15A",
       "status": "RECONCILED",
-      "note": ""
+      "note": "Excludes 3 non-annotated placeholder columns; 109 of 112 column pairs eligible; 26 exceed c*."
     },
     {
       "claim_id": "G06",

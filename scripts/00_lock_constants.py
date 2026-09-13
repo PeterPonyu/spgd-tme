@@ -112,7 +112,7 @@ def main() -> None:
                 "PCC_type": float(row["PCC_type"]),
                 "PCC_spot": float(row["PCC_spot"]),
                 "source": "locked",
-                "from": "capsules/spgd-deconv/manuscript/data/crossdonor.csv",
+                "from": "source://spgd-deconv/manuscript/data/crossdonor.csv",
             },
             indent=2,
         )

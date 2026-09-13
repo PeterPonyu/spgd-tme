@@ -5,5 +5,5 @@
   "PCC_type": 0.7708,
   "PCC_spot": 0.8773,
   "source": "locked",
-  "from": "capsules/spgd-deconv/manuscript/data/crossdonor.csv"
+  "from": "source://spgd-deconv/manuscript/data/crossdonor.csv"
 }
