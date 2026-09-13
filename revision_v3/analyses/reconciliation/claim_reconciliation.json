@@ -461,12 +461,12 @@
       "denominator": "one software archive citation",
       "spot_count": null,
       "metric": "status",
-      "value": "software archive / unpublished label required",
+      "value": "software archive / public Zenodo release",
       "interval": "",
       "source_artifact": "manuscript/references.bib",
       "manuscript_location": "References; R2-17 response",
-      "status": "OPEN_EDITORIAL",
-      "note": "Check final bibliographic wording before release."
+      "status": "RECONCILED",
+      "note": "Fu2026spgd entry labels the cited software archive and DOI."
     },
     {
       "claim_id": "L01",
@@ -476,12 +476,12 @@
       "denominator": "record 15487520 and provider terms",
       "spot_count": null,
       "metric": "permission status",
-      "value": "not yet verified from agreement text",
+      "value": "semantic clause determination; derived matrices withheld from CC-BY bundle",
       "interval": "",
-      "source_artifact": "local declarations; official record still needed",
+      "source_artifact": "LICENSES.md; revision_v3/license clause table",
       "manuscript_location": "Data Availability; both responses",
-      "status": "OPEN_EXTERNAL",
-      "note": "Do not state affirmative permission until official terms are archived."
+      "status": "RECONCILED",
+      "note": "Agreement read clause by clause; confidential text remains local and is not redistributed."
     },
     {
       "claim_id": "P01",
