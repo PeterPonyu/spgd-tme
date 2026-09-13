@@ -1,0 +1,24 @@
+{
+  "benchmark": "CosMx BCC (realgt3)",
+  "n_spots_matched": 800,
+  "n_types": 11,
+  "truth": "locked cell-count proportions",
+  "SPGD_build_v4": {
+    "overall_RMSE": 0.108186,
+    "tumor_RMSE": 0.157379,
+    "PCC_type": 0.604864,
+    "PCC_spot": 0.84359,
+    "JSD": 0.09409,
+    "gate_g": 0.017273
+  },
+  "Tangram_clusters": {
+    "overall_RMSE": 0.205869,
+    "tumor_RMSE": 0.490728,
+    "PCC_type": 0.329791,
+    "PCC_spot": 0.55057,
+    "JSD": 0.253531,
+    "num_epochs": 500,
+    "mode": "clusters"
+  },
+  "note": "Matched bounded subset, same locked truth. Tangram is a fresh independent refit (not a saved comparator output). cell2location and RCTD/spacexr are not installed in this environment."
+}

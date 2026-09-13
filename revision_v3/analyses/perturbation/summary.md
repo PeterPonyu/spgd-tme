@@ -1,0 +1,15 @@
+# V3 reference-gene perturbation summary
+
+| substrate   |   fraction |   n |   historical_cosine_mean |   historical_cosine_sd |   max_cosine_mean |   max_cosine_sd |   malignant_rmse_mean |   malignant_rmse_sd | historical_states       | max_states              |   fit_seconds_mean |
+|:------------|-----------:|----:|-------------------------:|-----------------------:|------------------:|----------------:|----------------------:|--------------------:|:------------------------|:------------------------|-------------------:|
+| openst      |       0.5  |   3 |                 0.966261 |              0.0205756 |          0.966409 |       0.0203611 |             0.0845842 |         0.000951919 | ABSTAIN,ABSTAIN,ABSTAIN | ABSTAIN,ABSTAIN,ABSTAIN |           4.53274  |
+| openst      |       0.75 |   3 |                 0.974015 |              0.0109758 |          0.974015 |       0.0109758 |             0.0786028 |         0.00178499  | ABSTAIN,ABSTAIN,ABSTAIN | ABSTAIN,ABSTAIN,ABSTAIN |           7.0329   |
+| openst      |       1    |   1 |                 0.972678 |            nan         |          0.972678 |     nan         |             0.0761645 |       nan           | ABSTAIN                 | ABSTAIN                 |          10.0644   |
+| realgt      |       0.5  |   3 |                 0.979027 |              0.0140288 |          0.979027 |       0.0140288 |             0.169895  |         0.0317144   | ABSTAIN,ABSTAIN,ABSTAIN | ABSTAIN,ABSTAIN,ABSTAIN |           0.391788 |
+| realgt      |       0.75 |   3 |                 0.982636 |              0.0044705 |          0.982636 |       0.0044705 |             0.173331  |         0.00882168  | ABSTAIN,ABSTAIN,ABSTAIN | ABSTAIN,ABSTAIN,ABSTAIN |           0.610431 |
+| realgt      |       1    |   1 |                 0.980196 |            nan         |          0.980196 |     nan         |             0.168244  |       nan           | ABSTAIN                 | ABSTAIN                 |           0.756342 |
+| realgt3     |       0.5  |   3 |                 0.560492 |              0.0127133 |          0.872006 |       0.0572022 |             0.142256  |         0.0443376   | KEEP,KEEP,KEEP          | ABSTAIN,ABSTAIN,ABSTAIN |           4.88585  |
+| realgt3     |       0.75 |   3 |                 0.612085 |              0.0469065 |          0.841251 |       0.0247751 |             0.122861  |         0.00128445  | KEEP,KEEP,KEEP          | ABSTAIN,ABSTAIN,ABSTAIN |           7.47719  |
+| realgt3     |       1    |   1 |                 0.603666 |            nan         |          0.8247   |     nan         |             0.12196   |       nan           | KEEP                    | ABSTAIN                 |          10.3539   |
+
+All 21 fits are fresh build_v4 fits on deterministic 400-spot probes. Historical-pair states remain stable within each substrate across retained-gene perturbations. The all-eligible maximum is a descriptive sensitivity estimand and can differ from the historical pair. See PROTOCOL.md for the locked design.

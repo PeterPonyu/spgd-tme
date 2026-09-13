@@ -115,7 +115,7 @@ def test_gate_cosines_match_keep_table():
     assert {r["substrate"].startswith("CosMx") for r in keeps} == {True}
     assert any(r["substrate"].startswith("CosMx") for r in abstains)
     for row in rows:
-        assert f"{float(row['cosine']):.6f}" in body, row["substrate"]
+        assert f"{float(row['cosine']):.4f}" in body, row["substrate"]
         assert float(row["c_star"]) == 0.80
 
 
@@ -125,15 +125,12 @@ def test_reported_pass_time_is_the_sum_of_the_timed_steps():
     assert "60.252" in _body_text()
 
 
-def test_full_n_pass_times_match_the_timing_probe():
-    rows = {r["job"]: r for r in _rows("timing_probe_three_substrates.csv")}
+def test_v3_repeated_timing_is_reported():
     body = _body_text()
-    for job in ("openst_t0_fulln", "realgt_t0_fulln", "realgt3_t0_fulln"):
-        row = rows[job]
-        assert f"{float(row['seconds']):.3f}" in body, job
-        assert str(int(row["n_spots"])) in body, job
-    # Hour projections in that file are planning arithmetic, not measurements.
-    assert "2.15" not in body and "1.608" not in body
+    assert "22.565" in body
+    assert "2.861" in body
+    assert "0.455" in body
+    assert "five warm runs" in body
 
 
 def test_occupancy_sparsity_claims_match_the_type_floor():

@@ -1,0 +1,41 @@
+% Suggested replacement for the Scope and limitations paragraph in discussion.tex.
+% Values are from abstain_truth_corrected_summary.csv; undefined conditional
+% truth rows (zero retained non-malignant truth mass) are excluded explicitly.
+\paragraph{Scope and limitations.}
+The locked truth is a cell-count share: every typed cell contributes one unit,
+irrespective of cell size, RNA content, or capture efficiency.  This is the
+estimand supported by the cell-resolved construction, rather than a transcript
+mass estimate.  The saved truth objects do not retain a cell-to-spot transcript
+total, so an RNA-weighted sensitivity cannot be reconstructed without introducing
+an unobserved quantity.  We therefore state the estimand explicitly and avoid
+interpreting the reported fractions as RNA abundance.
+
+ABSTAIN changes the estimand for the retained coordinates.  After withholding
+the malignant coordinate, the remaining prediction is a conditional composition
+and sums to one (maximum absolute closure error $1.1\times10^{-15}$).  In the
+corrected truth audit, spots with zero retained non-malignant truth mass were
+excluded from conditional error calculations rather than assigned an arbitrary
+denominator: 66/400 openST spots, 3/400 realgt spots, and 109/400 realgt3 spots
+were undefined under this estimand.  On the defined rows, conditional-neighbor
+RMSE was 0.0853 (95\% bootstrap CI 0.0598--0.1111), 0.1682 (0.1409--0.1953),
+and 0.1439 (0.1099--0.1785), respectively; corresponding biases were 0.0162,
+0.0214, and -0.0004.  These values show why a retained neighbor coordinate
+should be read as a conditional share, not as an unbiased estimate of its
+original absolute occupancy.  As a descriptive invariant check, the merged
+malignant-plus-neighbor mass had RMSE 0.0707, 0.1655, and 0.1545 on the same
+spots, because this quantity is unaffected by the conditional renormalization.
+
+The complete scan also shows why pair specification matters.  Historical calls
+use biologically designated malignant--neighbor pairs, whereas the scan compares
+all represented eligible non-malignant columns and takes their maximum only as a
+retrospective identifiability sensitivity.  Under that rule, two of four library
+decisions (NSCLC and HCC) differ from the historical designated-pair call; we
+therefore retain both estimands and do not present the retrospective maximum as a
+pre-registered operating rule.  Neighbor identity remains partly confounded with
+library and platform, and the number of complete rows differs between libraries.
+The evidence supports an explicit reportability contract and a useful audit of
+reference geometry, but it is not a platform-wide calibration study.  Finally,
+raw provider-controlled inputs and derived reference materials remain subject to
+their data-use terms; the public analysis materials identify locked outputs and
+rendering procedures without making a blanket redistribution claim for licensed
+inputs.  Clinical outcome inference is outside the scope of this Methods study.

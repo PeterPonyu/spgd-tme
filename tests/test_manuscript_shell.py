@@ -96,7 +96,7 @@ def test_required_figures_are_directly_included():
     )
     for include in expected:
         assert include in blob
-    assert blob.count("\\begin{figure}") == 12
+    assert blob.count("\\begin{figure}") == 15
     assert r"\input{figs/fig_pack.tex}" in blob
 
 
@@ -219,7 +219,8 @@ def test_discussion_ends_with_short_scope():
     last = paras[-1]
     n_lines = last.count("\n") + 1
     assert n_lines <= 12
-    assert last.count(".") <= 4
+    import re
+    assert len(re.findall(r"(?<!\d)\.(?!\d)", last)) <= 4
     low = last.lower()
     assert "cosmx" in low
     assert "c-from-d" in low or "materials ledger" in low

@@ -1,0 +1,17 @@
+{
+  "openst": {
+    "malignant": "Tumor",
+    "neighbor": "Tumor_Keratin_Pearl",
+    "cosine": 0.972678
+  },
+  "realgt3": {
+    "malignant": "Cancer.cells",
+    "neighbor": "Normal.Kerat",
+    "cosine": 0.603666
+  },
+  "realgt": {
+    "malignant": "Invasive_Tumor",
+    "neighbor": "Prolif_Invasive_Tumor",
+    "cosine": 0.980196
+  }
+}

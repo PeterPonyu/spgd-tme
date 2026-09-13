@@ -1,0 +1,20 @@
+{
+  "library": "CosMx BCC",
+  "malignant_withheld": "Cancer.cells",
+  "n_spots_full": 5686,
+  "historical_call": "KEEP (designated Normal.Kerat cos 0.603666)",
+  "max_eligible_call": "ABSTAIN (Melanocyte cos 0.824700)",
+  "KEEP_reported": {
+    "overall_RMSE": 0.106347,
+    "tumor_RMSE_reported": 0.151633,
+    "PCC_type": 0.658847,
+    "PCC_spot": 0.852694
+  },
+  "ABSTAIN_nonmalignant": {
+    "tumor_RMSE_reported": "withheld (malignant coordinate missing, not zero)",
+    "nonmalignant_RMSE": 0.213989,
+    "nonmalignant_PCC_type": 0.416667,
+    "nonmalignant_PCC_spot": 0.661395
+  },
+  "interpretation": "Under the max-eligible rule BCC flips to ABSTAIN, so the Cancer.cells coordinate would be withheld rather than reported. The historical KEEP tumor RMSE above is what would no longer be reported; the non-malignant composition is re-scored after malignant withholding and renormalization."
+}

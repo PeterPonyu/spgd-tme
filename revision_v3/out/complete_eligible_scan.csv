@@ -1,0 +1,113 @@
+library,platform_family,malignant,neighbor,cosine,n_ref_cells,designated,decision
+CosMx CRC,cosmx_carcinoma,tumor,B.activated,0.677968,275,False,KEEP
+CosMx CRC,cosmx_carcinoma,tumor,BEC,0.791305,2874,False,KEEP
+CosMx CRC,cosmx_carcinoma,tumor,IAF_MMP,0.668075,566,False,KEEP
+CosMx CRC,cosmx_carcinoma,tumor,LEC,0.722185,443,False,KEEP
+CosMx CRC,cosmx_carcinoma,tumor,PC_IgA1,0.070678,3284,False,KEEP
+CosMx CRC,cosmx_carcinoma,tumor,PC_IgD,0.324504,4827,False,KEEP
+CosMx CRC,cosmx_carcinoma,tumor,PC_IgG,0.105119,2504,False,KEEP
+CosMx CRC,cosmx_carcinoma,tumor,PC_IgM,0.103759,485,False,KEEP
+CosMx CRC,cosmx_carcinoma,tumor,TAM,0.613845,5346,False,KEEP
+CosMx CRC,cosmx_carcinoma,tumor,Tc,0.692023,863,False,KEEP
+CosMx CRC,cosmx_carcinoma,tumor,Th,0.725414,6766,False,KEEP
+CosMx CRC,cosmx_carcinoma,tumor,cDC,0.739574,2813,False,KEEP
+CosMx CRC,cosmx_carcinoma,tumor,fibroblast,0.505826,27401,True,KEEP
+CosMx CRC,cosmx_carcinoma,tumor,nan,0.745462,14757,False,KEEP
+CosMx CRC,cosmx_carcinoma,tumor,neutrophil,0.589742,509,False,KEEP
+CosMx CRC,cosmx_carcinoma,tumor,pericytes,0.755165,6872,False,KEEP
+CosMx NSCLC,cosmx_carcinoma,tumor,B-cell,0.779039,7090,False,KEEP
+CosMx NSCLC,cosmx_carcinoma,tumor,NK,0.792788,1748,False,KEEP
+CosMx NSCLC,cosmx_carcinoma,tumor,T CD4 memory,0.683399,179,False,KEEP
+CosMx NSCLC,cosmx_carcinoma,tumor,T CD4 naive,0.814309,8237,False,ABSTAIN
+CosMx NSCLC,cosmx_carcinoma,tumor,T CD8 memory,0.629121,26,False,KEEP
+CosMx NSCLC,cosmx_carcinoma,tumor,T CD8 naive,0.790527,1822,False,KEEP
+CosMx NSCLC,cosmx_carcinoma,tumor,Treg,0.661733,56,False,KEEP
+CosMx NSCLC,cosmx_carcinoma,tumor,endothelial,0.787382,7478,False,KEEP
+CosMx NSCLC,cosmx_carcinoma,tumor,epithelial,0.847336,3712,False,ABSTAIN
+CosMx NSCLC,cosmx_carcinoma,tumor,fibroblast,0.648151,12294,True,KEEP
+CosMx NSCLC,cosmx_carcinoma,tumor,mDC,0.652399,4202,False,KEEP
+CosMx NSCLC,cosmx_carcinoma,tumor,macrophage,0.648776,6729,False,KEEP
+CosMx NSCLC,cosmx_carcinoma,tumor,mast,0.624016,2569,False,KEEP
+CosMx NSCLC,cosmx_carcinoma,tumor,monocyte,0.759146,1767,False,KEEP
+CosMx NSCLC,cosmx_carcinoma,tumor,neutrophil,0.733664,13277,False,KEEP
+CosMx NSCLC,cosmx_carcinoma,tumor,pDC,0.694951,1963,False,KEEP
+CosMx NSCLC,cosmx_carcinoma,tumor,plasmablast,0.544303,8076,False,KEEP
+CosMx HCC,cosmx_carcinoma,tumor,Antibody.secreting.B.cells,0.261389,1236,False,KEEP
+CosMx HCC,cosmx_carcinoma,tumor,CD3+.alpha.beta.T.cells,0.854095,20083,False,ABSTAIN
+CosMx HCC,cosmx_carcinoma,tumor,Central.venous.LSECs,0.825098,2138,False,ABSTAIN
+CosMx HCC,cosmx_carcinoma,tumor,Cholangiocytes,0.611077,1411,False,KEEP
+CosMx HCC,cosmx_carcinoma,tumor,Erthyroid.cells,0.417553,139,False,KEEP
+CosMx HCC,cosmx_carcinoma,tumor,Hep,0.571128,1204,False,KEEP
+CosMx HCC,cosmx_carcinoma,tumor,Inflammatory.macrophages,0.828847,14797,False,ABSTAIN
+CosMx HCC,cosmx_carcinoma,tumor,Mature.B.cells,0.812665,4974,False,ABSTAIN
+CosMx HCC,cosmx_carcinoma,tumor,NK.like.cells,0.801224,705,False,ABSTAIN
+CosMx HCC,cosmx_carcinoma,tumor,Non.inflammatory.macrophages,0.814175,9076,False,ABSTAIN
+CosMx HCC,cosmx_carcinoma,tumor,NotDet,0.5022,5,False,KEEP
+CosMx HCC,cosmx_carcinoma,tumor,Periportal.LSECs,0.773915,11893,False,KEEP
+CosMx HCC,cosmx_carcinoma,tumor,Portal.endothelial.cells,0.842196,1060,False,ABSTAIN
+CosMx HCC,cosmx_carcinoma,tumor,Stellate.cells,0.648597,7798,True,KEEP
+CosMx HCC,cosmx_carcinoma,tumor,gamma.delta.T.cells.1,0.849754,549,False,ABSTAIN
+CosMx PDAC,cosmx_carcinoma,tumor,CAF,0.861599,5242,True,ABSTAIN
+CosMx PDAC,cosmx_carcinoma,tumor,Hepatocyte,0.803608,6519,False,ABSTAIN
+CosMx PDAC,cosmx_carcinoma,tumor,Macrophage,0.905088,3477,False,ABSTAIN
+CosMx PDAC,cosmx_carcinoma,tumor,Pancreatic islet,0.87719,9959,False,ABSTAIN
+CosMx PDAC,cosmx_carcinoma,tumor,Plasma cell,0.852177,10677,False,ABSTAIN
+CosMx PDAC,cosmx_carcinoma,tumor,Undetermined,0.882464,20028,False,ABSTAIN
+openST,platform,Tumor,CAF,0.786229,4416,False,KEEP
+openST,platform,Tumor,CAM,0.950334,1092,False,ABSTAIN
+openST,platform,Tumor,Cortex_CCL21,0.677944,55,False,KEEP
+openST,platform,Tumor,Fibroblasts,0.678267,2094,False,KEEP
+openST,platform,Tumor,Germinal_Center_Plasma_IgM_B_cell,0.725969,7559,False,KEEP
+openST,platform,Tumor,High_Endothelial_Venules,0.722314,3607,False,KEEP
+openST,platform,Tumor,M1_macrophages,0.742756,8520,False,KEEP
+openST,platform,Tumor,Macrophages,0.707483,108,False,KEEP
+openST,platform,Tumor,Plasma_IgA,0.608378,1967,False,KEEP
+openST,platform,Tumor,Plasma_IgG,0.325334,15773,False,KEEP
+openST,platform,Tumor,T_cell,0.687678,5114,False,KEEP
+openST,platform,Tumor,Tumor_Keratin_Pearl,0.972678,912,True,ABSTAIN
+Xenium,platform,Invasive_Tumor,B_Cells,0.305199,1500,False,KEEP
+Xenium,platform,Invasive_Tumor,CD4+_T_Cells,0.206395,1500,False,KEEP
+Xenium,platform,Invasive_Tumor,CD8+_T_Cells,0.255542,1500,False,KEEP
+Xenium,platform,Invasive_Tumor,DCIS_1,0.902972,1500,False,ABSTAIN
+Xenium,platform,Invasive_Tumor,DCIS_2,0.932058,1500,False,ABSTAIN
+Xenium,platform,Invasive_Tumor,Endothelial,0.347482,1500,False,KEEP
+Xenium,platform,Invasive_Tumor,IRF7+_DCs,0.221665,319,False,KEEP
+Xenium,platform,Invasive_Tumor,LAMP3+_DCs,0.206807,204,False,KEEP
+Xenium,platform,Invasive_Tumor,Macrophages_1,0.384075,1500,False,KEEP
+Xenium,platform,Invasive_Tumor,Macrophages_2,0.282143,1080,False,KEEP
+Xenium,platform,Invasive_Tumor,Mast_Cells,0.297887,110,False,KEEP
+Xenium,platform,Invasive_Tumor,Myoepi_ACTA2+,0.695255,1500,False,KEEP
+Xenium,platform,Invasive_Tumor,Myoepi_KRT15+,0.650929,1500,False,KEEP
+Xenium,platform,Invasive_Tumor,Perivascular-Like,0.268239,544,False,KEEP
+Xenium,platform,Invasive_Tumor,Prolif_Invasive_Tumor,0.980196,1500,True,ABSTAIN
+Xenium,platform,Invasive_Tumor,Stromal,0.366391,1500,False,KEEP
+Xenium,platform,Invasive_Tumor,Stromal_&_T_Cell_Hybrid,0.27178,417,False,KEEP
+Xenium,platform,Invasive_Tumor,T_Cell_&_Tumor_Hybrid,0.856867,364,False,ABSTAIN
+Xenium FLEX,platform,Invasive_Tumor,B_Cells,0.489846,1463,False,KEEP
+Xenium FLEX,platform,Invasive_Tumor,CD4+_T_Cells,0.492048,2899,False,KEEP
+Xenium FLEX,platform,Invasive_Tumor,CD8+_T_Cells,0.513663,1843,False,KEEP
+Xenium FLEX,platform,Invasive_Tumor,DCIS_1,0.862624,1863,False,ABSTAIN
+Xenium FLEX,platform,Invasive_Tumor,DCIS_2,0.83239,2159,False,ABSTAIN
+Xenium FLEX,platform,Invasive_Tumor,Endothelial,0.624305,1055,False,KEEP
+Xenium FLEX,platform,Invasive_Tumor,IRF7+_DCs,0.475764,210,False,KEEP
+Xenium FLEX,platform,Invasive_Tumor,LAMP3+_DCs,0.329751,103,False,KEEP
+Xenium FLEX,platform,Invasive_Tumor,Macrophages_1,0.505024,2964,False,KEEP
+Xenium FLEX,platform,Invasive_Tumor,Macrophages_2,0.323909,760,False,KEEP
+Xenium FLEX,platform,Invasive_Tumor,Mast_Cells,0.333628,92,False,KEEP
+Xenium FLEX,platform,Invasive_Tumor,Myoepi_ACTA2+,0.747842,1235,False,KEEP
+Xenium FLEX,platform,Invasive_Tumor,Myoepi_KRT15+,0.58736,604,False,KEEP
+Xenium FLEX,platform,Invasive_Tumor,Perivascular-Like,0.592055,285,False,KEEP
+Xenium FLEX,platform,Invasive_Tumor,Prolif_Invasive_Tumor,0.977005,1329,True,ABSTAIN
+Xenium FLEX,platform,Invasive_Tumor,Stromal,0.340917,2611,False,KEEP
+Xenium FLEX,platform,Invasive_Tumor,Stromal_&_T_Cell_Hybrid,0.451654,426,False,KEEP
+Xenium FLEX,platform,Invasive_Tumor,T_Cell_&_Tumor_Hybrid,0.956428,1003,False,ABSTAIN
+CosMx BCC,platform,Cancer.cells,Bcell,0.658445,143,False,KEEP
+CosMx BCC,platform,Cancer.cells,Endothelial,0.738436,2423,False,KEEP
+CosMx BCC,platform,Cancer.cells,Fibroblast,0.493869,11995,False,KEEP
+CosMx BCC,platform,Cancer.cells,Melanocyte,0.8247,879,False,ABSTAIN
+CosMx BCC,platform,Cancer.cells,MoMacDC,0.46308,4268,False,KEEP
+CosMx BCC,platform,Cancer.cells,Neutrophil,0.511271,50,False,KEEP
+CosMx BCC,platform,Cancer.cells,Normal.Kerat,0.603666,2479,True,KEEP
+CosMx BCC,platform,Cancer.cells,Pericyte,0.688684,979,False,KEEP
+CosMx BCC,platform,Cancer.cells,PlasmaCell,0.398572,1940,False,KEEP
+CosMx BCC,platform,Cancer.cells,Tcell,0.634926,1004,False,KEEP

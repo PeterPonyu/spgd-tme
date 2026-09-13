@@ -1,0 +1,5 @@
+library,malignant,selected_neighbor_max_rule,selected_cosine_max_rule,selected_decision_max_rule,n_all_scan_rows,n_eligible_rows,n_excluded_rows,excluded_names,historical_neighbor,historical_cosine,historical_decision,decision_changed
+CosMx CRC,tumor,BEC,0.791305,KEEP,8,8,0,,fibroblast,0.505826,KEEP,False
+CosMx HCC,tumor,CD3+.alpha.beta.T.cells,0.854095,ABSTAIN,15,14,1,NotDet,Stellate.cells,0.648597,KEEP,True
+CosMx NSCLC,tumor,epithelial,0.847336,ABSTAIN,17,17,0,,fibroblast,0.648151,KEEP,True
+CosMx PDAC,tumor,Macrophage,0.905088,ABSTAIN,6,5,1,Undetermined,CAF,0.861599,ABSTAIN,False

@@ -1,0 +1,38 @@
+{
+  "run_id": "V3_reporting_neighbor_and_abstain_20260912",
+  "created_utc": "2026-09-12T17:11:05.424456+00:00",
+  "status": "PASS_WITH_SCOPE",
+  "source_mirror": "<v3-analysis-mirror>",
+  "inputs": {
+    "F12_neighbor_scan.csv": "c8728f719695bbd2fd57391bb4d3d6d36363bc537a7b2c361f28823afcd0063a",
+    "F12_keep_cosine.csv": "6eb8107f91ac7b971a0144b9bad58a34ade4539f7d2c78f630e6a7d42f14a566",
+    "F3_pi_t0_openst.csv": "1b124d9004d78cea8d5a71cdcd0683c5139b6242019154fd085c12320817e600",
+    "F3_pi_t0_realgt.csv": "5b61702f61629b8996b00b53b2f07dd0be6bddd3293edcdb56e52eb0b15e0c46",
+    "F3_pi_t0_realgt3.csv": "01b110356ecd916b8cab4ec97ee372e9bf99937c6f27ccdbacef660f84915447"
+  },
+  "c_star": 0.8,
+  "neighbor_rule": "retrospective maximum cosine over all represented eligible non-malignant columns; lexical tie break",
+  "neighbor_eligibility": "exclude empty/nan/unknown/undetermined/notdet/unassigned and names containing tumour/tumor/cancer/malignant/prolif",
+  "pdac_reconciliation": "six stored rows, five eligible rows because Undetermined is excluded",
+  "abstain_rule": "conditional truth is undefined when retained truth mass is zero; those rows are excluded and counted",
+  "bootstrap_B": 2000,
+  "seed": 20260912,
+  "neighbor_summary": {
+    "all_scan_rows": 46,
+    "eligible_scan_rows": 44,
+    "libraries": 4,
+    "changed_library_decisions": 2,
+    "pdac_all_rows": 6,
+    "pdac_eligible_rows": 5
+  },
+  "abstain_summary": {
+    "substrates": 3,
+    "total_zero_retained_truth_rows": 178,
+    "bootstrap_B": 2000
+  },
+  "bcc_directed_inventory": {
+    "directed_pairs": 3,
+    "truth_map_rows": 6475
+  },
+  "scope_note": "No refitting; historical pair-specific calls remain unchanged. BCC directed donor metrics are represented by saved pair-level outputs and merged truth maps where spot-level predictions are not available in this mirror."
+}

@@ -197,8 +197,8 @@ def main() -> None:
     if not contract.is_file() or "11 data figures + 3 tables" not in contract.read_text():
         raise SystemExit("missing 11+3 figure contract")
     n_fig = body.count("\\begin{figure}")
-    if n_fig != 12:
-        raise SystemExit(f"manuscript must contain exactly 12 numbered figures, found {n_fig}")
+    if n_fig != 15:
+        raise SystemExit(f"manuscript must contain exactly 15 numbered figures, found {n_fig}")
     if "\\textbf{Schematic.}" in main_tex:
         raise SystemExit("main.tex still uses unnumbered Schematic")
     _check_caption_placement(body)

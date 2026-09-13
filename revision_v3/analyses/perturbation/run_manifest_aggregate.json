@@ -1,0 +1,26 @@
+{
+  "run_id": "RUN_V3_gene_perturbation_20260912",
+  "protocol": "PROTOCOL.md",
+  "fit_count": 21,
+  "substrates": [
+    "openst",
+    "realgt",
+    "realgt3"
+  ],
+  "fractions": [
+    0.5,
+    0.75,
+    1.0
+  ],
+  "seeds_partial": [
+    101,
+    102,
+    103
+  ],
+  "threshold": 0.8,
+  "n_spots_per_substrate": 400,
+  "status": "PASS_WITH_SCOPE",
+  "scope": "Fresh build_v4 fits; no threshold selection and no saved-fit relabeling.",
+  "historical_pair_states_stable": true,
+  "all_eligible_max_is_descriptive": true
+}

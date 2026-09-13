@@ -1,0 +1,5 @@
+library,all_scan_rows,eligible_rows,excluded_rows,fraction_ge_cstar,eligible_fraction_ge_cstar,excluded_names
+CosMx CRC,8,8,0,0.0,0.0,
+CosMx HCC,15,14,1,0.5333333333333333,0.5714285714285714,NotDet
+CosMx NSCLC,17,17,0,0.11764705882352941,0.11764705882352941,
+CosMx PDAC,6,5,1,1.0,1.0,Undetermined

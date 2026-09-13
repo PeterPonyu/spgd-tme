@@ -1,0 +1,4 @@
+pair,metrics_available,spot_level_prediction_available_in_mirror,RMSE,PCC_type,PCC_spot,tumor_rmse,pseudobulk_jsd,truth_map_rows,truth_types,truth_malignant_plus_fibroblast_mean,truth_malignant_zero_rows
+A_from_B,pair;spot_donor;ref_donor;RMSE;PCC_type;PCC_spot;tumor_rmse;pseudobulk_jsd;source,False,0.134904,0.703361,0.802955,0.162741,0.023958,1194,Cancer.cells;Fibroblast;MoMacDC,0.666821050904849,436
+B_from_A,pair;spot_donor;ref_donor;RMSE;PCC_type;PCC_spot;tumor_rmse;pseudobulk_jsd;source,False,0.065881,0.748353,0.952755,0.103082,0.043166,2020,Cancer.cells;Fibroblast;MoMacDC,0.9018076424548847,184
+D_from_C,pair;spot_donor;ref_donor;RMSE;PCC_type;PCC_spot;tumor_rmse;pseudobulk_jsd;source,False,0.090597,0.729263,0.903654,0.122219,0.027205,3261,Cancer.cells;Fibroblast;MoMacDC,0.8018565977746068,480

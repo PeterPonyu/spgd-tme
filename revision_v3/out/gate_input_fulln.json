@@ -1,0 +1,58 @@
+[
+  {
+    "library": "openST",
+    "malignant": "Tumor",
+    "neighbor": "Tumor_Keratin_Pearl",
+    "n_spots_full": 6971,
+    "n_genes": 4096,
+    "gate_g": 0.004911,
+    "cosine_P": 0.972678,
+    "cosine_S": 0.689529,
+    "delta_S_minus_P": -0.28315,
+    "decision_P": "ABSTAIN",
+    "decision_S": "KEEP",
+    "status": "DISCREPANT"
+  },
+  {
+    "library": "Xenium",
+    "malignant": "Invasive_Tumor",
+    "neighbor": "Prolif_Invasive_Tumor",
+    "n_spots_full": 2864,
+    "n_genes": 307,
+    "gate_g": 0.090901,
+    "cosine_P": 0.980196,
+    "cosine_S": 0.944744,
+    "delta_S_minus_P": -0.035452,
+    "decision_P": "ABSTAIN",
+    "decision_S": "ABSTAIN",
+    "status": "identical"
+  },
+  {
+    "library": "Xenium FLEX",
+    "malignant": "Invasive_Tumor",
+    "neighbor": "Prolif_Invasive_Tumor",
+    "n_spots_full": 2864,
+    "n_genes": 18082,
+    "gate_g": 0.066439,
+    "cosine_P": 0.977005,
+    "cosine_S": 0.963194,
+    "delta_S_minus_P": -0.013811,
+    "decision_P": "ABSTAIN",
+    "decision_S": "ABSTAIN",
+    "status": "identical"
+  },
+  {
+    "library": "CosMx BCC",
+    "malignant": "Cancer.cells",
+    "neighbor": "Normal.Kerat",
+    "n_spots_full": 5686,
+    "n_genes": 4096,
+    "gate_g": 0.016135,
+    "cosine_P": 0.603666,
+    "cosine_S": 0.560911,
+    "delta_S_minus_P": -0.042755,
+    "decision_P": "KEEP",
+    "decision_S": "KEEP",
+    "status": "identical"
+  }
+]

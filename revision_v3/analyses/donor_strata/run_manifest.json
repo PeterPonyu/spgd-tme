@@ -1,0 +1,7 @@
+{
+  "run_id": "RUN_V3_donor_strata_20260912",
+  "fit_count": 0,
+  "bootstrap_replicates": 2000,
+  "status": "PASS_WITH_SCOPE",
+  "note": "Saved estimates/truth only; retrospective calibration extension, not a fitted gate or threshold sweep."
+}

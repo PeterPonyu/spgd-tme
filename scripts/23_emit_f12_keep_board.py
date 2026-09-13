@@ -17,7 +17,7 @@ COSINE_ROWS = [
     {"substrate": "CosMx PDAC", "malignant": "tumor", "neighbor": "CAF", "cosine": 0.861599, "c_star": 0.80, "decision": "ABSTAIN"},
     {"substrate": "openST", "malignant": "Tumor", "neighbor": "Tumor_Keratin_Pearl", "cosine": 0.972678, "c_star": 0.80, "decision": "ABSTAIN"},
     {"substrate": "Xenium", "malignant": "Invasive_Tumor", "neighbor": "Prolif_Invasive_Tumor", "cosine": 0.980196, "c_star": 0.80, "decision": "ABSTAIN"},
-    {"substrate": "Xenium FLEX", "malignant": "Invasive_Tumor", "neighbor": "Prolif_Invasive_Tumor", "cosine": 0.987505, "c_star": 0.80, "decision": "ABSTAIN"},
+    {"substrate": "Xenium FLEX", "malignant": "Invasive_Tumor", "neighbor": "Prolif_Invasive_Tumor", "cosine": 0.977005, "c_star": 0.80, "decision": "ABSTAIN"},
 ]
 
 DONOR_ROWS = [

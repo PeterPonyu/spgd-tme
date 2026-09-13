@@ -6,4 +6,4 @@ CosMx HCC,tumor,Stellate.cells,0.648597,0.8,KEEP
 CosMx PDAC,tumor,CAF,0.861599,0.8,ABSTAIN
 openST,Tumor,Tumor_Keratin_Pearl,0.972678,0.8,ABSTAIN
 Xenium,Invasive_Tumor,Prolif_Invasive_Tumor,0.980196,0.8,ABSTAIN
-Xenium FLEX,Invasive_Tumor,Prolif_Invasive_Tumor,0.987505,0.8,ABSTAIN
+Xenium FLEX,Invasive_Tumor,Prolif_Invasive_Tumor,0.977005,0.8,ABSTAIN

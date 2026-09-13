@@ -1,0 +1,62 @@
+{
+  "c_star": 0.8,
+  "n_libraries": 8,
+  "designated_sorted": [
+    {
+      "library": "CosMx CRC",
+      "cosine": 0.505826,
+      "decision": "KEEP"
+    },
+    {
+      "library": "CosMx BCC",
+      "cosine": 0.603666,
+      "decision": "KEEP"
+    },
+    {
+      "library": "CosMx NSCLC",
+      "cosine": 0.648151,
+      "decision": "KEEP"
+    },
+    {
+      "library": "CosMx HCC",
+      "cosine": 0.648597,
+      "decision": "KEEP"
+    },
+    {
+      "library": "CosMx PDAC",
+      "cosine": 0.861599,
+      "decision": "ABSTAIN"
+    },
+    {
+      "library": "openST",
+      "cosine": 0.972678,
+      "decision": "ABSTAIN"
+    },
+    {
+      "library": "Xenium FLEX",
+      "cosine": 0.977005,
+      "decision": "ABSTAIN"
+    },
+    {
+      "library": "Xenium",
+      "cosine": 0.980196,
+      "decision": "ABSTAIN"
+    }
+  ],
+  "max_designated_KEEP": 0.648597,
+  "min_designated_ABSTAIN": 0.861599,
+  "separation_gap": [
+    0.648597,
+    0.861599
+  ],
+  "gap_width": 0.213002,
+  "c_star_inside_gap": true,
+  "designated_calls_stable_0p75_0p85": true,
+  "eligible_pair_cosines": {
+    "n": 112,
+    "min": 0.070678,
+    "median": 0.67301,
+    "max": 0.980196,
+    "frac_ge_cstar": 0.241071
+  }
+}

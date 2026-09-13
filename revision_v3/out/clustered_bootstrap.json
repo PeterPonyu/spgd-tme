@@ -1,0 +1,12 @@
+{
+  "statistic": "fraction eligible pairs cosine>=c*",
+  "c_star": 0.8,
+  "point_estimate": 0.241071,
+  "ci95": [
+    0.118182,
+    0.409639
+  ],
+  "n_bootstrap": 4000,
+  "cluster_unit": "library",
+  "n_clusters": 8
+}

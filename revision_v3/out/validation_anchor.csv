@@ -1,0 +1,5 @@
+library,designated_neighbor,reproduced_cosine,locked_cosine,matches_lock
+openST,Tumor_Keratin_Pearl,0.972678,0.972678,True
+Xenium,Prolif_Invasive_Tumor,0.980196,0.980196,True
+Xenium FLEX,Prolif_Invasive_Tumor,0.977005,,False
+CosMx BCC,Normal.Kerat,0.603666,0.603666,True

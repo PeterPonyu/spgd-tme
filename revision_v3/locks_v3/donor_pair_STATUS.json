@@ -1,0 +1,59 @@
+[
+  {
+    "spot_donor": "PatientA",
+    "ref_donor": "PatientB",
+    "n_shared_types": 8,
+    "kept": [
+      "Cancer.cells",
+      "Endothelial",
+      "Fibroblast",
+      "Melanocyte",
+      "MoMacDC",
+      "Normal.Kerat",
+      "Pericyte",
+      "PlasmaCell"
+    ],
+    "spot_n": 21665,
+    "ref_n": 41787,
+    "out_dir": "data/donor_pairs/PatientA_from_PatientB",
+    "n_spots": 1194
+  },
+  {
+    "spot_donor": "PatientB",
+    "ref_donor": "PatientA",
+    "n_shared_types": 8,
+    "kept": [
+      "Cancer.cells",
+      "Endothelial",
+      "Fibroblast",
+      "Melanocyte",
+      "MoMacDC",
+      "Normal.Kerat",
+      "Pericyte",
+      "PlasmaCell"
+    ],
+    "spot_n": 41787,
+    "ref_n": 21665,
+    "out_dir": "data/donor_pairs/PatientB_from_PatientA",
+    "n_spots": 2020
+  },
+  {
+    "spot_donor": "PatientD",
+    "ref_donor": "PatientC",
+    "n_shared_types": 8,
+    "kept": [
+      "Cancer.cells",
+      "Endothelial",
+      "Fibroblast",
+      "Melanocyte",
+      "MoMacDC",
+      "Normal.Kerat",
+      "Pericyte",
+      "PlasmaCell"
+    ],
+    "spot_n": 65167,
+    "ref_n": 90636,
+    "out_dir": "data/donor_pairs/PatientD_from_PatientC",
+    "n_spots": 3261
+  }
+]

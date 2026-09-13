@@ -1,0 +1,52 @@
+{
+  "release": "SPGD-TME V3 review build",
+  "generated": "2026-09-12",
+  "authoritative_source_tree": "research/results/SPGD_TME_REVISION/MIRROR_v3_enhanced_20260912",
+  "capture_tree": "research/results/SPGD_TME_REVISION/SUBMISSION_CAPTURE_V3_20260912",
+  "manuscript_pdf": "manuscript/main.pdf",
+  "figures": 15,
+  "tables": 3,
+  "pages": 28,
+  "canonical_gate_input": "P (library-size-normalized mean reference profile)",
+  "fit_signature": "S (platform-corrected working signature)",
+  "operating_neighbor_rule": "historical designated malignant-neighbor pair; complete maximum-over-eligible scan is sensitivity estimand",
+  "analysis_components": [
+    {
+      "name": "core V3 manuscript and figures",
+      "path": "manuscript/",
+      "status": "authoritative"
+    },
+    {
+      "name": "claim reconciliation ledger",
+      "path": "analyses/reconciliation/",
+      "status": "authoritative numerical map"
+    },
+    {
+      "name": "fresh perturbation fits",
+      "path": "analyses/perturbation/",
+      "status": "included evidence"
+    },
+    {
+      "name": "stored-reference four-library audit",
+      "path": "analyses/reporting/",
+      "status": "included evidence"
+    },
+    {
+      "name": "full-input eight-library, comparator, P/S, downstream audits",
+      "path": "analyses/revision_v3_external/",
+      "status": "included evidence; external data paths required to rerun"
+    }
+  ],
+  "historical_preservation": {
+    "v2_source": "public_release_v2/",
+    "policy": "historical V0/V1/V2 artifacts are preserved; V3 changes are additive",
+    "omissions_audit": "HISTORICAL_OMISSIONS_AUDIT_20260912.md"
+  },
+  "open_items": [
+    "full Reviewer 1 and Reviewer 2 V3 point-to-point response PDFs",
+    "official NanoString license terms and derived-reference permission decision",
+    "integrated figure relayout",
+    "authenticated GitHub/Zenodo refresh"
+  ],
+  "remote_state": "not verified or mutated in this local-only phase"
+}

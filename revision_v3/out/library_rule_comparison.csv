@@ -1,0 +1,41 @@
+library,floor,n_eligible,designated_neighbor,designated_cosine,designated_decision,max_neighbor,max_cosine,max_decision,rule_changes_call
+CosMx CRC,0,16,fibroblast,0.505826,KEEP,BEC,0.791305,KEEP,False
+CosMx CRC,25,16,fibroblast,0.505826,KEEP,BEC,0.791305,KEEP,False
+CosMx CRC,50,16,fibroblast,0.505826,KEEP,BEC,0.791305,KEEP,False
+CosMx CRC,75,16,fibroblast,0.505826,KEEP,BEC,0.791305,KEEP,False
+CosMx CRC,100,16,fibroblast,0.505826,KEEP,BEC,0.791305,KEEP,False
+CosMx NSCLC,0,17,fibroblast,0.648151,KEEP,epithelial,0.847336,ABSTAIN,True
+CosMx NSCLC,25,17,fibroblast,0.648151,KEEP,epithelial,0.847336,ABSTAIN,True
+CosMx NSCLC,50,16,fibroblast,0.648151,KEEP,epithelial,0.847336,ABSTAIN,True
+CosMx NSCLC,75,15,fibroblast,0.648151,KEEP,epithelial,0.847336,ABSTAIN,True
+CosMx NSCLC,100,15,fibroblast,0.648151,KEEP,epithelial,0.847336,ABSTAIN,True
+CosMx HCC,0,15,Stellate.cells,0.648597,KEEP,CD3+.alpha.beta.T.cells,0.854095,ABSTAIN,True
+CosMx HCC,25,14,Stellate.cells,0.648597,KEEP,CD3+.alpha.beta.T.cells,0.854095,ABSTAIN,True
+CosMx HCC,50,14,Stellate.cells,0.648597,KEEP,CD3+.alpha.beta.T.cells,0.854095,ABSTAIN,True
+CosMx HCC,75,14,Stellate.cells,0.648597,KEEP,CD3+.alpha.beta.T.cells,0.854095,ABSTAIN,True
+CosMx HCC,100,14,Stellate.cells,0.648597,KEEP,CD3+.alpha.beta.T.cells,0.854095,ABSTAIN,True
+CosMx PDAC,0,6,CAF,0.861599,ABSTAIN,Macrophage,0.905088,ABSTAIN,False
+CosMx PDAC,25,6,CAF,0.861599,ABSTAIN,Macrophage,0.905088,ABSTAIN,False
+CosMx PDAC,50,6,CAF,0.861599,ABSTAIN,Macrophage,0.905088,ABSTAIN,False
+CosMx PDAC,75,6,CAF,0.861599,ABSTAIN,Macrophage,0.905088,ABSTAIN,False
+CosMx PDAC,100,6,CAF,0.861599,ABSTAIN,Macrophage,0.905088,ABSTAIN,False
+openST,0,12,Tumor_Keratin_Pearl,0.972678,ABSTAIN,Tumor_Keratin_Pearl,0.972678,ABSTAIN,False
+openST,25,12,Tumor_Keratin_Pearl,0.972678,ABSTAIN,Tumor_Keratin_Pearl,0.972678,ABSTAIN,False
+openST,50,12,Tumor_Keratin_Pearl,0.972678,ABSTAIN,Tumor_Keratin_Pearl,0.972678,ABSTAIN,False
+openST,75,11,Tumor_Keratin_Pearl,0.972678,ABSTAIN,Tumor_Keratin_Pearl,0.972678,ABSTAIN,False
+openST,100,11,Tumor_Keratin_Pearl,0.972678,ABSTAIN,Tumor_Keratin_Pearl,0.972678,ABSTAIN,False
+Xenium,0,18,Prolif_Invasive_Tumor,0.980196,ABSTAIN,Prolif_Invasive_Tumor,0.980196,ABSTAIN,False
+Xenium,25,18,Prolif_Invasive_Tumor,0.980196,ABSTAIN,Prolif_Invasive_Tumor,0.980196,ABSTAIN,False
+Xenium,50,18,Prolif_Invasive_Tumor,0.980196,ABSTAIN,Prolif_Invasive_Tumor,0.980196,ABSTAIN,False
+Xenium,75,18,Prolif_Invasive_Tumor,0.980196,ABSTAIN,Prolif_Invasive_Tumor,0.980196,ABSTAIN,False
+Xenium,100,18,Prolif_Invasive_Tumor,0.980196,ABSTAIN,Prolif_Invasive_Tumor,0.980196,ABSTAIN,False
+Xenium FLEX,0,18,Prolif_Invasive_Tumor,0.977005,ABSTAIN,Prolif_Invasive_Tumor,0.977005,ABSTAIN,False
+Xenium FLEX,25,18,Prolif_Invasive_Tumor,0.977005,ABSTAIN,Prolif_Invasive_Tumor,0.977005,ABSTAIN,False
+Xenium FLEX,50,18,Prolif_Invasive_Tumor,0.977005,ABSTAIN,Prolif_Invasive_Tumor,0.977005,ABSTAIN,False
+Xenium FLEX,75,18,Prolif_Invasive_Tumor,0.977005,ABSTAIN,Prolif_Invasive_Tumor,0.977005,ABSTAIN,False
+Xenium FLEX,100,17,Prolif_Invasive_Tumor,0.977005,ABSTAIN,Prolif_Invasive_Tumor,0.977005,ABSTAIN,False
+CosMx BCC,0,10,Normal.Kerat,0.603666,KEEP,Melanocyte,0.8247,ABSTAIN,True
+CosMx BCC,25,10,Normal.Kerat,0.603666,KEEP,Melanocyte,0.8247,ABSTAIN,True
+CosMx BCC,50,10,Normal.Kerat,0.603666,KEEP,Melanocyte,0.8247,ABSTAIN,True
+CosMx BCC,75,9,Normal.Kerat,0.603666,KEEP,Melanocyte,0.8247,ABSTAIN,True
+CosMx BCC,100,9,Normal.Kerat,0.603666,KEEP,Melanocyte,0.8247,ABSTAIN,True

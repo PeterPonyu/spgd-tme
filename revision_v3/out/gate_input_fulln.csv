@@ -1,0 +1,5 @@
+library,malignant,neighbor,n_spots_full,n_genes,gate_g,cosine_P,cosine_S,delta_S_minus_P,decision_P,decision_S,status
+openST,Tumor,Tumor_Keratin_Pearl,6971,4096,0.004911,0.972678,0.689529,-0.28315,ABSTAIN,KEEP,DISCREPANT
+Xenium,Invasive_Tumor,Prolif_Invasive_Tumor,2864,307,0.090901,0.980196,0.944744,-0.035452,ABSTAIN,ABSTAIN,identical
+Xenium FLEX,Invasive_Tumor,Prolif_Invasive_Tumor,2864,18082,0.066439,0.977005,0.963194,-0.013811,ABSTAIN,ABSTAIN,identical
+CosMx BCC,Cancer.cells,Normal.Kerat,5686,4096,0.016135,0.603666,0.560911,-0.042755,KEEP,KEEP,identical
