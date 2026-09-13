@@ -18,6 +18,14 @@ manuscript as Supplementary Material, and its deposit is scheduled for acceptanc
 archived version matches the accepted text. Creating it requires a current API token; no
 previously exposed token may be reused.
 
+## V3 upload candidate
+
+The sanitized V3 candidate is prepared from public branch commit `4160489` as
+`spgd-tme-v3-4160489.tar.gz` (SHA-256
+`10537440b9f08a376bcced2ade102dd94227fae295f3dca00e55b457441c7225`). It has not been
+uploaded or published; the extracted archive was re-scanned for machine-local paths, credentials,
+internal workflow documents, and confidential agreement files before release.
+
 ## Source repository visibility
 
 The Git repository backing this release is **public** on the `codex/v3-public-release` branch. An
