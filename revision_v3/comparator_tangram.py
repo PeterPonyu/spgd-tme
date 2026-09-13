@@ -8,10 +8,9 @@ an independent, third-party spatial deconvolution method on the CosMx BCC
 subset.
 
 Integrity: reads references read-only; writes only to revision_v3/out/. This is
-an additive comparison and does not alter any historical number. cell2location
-and RCTD are not installed in this environment (see availability note in the
-summary); Tangram and scvi-tools are. This provides a genuinely fresh external
-refit rather than a re-use of saved comparator output.
+an additive comparison and does not alter any historical number. The matched audit separately re-scores the saved RCTD and cell2location outputs
+using comparator_matched.py; this module provides the fresh Tangram refit and does
+not require reinstalling those external methods.
 """
 from __future__ import annotations
 
