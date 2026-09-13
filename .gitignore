@@ -25,6 +25,11 @@ manuscript/figs/rendered/
 manuscript/*.pdf
 manuscript/*.bbl
 manuscript/*.blg
+manuscript/main_diff_V2_to_V3.tex
+
+# Internal licence evidence: contains a provider-confidential agreement copy.
+# Never publish; kept out of the public release.
+revision_v3/license/
 
 # Rebuilt from the editing copy by scripts/28_assemble_submission.py. The
 # assembler is the tracked artifact; the capsule is its output.
