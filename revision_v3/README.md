@@ -60,16 +60,22 @@ principled, data-grounded justification for 0.80 that does not re-tune it.
 `out/clustered_bootstrap.json`.
 
 Library-clustered bootstrap (8 clusters, B = 4000) on the fraction of eligible
-pairs with cosine >= 0.80: point 0.241, 95% CI [0.118, 0.410].
+eligible pairs with cosine >= 0.80: point 0.239, 95% CI [0.119, 0.400] over 109 eligible pairs (of a 112-column all-annotation scan).
 
-### R2-5 — external comparator (fresh refit, not saved output)
-`out/comparator_tangram.json`.
+### R2-5 — external comparators (matched, same locked truth)
+`out/comparator_tangram.json`, `comparator_matched.py`, `out/comparator_matched.csv`.
 
 Tangram was run as a fresh independent method on CosMx BCC (800-spot matched
-subset, same locked cell-count truth). SPGD `build_v4` is more accurate on every
-axis: overall RMSE 0.108 vs 0.206, tumor RMSE 0.157 vs 0.491, type PCC 0.605 vs
-0.330, spot PCC 0.844 vs 0.551, JSD 0.094 vs 0.254. cell2location and
-RCTD/spacexr are not installed in this environment; Tangram and scvi-tools are.
+subset): SPGD `build_v4` is more accurate on every axis (overall RMSE 0.108 vs
+0.206, tumor RMSE 0.157 vs 0.491, type PCC 0.605 vs 0.330, spot PCC 0.844 vs
+0.551, JSD 0.094 vs 0.254). `comparator_matched.py` additionally re-scores the
+real saved RCTD (spacexr 2.2.1) and cell2location runs from the deconv-lab
+pipeline against the same locked truth alongside a fresh SPGD fit: SPGD beats
+cell2location on openST (overall RMSE 0.093 vs 0.121) and is close to RCTD on the
+two Xenium libraries (0.087 vs 0.088; 0.093 vs 0.089), with RCTD retaining a
+lower malignant-coordinate RMSE. Reported without a uniform-superiority claim.
+The matched harness reads external saved outputs; set `SPGD_DECONV_ROOT` to the
+deconv-lab checkout to rerun.
 
 ### Gate-input scope (C03) at full n
 `out/gate_input_fulln.csv`.
@@ -98,6 +104,8 @@ coordinate is reported as missing, never scored as zero.
 ## Release follow-up (requires provider/authenticated access)
 
 - R2-16 NanoString licence: needs the agreement text (not on disk).
-- cell2location / RCTD refits: need installation (cell2location via pip +
-  scvi/jax; RCTD via the R `spacexr` package).
+- cell2location / RCTD are re-scored from the deconv-lab pipeline's real saved
+  runs via `comparator_matched.py` (set `SPGD_DECONV_ROOT`); a from-scratch
+  install (cell2location via pip; RCTD via the R `spacexr` package) is only
+  needed to regenerate those saved outputs.
 - Zenodo re-publication and GitHub release publication: perform only after the license clause table is complete.

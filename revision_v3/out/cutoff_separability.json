@@ -53,10 +53,10 @@
   "c_star_inside_gap": true,
   "designated_calls_stable_0p75_0p85": true,
   "eligible_pair_cosines": {
-    "n": 112,
+    "n": 109,
     "min": 0.070678,
-    "median": 0.67301,
+    "median": 0.668075,
     "max": 0.980196,
-    "frac_ge_cstar": 0.241071
+    "frac_ge_cstar": 0.238532
   }
 }

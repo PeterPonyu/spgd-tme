@@ -23,6 +23,7 @@ from __future__ import annotations
 import importlib.util
 import io
 import json
+import os
 import sys
 import zipfile
 from pathlib import Path
@@ -31,12 +32,27 @@ import numpy as np
 import pandas as pd
 
 REPO = Path(__file__).resolve().parents[1]
-DECONV = Path(os.environ.get("SPGD_DECONV_ROOT", Path(__file__).resolve().parents[1] / "data" / "external" / "deconv-lab"))
+# deconv-lab is a sibling of spgd-tme under labs/active/; override with SPGD_DECONV_ROOT.
+DECONV = Path(os.environ.get("SPGD_DECONV_ROOT", str(Path(__file__).resolve().parents[2] / "deconv-lab")))
 OUT = Path(__file__).resolve().parent / "out"
 OUT.mkdir(parents=True, exist_ok=True)
 
 C_STAR = 0.80
 FLOORS = [0, 25, 50, 75, 100]
+
+# Annotation placeholders that are not an "annotated non-malignant program" and
+# are therefore excluded from the eligible set (kept in the all-column scan).
+INELIGIBLE_TOKENS = {"nan", "notdet", "undetermined", "unknown", "unassigned",
+                     "ambiguous", "doublet", "na", "none", ""}
+
+
+def _eligible(name) -> tuple[bool, str]:
+    if pd.isna(name):
+        return False, "non-annotated placeholder"
+    s = str(name).strip()
+    if s == "" or s.lower() in INELIGIBLE_TOKENS:
+        return False, "non-annotated placeholder"
+    return True, "eligible"
 
 # --- shared probe helpers (module 20) ---------------------------------------
 sys.path.insert(0, str(REPO))
@@ -173,10 +189,12 @@ def scan_library(lib, types, P, counts, mal, nbr, family):
         if t == mal:
             continue
         c = _cos(P, idx, types.index(t))
+        elig, reason = _eligible(t)
         rows.append({
             "library": lib, "platform_family": family, "malignant": mal, "neighbor": t,
             "cosine": round(c, 6), "n_ref_cells": counts.get(t, np.nan),
             "designated": bool(t == nbr), "decision": "ABSTAIN" if c >= C_STAR else "KEEP",
+            "eligible": bool(elig), "eligibility_reason": reason,
         })
     return rows
 
@@ -205,6 +223,9 @@ def main():
     scan = pd.DataFrame(all_rows)
     scan.to_csv(OUT / "complete_eligible_scan.csv", index=False)
     pd.DataFrame(anchor).to_csv(OUT / "validation_anchor.csv", index=False)
+    # All aggregate statistics below use only eligible pairs; the CSV above is
+    # the full all-column scan carrying an `eligible` flag and `eligibility_reason`.
+    elig_scan = scan[scan["eligible"]].copy()
 
     # rule comparison across floors
     comp = []
@@ -214,7 +235,7 @@ def main():
         dnbr = str(des["neighbor"].iloc[0]) if len(des) else ""
         for floor in FLOORS:
             known = g["n_ref_cells"].notna()
-            e = g[(~known) | (g["n_ref_cells"] >= floor)]
+            e = g[g["eligible"] & ((~known) | (g["n_ref_cells"] >= floor))]
             if not len(e):
                 continue
             im = e["cosine"].idxmax()
@@ -247,7 +268,7 @@ def main():
     abst = designated[designated["decision"] == "ABSTAIN"]["cosine"]
     max_keep = float(keep.max()) if len(keep) else float("nan")
     min_abst = float(abst.min()) if len(abst) else float("nan")
-    allc = scan["cosine"].to_numpy(float)
+    allc = elig_scan["cosine"].to_numpy(float)
     sep = {
         "c_star": C_STAR, "n_libraries": int(designated.shape[0]),
         "designated_sorted": designated.round(6).to_dict("records"),
@@ -264,18 +285,19 @@ def main():
 
     # clustered bootstrap (R2-4)
     rng = np.random.default_rng(0)
-    libs = scan["library"].unique().tolist()
-    per = {l: scan[scan["library"] == l]["cosine"].to_numpy(float) for l in libs}
+    libs = elig_scan["library"].unique().tolist()
+    per = {l: elig_scan[elig_scan["library"] == l]["cosine"].to_numpy(float) for l in libs}
     stats = []
     for _ in range(4000):
         pick = rng.choice(len(libs), len(libs), replace=True)
         pooled = np.concatenate([per[libs[i]] for i in pick])
         stats.append(float(np.mean(pooled >= C_STAR)))
     lo, hi = np.percentile(stats, [2.5, 97.5])
-    boot = {"statistic": "fraction eligible pairs cosine>=c*", "c_star": C_STAR,
-            "point_estimate": round(float(np.mean(allc >= C_STAR)), 6),
+    boot = {"statistic": "fraction of eligible malignant-neighbor pairs with cosine>=c*",
+            "c_star": C_STAR, "point_estimate": round(float(np.mean(allc >= C_STAR)), 6),
             "ci95": [round(float(lo), 6), round(float(hi), 6)], "n_bootstrap": 4000,
-            "cluster_unit": "library", "n_clusters": len(libs)}
+            "cluster_unit": "library", "n_clusters": len(libs),
+            "n_eligible_pairs": int(len(elig_scan)), "n_all_column_pairs": int(len(scan))}
     (OUT / "clustered_bootstrap.json").write_text(json.dumps(boot, indent=2) + "\n")
 
     print("\n=== validation anchor ===")
@@ -285,7 +307,8 @@ def main():
                                      "max_neighbor", "max_cosine", "max_decision", "rule_changes_call"]].to_string(index=False))
     print(f"\nseparability: max KEEP={sep['max_designated_KEEP']} min ABSTAIN={sep['min_designated_ABSTAIN']} "
           f"0.80 in gap={sep['c_star_inside_gap']} stable 0.75-0.85={sep['designated_calls_stable_0p75_0p85']}")
-    print(f"clustered bootstrap frac>=0.80: {boot['point_estimate']} CI {boot['ci95']}")
+    print(f"clustered bootstrap frac>=0.80: {boot['point_estimate']} CI {boot['ci95']} "
+          f"(eligible {len(elig_scan)} of {len(scan)} all-column pairs)")
     print("wrote ->", OUT)
 
 

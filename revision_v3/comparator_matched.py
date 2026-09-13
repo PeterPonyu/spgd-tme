@@ -16,13 +16,15 @@ modified. realgt4 is intentionally excluded (design guardrail).
 from __future__ import annotations
 
 import json
+import os
 import sys
 from pathlib import Path
 
 import numpy as np
 import pandas as pd
 
-DECONV = Path("/home/zeyufu/Desktop/labs/active/deconv-lab")
+# deconv-lab is a sibling of spgd-tme under labs/active/; override with SPGD_DECONV_ROOT.
+DECONV = Path(os.environ.get("SPGD_DECONV_ROOT", str(Path(__file__).resolve().parents[2] / "deconv-lab")))
 OUT = Path(__file__).resolve().parent / "out"
 OUT.mkdir(parents=True, exist_ok=True)
 sys.path.insert(0, str(DECONV / "src"))

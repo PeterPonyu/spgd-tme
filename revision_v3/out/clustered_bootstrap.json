@@ -1,12 +1,14 @@
 {
-  "statistic": "fraction eligible pairs cosine>=c*",
+  "statistic": "fraction of eligible malignant-neighbor pairs with cosine>=c*",
   "c_star": 0.8,
-  "point_estimate": 0.241071,
+  "point_estimate": 0.238532,
   "ci95": [
-    0.118182,
-    0.409639
+    0.119024,
+    0.4
   ],
   "n_bootstrap": 4000,
   "cluster_unit": "library",
-  "n_clusters": 8
+  "n_clusters": 8,
+  "n_eligible_pairs": 109,
+  "n_all_column_pairs": 112
 }

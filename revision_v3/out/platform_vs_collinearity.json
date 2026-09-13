@@ -1,7 +1,7 @@
 {
   "question": "Does assay platform, rather than pair collinearity, explain which malignant-neighbor pairs reach the frozen cutoff?",
   "c_star": 0.8,
-  "n_pairs": 112,
+  "n_pairs": 109,
   "n_libraries": 8,
   "n_platform_families": 3,
   "exchangeable_unit": "library",
@@ -19,18 +19,18 @@
     {
       "library": "CosMx CRC",
       "family": "CosMx",
-      "n_pairs": 16,
-      "mean_cosine": 0.551915,
+      "n_pairs": 15,
+      "mean_cosine": 0.539012,
       "max_cosine": 0.791305,
       "frac_ge_cstar": 0.0
     },
     {
       "library": "CosMx HCC",
       "family": "CosMx",
-      "n_pairs": 15,
-      "mean_cosine": 0.694261,
+      "n_pairs": 14,
+      "mean_cosine": 0.70798,
       "max_cosine": 0.854095,
-      "frac_ge_cstar": 0.533333
+      "frac_ge_cstar": 0.571429
     },
     {
       "library": "CosMx NSCLC",
@@ -43,8 +43,8 @@
     {
       "library": "CosMx PDAC",
       "family": "CosMx",
-      "n_pairs": 6,
-      "mean_cosine": 0.863688,
+      "n_pairs": 5,
+      "mean_cosine": 0.859932,
       "max_cosine": 0.905088,
       "frac_ge_cstar": 1.0
     },
@@ -74,14 +74,14 @@
     }
   ],
   "observed_between_family_range_mean_cosine": 0.191333,
-  "p_between_family_mean_cosine": 0.357143,
-  "observed_between_family_range_frac_ge": 0.183529,
+  "p_between_family_mean_cosine": 0.369048,
+  "observed_between_family_range_frac_ge": 0.191148,
   "p_between_family_frac_ge": 0.910714,
-  "within_cosmx_range_mean_cosine": 0.311772,
-  "pooled_frac_ge_cstar": 0.241071,
+  "within_cosmx_range_mean_cosine": 0.32092,
+  "pooled_frac_ge_cstar": 0.238532,
   "pooled_frac_ge_cstar_ci95_library_clustered": [
-    0.120968,
-    0.408628
+    0.122943,
+    0.397446
   ],
   "interpretation": "With eight libraries in three families the permutation null is coarse and the test is underpowered by construction. The reported p-values are therefore a bound on what this design can establish, not a demonstration of platform independence."
 }

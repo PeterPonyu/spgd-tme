@@ -101,8 +101,9 @@ def main() -> None:
         },
         "note": (
             "Matched bounded subset, same locked truth. Tangram is a fresh independent "
-            "refit (not a saved comparator output). cell2location and RCTD/spacexr are "
-            "not installed in this environment."
+            "refit. RCTD and cell2location are re-scored from the deconv-lab pipeline's "
+            "real saved runs in comparator_matched.py; a fresh install of those methods "
+            "is not required for the matched comparison."
         ),
     }
     (OUT / "comparator_tangram.json").write_text(json.dumps(result, indent=2) + "\n")

@@ -1,7 +1,7 @@
 {
   "release": "SPGD-TME V3 review build",
   "generated": "2026-09-12",
-  "authoritative_source_tree": "research/results/SPGD_TME_REVISION/MIRROR_v3_enhanced_20260912",
+  "authoritative_source_tree": "manuscript/",
   "capture_tree": "research/results/SPGD_TME_REVISION/SUBMISSION_CAPTURE_V3_20260912",
   "manuscript_pdf": "manuscript/main.pdf",
   "figures": 15,
@@ -43,10 +43,9 @@
     "omissions_audit": "HISTORICAL_OMISSIONS_AUDIT_20260912.md"
   },
   "open_items": [
-    "full Reviewer 1 and Reviewer 2 V3 point-to-point response PDFs",
-    "official NanoString license terms and derived-reference permission decision",
-    "integrated figure relayout",
-    "authenticated GitHub/Zenodo refresh"
+    "Zenodo V3 version (create after rotating the previously-exposed API token)",
+    "author/institutional legal sign-off on the completed NanoString clause determination",
+    "integrated figure relayout (F13-F15 into the Results narrative)"
   ],
-  "remote_state": "not verified or mutated in this local-only phase"
+  "remote_state": "V3 branch codex/v3-public-release published to the configured GitHub remote as a new branch; master unchanged; Zenodo V3 version pending token rotation"
 }

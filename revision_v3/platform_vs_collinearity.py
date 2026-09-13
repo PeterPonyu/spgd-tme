@@ -42,6 +42,8 @@ def _between_family_spread(lib_stat: pd.Series, lib_family: pd.Series) -> float:
 
 def main() -> None:
     scan = pd.read_csv(SCAN)
+    if "eligible" in scan.columns:
+        scan = scan[scan["eligible"]].copy()
     scan["family"] = scan["library"].map(_family)
 
     # Library-level statistics: these are the exchangeable units under the null.
