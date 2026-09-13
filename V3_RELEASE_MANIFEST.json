@@ -47,7 +47,7 @@
     "author/institutional legal sign-off on the completed NanoString clause determination",
     "integrated figure relayout (F13-F15 into the Results narrative)"
   ],
-  "remote_state": "V3 branch codex/v3-public-release published to the configured GitHub remote as a new branch; master unchanged; Zenodo V3 version pending token rotation",
+  "remote_state": "V3 branch codex/v3-public-release published; repository visibility public; master unchanged; Zenodo V3 pending",
   "word_count_main_text": 9507,
   "eligible_pair_scan": {
     "all_column_pairs": 112,
@@ -66,9 +66,9 @@
     "variance_share_between_library_within_family": 0.122197,
     "variance_share_within_library": 0.773257
   },
-  "source_repository_visibility": "private at submission time; opening scheduled for acceptance",
+  "source_repository_visibility": "public (changed from private after the review-build commit)",
   "zenodo": {
     "v2": "10.5281/zenodo.22726775 (published)",
-    "v3": "not created; scheduled for acceptance"
+    "v3": "not created; pending fresh Zenodo credentials and author-approved payload"
   }
 }

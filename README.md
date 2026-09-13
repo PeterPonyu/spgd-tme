@@ -53,7 +53,7 @@ V3 is additive and does not rewrite historical calls.
 
 Cite a frozen build through its versioned Zenodo record rather than through a branch name.
 
-The V2 reproducibility package is deposited and citable. The V3 package accompanies the
-manuscript as Supplementary Material; its archival deposit is scheduled for acceptance so that
-the released version matches the accepted text. Until that deposit exists, treat this
-repository and the archive as synchronized only for V2.
+The V2 reproducibility package is deposited and citable. The V3 repository branch is now
+publicly visible and accompanies the manuscript as the review-build source. A versioned V3
+Zenodo deposit has not yet been created; until that deposit exists, cite the V2 archive DOI
+for the archival release and use the V3 branch as the review-build source.

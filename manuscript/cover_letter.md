@@ -31,20 +31,25 @@ CosMx basal-cell carcinoma they recover named tissue objects — the ulcerated-n
 wound axes — and directed donor transfer reaches RMSE 0.0659 and spot-level PCC 0.9528 on
 the tightest edge. The frozen cutoff returns KEEP on four independent CosMx carcinomas and
 ABSTAIN on CosMx pancreatic adenocarcinoma, HNSCC openST, breast Xenium, and an orthogonal
-Xenium FLEX reference. The pancreatic abstention is the load-bearing control: it sits on
-the same assay platform as all four KEEP calls, which is what shows the cutoff separates
-collinear type pairs rather than platforms. The gate costs 0.001 s of a 60.252 s pass.
+Xenium FLEX reference. The pancreatic abstention is the within-platform control: it sits on
+the same assay platform as the four KEEP calls, so the observed pattern is consistent with
+malignant--neighbour collinearity. The library-level design and the formal permutation analysis
+are deliberately reported as underpowered for establishing platform independence. A repeated
+400-spot openST build takes 22.565 +/- 2.861 s, while 1,000 in-memory refusal applications
+take 0.455 s.
 
 We believe the work suits Frontiers in Genetics as a Methods article because its
 contribution is a checkable computational contract rather than a biological finding: every
 constant is frozen before use, every reported number is emitted by a released script from a
-public input, and the decision the method adds is an explicit refusal that a reader can
-audit.
+documented input, and provider-controlled source libraries are used only under their
+applicable access terms. The decision the method adds is an explicit refusal that a reader
+can audit.
 
 This manuscript is not under consideration at any other journal and has not been published
-elsewhere. The estimator whose constants it holds fixed, SPGD, is released software cited
-here as its public archive (doi:10.5281/zenodo.21869991), and is treated in this work the
-same way as any other prior method it builds on.
+elsewhere. The fixed composition core is cited for provenance through its software archive
+(doi:10.5281/zenodo.21869991); the present manuscript contributes and evaluates the two
+locked operators, their audit analyses, and the reproducibility contract as a standalone
+SPGD-TME Methods implementation.
 
 **Data and reproducibility.** No new data were generated. Every library is public and named
 by repository accession in the Data availability statement. The values behind every panel,
