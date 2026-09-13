@@ -12,10 +12,19 @@ The current revision contains 15 figures and 3 tables. It evaluates two locked o
 - a Patient-ID disjoint donor split for mixed-spot construction and reference transfer.
 
 The V3 layer adds the full-input eight-library scan, cutoff stability and clustered bootstrap,
-full-n gate-input audit, downstream abstention analysis, reference-floor sensitivity, repeated
-timing, corrected conditional-renormalization audit, and a matched Tangram comparator. Exact
-numerical outputs are retained in machine-readable files under `revision_v3/analyses/` and
-`revision_v3/out/`.
+a library-clustered permutation test of platform family against pair collinearity, the full-n
+gate-input audit, downstream abstention analysis, reference-floor sensitivity, repeated
+timing, and the corrected conditional-renormalization audit.
+
+It also adds a matched multi-method comparison on identical spot sets and the same locked
+cell-count truth: a fresh independent Tangram refit on CosMx BCC, and RCTD and cell2location
+re-scored from their real saved runs on Xenium, Xenium FLEX, and openST. The comparison is
+reported with its losses as well as its wins — RCTD attains a lower malignant-coordinate RMSE
+on Xenium and a lower overall RMSE on Xenium FLEX — because the article's claim concerns the
+reportability state rather than aggregate accuracy.
+
+Exact numerical outputs are retained in machine-readable files under `revision_v3/analyses/`
+and `revision_v3/out/`.
 
 ## Reproduction
 
@@ -28,8 +37,10 @@ python -m pytest tests -q
 
 The V3 numerical analyses are run from the scripts under `revision_v3/`. Source libraries and
 provider-controlled reference inputs must be obtained from their original repositories under
-their applicable access terms. This release does not redistribute NanoString raw files or
-reference matrices unless the governing provider agreement expressly permits it.
+their applicable access terms. The governing NanoString agreement has been read clause by
+clause; it permits non-commercial redistribution of derived reference matrices only under
+same-licence terms that a CC-BY supplement cannot carry, so this release identifies those
+matrices by content digest instead of shipping them. See `LICENSES.md` for the full boundary.
 
 ## Release boundary
 
@@ -40,6 +51,9 @@ V3 is additive and does not rewrite historical calls.
 
 ## Citation and archive
 
-Use the versioned Zenodo record associated with the release when citing a frozen build. The
-repository and archive should be considered synchronized only after the corresponding public
-release verification has been completed.
+Cite a frozen build through its versioned Zenodo record rather than through a branch name.
+
+The V2 reproducibility package is deposited and citable. The V3 package accompanies the
+manuscript as Supplementary Material; its archival deposit is scheduled for acceptance so that
+the released version matches the accepted text. Until that deposit exists, treat this
+repository and the archive as synchronized only for V2.

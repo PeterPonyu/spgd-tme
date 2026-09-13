@@ -1,6 +1,6 @@
 {
   "release": "SPGD-TME V3 review build",
-  "generated": "2026-09-12",
+  "generated": "2026-09-13",
   "authoritative_source_tree": "manuscript/",
   "capture_tree": "research/results/SPGD_TME_REVISION/SUBMISSION_CAPTURE_V3_20260912",
   "manuscript_pdf": "manuscript/main.pdf",
@@ -47,5 +47,28 @@
     "author/institutional legal sign-off on the completed NanoString clause determination",
     "integrated figure relayout (F13-F15 into the Results narrative)"
   ],
-  "remote_state": "V3 branch codex/v3-public-release published to the configured GitHub remote as a new branch; master unchanged; Zenodo V3 version pending token rotation"
+  "remote_state": "V3 branch codex/v3-public-release published to the configured GitHub remote as a new branch; master unchanged; Zenodo V3 version pending token rotation",
+  "word_count_main_text": 9507,
+  "eligible_pair_scan": {
+    "all_column_pairs": 112,
+    "eligible_pairs": 109,
+    "excluded": "non-annotated placeholders (NotDet, Undetermined, one unlabelled column)",
+    "exceedance_at_c_star": 0.238532,
+    "exceedance_ci95_library_clustered": [
+      0.119024,
+      0.4
+    ]
+  },
+  "platform_vs_collinearity": {
+    "permutation_p_mean_cosine_range": 0.369048,
+    "permutation_p_frac_ge_range": 0.910714,
+    "variance_share_between_platform_family": 0.104546,
+    "variance_share_between_library_within_family": 0.122197,
+    "variance_share_within_library": 0.773257
+  },
+  "source_repository_visibility": "private at submission time; opening scheduled for acceptance",
+  "zenodo": {
+    "v2": "10.5281/zenodo.22726775 (published)",
+    "v3": "not created; scheduled for acceptance"
+  }
 }

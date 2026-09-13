@@ -15,15 +15,12 @@ import itertools
 import json
 from pathlib import Path
 
-import numpy as np
 import pandas as pd
 
 HERE = Path(__file__).resolve().parent
 SCAN = HERE / "out" / "complete_eligible_scan.csv"
 OUT = HERE / "out" / "platform_vs_collinearity.json"
 C_STAR = 0.80
-SEED = 0
-N_PERM = 20000
 
 
 def _family(library: str) -> str:
@@ -88,14 +85,22 @@ def main() -> None:
     cosmx_libs = lib[lib["family"] == "CosMx"]
     within_cosmx_range = float(cosmx_libs["mean_cosine"].max() - cosmx_libs["mean_cosine"].min())
 
-    rng = np.random.default_rng(SEED)
-    boot = []
-    lib_groups = [g["cosine"].to_numpy() for _, g in scan.groupby("library")]
-    for _ in range(N_PERM // 5):
-        pick = rng.integers(0, len(lib_groups), len(lib_groups))
-        pooled = np.concatenate([lib_groups[i] for i in pick])
-        boot.append(float((pooled >= C_STAR).mean()))
-    boot = np.asarray(boot)
+    # Where the variation actually sits. The permutation test above is a hypothesis test on
+    # eight libraries and has little power; this is the estimation counterpart, and it does
+    # not depend on the null being rejectable. Nested sums of squares over pair cosine:
+    # family, then library within family, then pair within library.
+    grand = float(scan["cosine"].mean())
+    ss_total = float(((scan["cosine"] - grand) ** 2).sum())
+    ss_family = 0.0
+    ss_library = 0.0
+    ss_within = 0.0
+    for family, fam_rows in scan.groupby("family"):
+        fam_mean = float(fam_rows["cosine"].mean())
+        ss_family += len(fam_rows) * (fam_mean - grand) ** 2
+        for _, lib_rows in fam_rows.groupby("library"):
+            lib_mean = float(lib_rows["cosine"].mean())
+            ss_library += len(lib_rows) * (lib_mean - fam_mean) ** 2
+            ss_within += float(((lib_rows["cosine"] - lib_mean) ** 2).sum())
 
     result = {
         "question": "Does assay platform, rather than pair collinearity, explain which "
@@ -123,11 +128,17 @@ def main() -> None:
         "observed_between_family_range_frac_ge": round(observed_frac, 6),
         "p_between_family_frac_ge": round(ge_frac / total, 6),
         "within_cosmx_range_mean_cosine": round(within_cosmx_range, 6),
+        "variance_decomposition_pair_cosine": {
+            "basis": "nested sums of squares: platform family / library within family / pair within library",
+            "share_between_platform_family": round(ss_family / ss_total, 6),
+            "share_between_library_within_family": round(ss_library / ss_total, 6),
+            "share_within_library": round(ss_within / ss_total, 6),
+            "identity_check_abs_error": round(
+                abs(ss_total - (ss_family + ss_library + ss_within)), 12
+            ),
+        },
         "pooled_frac_ge_cstar": round(float((scan["cosine"] >= C_STAR).mean()), 6),
-        "pooled_frac_ge_cstar_ci95_library_clustered": [
-            round(float(np.percentile(boot, 2.5)), 6),
-            round(float(np.percentile(boot, 97.5)), 6),
-        ],
+        "pooled_frac_ge_cstar_ci95_source": "clustered_bootstrap.json",
         "interpretation": "With eight libraries in three families the permutation null is "
         "coarse and the test is underpowered by construction. The reported p-values are "
         "therefore a bound on what this design can establish, not a demonstration of "

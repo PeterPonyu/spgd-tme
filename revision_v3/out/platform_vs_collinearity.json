@@ -78,10 +78,14 @@
   "observed_between_family_range_frac_ge": 0.191148,
   "p_between_family_frac_ge": 0.910714,
   "within_cosmx_range_mean_cosine": 0.32092,
+  "variance_decomposition_pair_cosine": {
+    "basis": "nested sums of squares: platform family / library within family / pair within library",
+    "share_between_platform_family": 0.104546,
+    "share_between_library_within_family": 0.122197,
+    "share_within_library": 0.773257,
+    "identity_check_abs_error": 0.0
+  },
   "pooled_frac_ge_cstar": 0.238532,
-  "pooled_frac_ge_cstar_ci95_library_clustered": [
-    0.122943,
-    0.397446
-  ],
+  "pooled_frac_ge_cstar_ci95_source": "clustered_bootstrap.json",
   "interpretation": "With eight libraries in three families the permutation null is coarse and the test is underpowered by construction. The reported p-values are therefore a bound on what this design can establish, not a demonstration of platform independence."
 }
