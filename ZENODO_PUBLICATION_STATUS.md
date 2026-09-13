@@ -20,11 +20,10 @@ previously exposed token may be reused.
 
 ## V3 upload candidate
 
-The sanitized V3 candidate is prepared from public branch commit `4160489` as
-`spgd-tme-v3-4160489.tar.gz` (SHA-256
-`10537440b9f08a376bcced2ade102dd94227fae295f3dca00e55b457441c7225`). It has not been
-uploaded or published; the extracted archive was re-scanned for machine-local paths, credentials,
-internal workflow documents, and confidential agreement files before release.
+A sanitized V3 candidate archive and its SHA-256 manifest are prepared in the local handoff
+directory. The candidate is generated directly from the public review branch and has not been
+uploaded or published; its extracted contents were re-scanned for machine-local paths,
+credentials, internal workflow documents, and confidential agreement files before release.
 
 ## Source repository visibility
 
