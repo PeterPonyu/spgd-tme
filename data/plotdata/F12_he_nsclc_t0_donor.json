@@ -33,5 +33,5 @@
   "type_pcc": 0.598565,
   "spot_pcc": 0.841545,
   "n_genes_signature": 960,
-  "pair_dir": "/home/zeyufu/Desktop/labs/active/spgd-tme/data/external/he_nsclc/run/Lung6_from_Lung5_Rep2"
+  "pair_dir": "data/external/he_nsclc/run/Lung6_from_Lung5_Rep2"
 }

@@ -189,6 +189,6 @@ def build_pair(
         "ref_per_type": dict(collections.Counter(ct[ref_idx].tolist())),
     }
     (out_dir / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
-    status["out_dir"] = str(out_dir)
+    status["out_dir"] = f"data/donor_pairs/{pair_dirname(spot_donor, ref_donor)}"
     status["n_spots"] = int(spots.n_obs)
     return status

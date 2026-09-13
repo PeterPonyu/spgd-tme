@@ -8,19 +8,12 @@ ROOT = Path(__file__).resolve().parents[1]
 
 ABSOLUTE_LOCAL = re.compile(r"/home/[a-z0-9_.-]+/|/root/|miniconda3?/")
 
-# Provenance records pin the inputs a sitting consumed, so their locator
-# strings are absolute by design and stay local. Everything else must be
-# relocatable, and these four are the scrub list for any public deposit.
-PROVENANCE_RECORDS = {
-    "locks/input_sha256.txt",
-    "locks/donor_pair_STATUS.json",
-    "data/plotdata/CBC_spatial_maps.REUSE",
-    "data/plotdata/F12_he_nsclc_t0_donor.json",
-}
+# All tracked release records use semantic locators. No machine-local path is
+# permitted in the public source tree.
+PROVENANCE_RECORDS = set()
 
-# Agent planning notes are working material, not part of the paper package.
-# This file is exempt because it has to spell the forbidden prefixes to detect them.
-EXEMPT_PREFIXES = ("docs/superpowers/", "tests/test_no_path_leaks.py")
+# This test file contains the forbidden pattern in its own regular expression.
+EXEMPT_PREFIXES = ("tests/test_no_path_leaks.py",)
 
 
 def _tracked_text_files() -> list[str]:

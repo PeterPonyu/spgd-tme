@@ -186,5 +186,5 @@ def build_pair(spot_prefix: str, ref_prefix: str, out_dir: Path) -> dict:
         "ref_per_type": dict(collections.Counter(ref["cell_type"][ref_keep].tolist())),
     }
     (out_dir / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
-    status.update({"n_spots": int(spots.n_obs), "out_dir": str(out_dir)})
+    status.update({"n_spots": int(spots.n_obs), "out_dir": f"data/external/he_nsclc/run/{out_dir.name}"})
     return status

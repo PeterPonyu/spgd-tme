@@ -122,11 +122,11 @@ def main() -> None:
     sha_rows = []
     for name in ("cells.txt", "features.txt", "metadata.csv", "counts_genes_x_cells.mtx.gz"):
         p = BCC_EXPORT / name
-        sha_rows.append(f"{p}\t{_sha(p)}")
+        sha_rows.append(f"source://deconv-lab/data/realgt3_benchmark/downloads/bcc_export/{name}\t{_sha(p)}")
     for key in ("openst", "realgt", "realgt3", "realgt4"):
         p = BENCH[key] / "reference_subset.h5ad"
-        sha_rows.append(f"{p}\t{_sha(p)}")
-    sha_rows.append(f"{CBC_CROSSDONOR}\t{_sha(CBC_CROSSDONOR)}")
+        sha_rows.append(f"source://deconv-lab/data/{key}_benchmark/reference_subset.h5ad\t{_sha(p)}")
+    sha_rows.append(f"source://spgd-deconv/manuscript/data/crossdonor.csv\t{_sha(CBC_CROSSDONOR)}")
     sha_path.write_text("\n".join(sha_rows) + "\n")
     print("[write]", type_pairs_path)
     print("[write]", c_star_path)

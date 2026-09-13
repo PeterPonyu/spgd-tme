@@ -94,7 +94,7 @@ def main() -> None:
 
     spatial = CBC_MS / "data/spatial_maps.csv"
     (PLOTDATA / "CBC_spatial_maps.REUSE").write_text(
-        f"{spatial}\t{_sha(spatial)}\trole=cbc_reuse_not_f2_hero\n"
+        f"provider://spgd-deconv/manuscript/data/spatial_maps.csv\t{_sha(spatial)}\trole=cbc_reuse_not_f2_hero\n"
     )
 
     rows = []

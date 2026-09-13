@@ -1,8 +1,8 @@
 # SPGD-TME revision V3 enhancement package
 
 Additive analyses generated in the stable source repository to deepen the V2
-revision. Every result here is reproducible from the local data with the
-scripts in this directory; nothing in this package modifies a lock, a
+revision. Every result here is reproducible from the documented inputs with the
+scripts in this directory; provider-controlled source libraries remain subject to their original access terms. Nothing in this package modifies a lock, a
 historical call, a probe JSON, or a manuscript number, and the frozen cutoff
 `c* = 0.80` is never re-tuned.
 
@@ -101,11 +101,14 @@ coordinate is reported as missing, never scored as zero.
 - Runs in the stable source repo; the V2 capture tree and the concurrent
   MIRROR_v3_enhanced work are untouched.
 
-## Release follow-up (requires provider/authenticated access)
+## Release status and follow-up
 
-- R2-16 NanoString licence: needs the agreement text (not on disk).
-- cell2location / RCTD are re-scored from the deconv-lab pipeline's real saved
-  runs via `comparator_matched.py` (set `SPGD_DECONV_ROOT`); a from-scratch
-  install (cell2location via pip; RCTD via the R `spacexr` package) is only
-  needed to regenerate those saved outputs.
-- Zenodo re-publication and GitHub release publication: perform only after the license clause table is complete.
+- R2-16 NanoString licence: the governing non-commercial agreement was read clause by clause;
+  the semantic clause determination and redistribution boundary are recorded in the top-level
+  `LICENSES.md`. The confidential agreement text is not redistributed.
+- cell2location / RCTD are re-scored from the deconv-lab pipeline's real saved runs via
+  `comparator_matched.py` (set `SPGD_DECONV_ROOT`); a from-scratch install is only needed to
+  regenerate those saved outputs.
+- The `codex/v3-public-release` GitHub branch is public. A V3 Zenodo deposit is still pending
+  creation with a fresh credential and a final payload audit; the V2 DOI remains the citable
+  archival release until then.

@@ -20,9 +20,7 @@ previously exposed token may be reused.
 
 ## Source repository visibility
 
-The Git repository backing this release is **not currently public**. An unauthenticated request
-to the GitHub API for it returns HTTP 404 while the same API answers 200 for a control
-repository, which is the signature of a private repository rather than an unreachable network.
-No manuscript or response text points a reader at a repository URL, and no reviewer-facing
-document claims the source repository is already browsable. Opening the repository is scheduled
-alongside the V3 deposit.
+The Git repository backing this release is **public** on the `codex/v3-public-release` branch. An
+unauthenticated GitHub API request returns HTTP 200 with `private=false`; the public branch
+resolves to the reviewed V3 source commit. The V3 Zenodo deposit remains separate and is not
+claimed until it is created and verified.

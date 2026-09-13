@@ -15,7 +15,7 @@
     ],
     "spot_n": 21665,
     "ref_n": 41787,
-    "out_dir": "/home/zeyufu/Desktop/labs/active/spgd-tme/data/donor_pairs/A_from_B",
+    "out_dir": "data/donor_pairs/PatientA_from_PatientB",
     "n_spots": 1194
   },
   {
@@ -34,7 +34,7 @@
     ],
     "spot_n": 41787,
     "ref_n": 21665,
-    "out_dir": "/home/zeyufu/Desktop/labs/active/spgd-tme/data/donor_pairs/B_from_A",
+    "out_dir": "data/donor_pairs/PatientB_from_PatientA",
     "n_spots": 2020
   },
   {
@@ -53,7 +53,7 @@
     ],
     "spot_n": 65167,
     "ref_n": 90636,
-    "out_dir": "/home/zeyufu/Desktop/labs/active/spgd-tme/data/donor_pairs/D_from_C",
+    "out_dir": "data/donor_pairs/PatientD_from_PatientC",
     "n_spots": 3261
   }
 ]
