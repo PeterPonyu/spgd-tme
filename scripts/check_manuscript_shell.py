@@ -54,6 +54,7 @@ REQUIRED_EVIDENCE = (
     "F2_condition_cell_summary.csv",
     "T1_materials.csv",
     "T2_timing.csv",
+    "T2_repeated_timing.csv",
     "T3_donor_matrix.csv",
     "F12_keep_cosine.csv",
     "F12_donor_rmse.csv",

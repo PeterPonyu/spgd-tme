@@ -42,6 +42,34 @@ clause; it permits non-commercial redistribution of derived reference matrices o
 same-licence terms that a CC-BY supplement cannot carry, so this release identifies those
 matrices by content digest instead of shipping them. See `LICENSES.md` for the full boundary.
 
+The release runs in dependency order:
+
+1. `python scripts/check_scaffold.py` — verifies the required inputs and layout.
+2. `python -m pytest tests -q` — the 104-check release contract (seven checks read the built
+   PDF and are skipped until `manuscript/main.pdf` exists).
+3. `Rscript manuscript/scripts/R/render_disk_faces.R`,
+   `Rscript manuscript/scripts/R/render_F12_keep.R`, and
+   `python manuscript/scripts/generate_tables.py` — reproduce the figures and table bodies
+   from `data/plotdata/`.
+4. The `revision_v3/` scripts — rerun the V3 numerical audits; see `revision_v3/README.md`.
+
+## Tested environment
+
+CPython 3.13.7; R with ggplot2, patchwork, dplyr, tidyr, ragg, and Cairo; a TeX Live
+installation with `latexmk`, `bibtex`, and `latexdiff` for the manuscript builds. Wall-clock
+timings were measured on an Intel Core Ultra 9 275HX (24 logical CPUs, 62 GiB RAM) with no
+accelerator; they are environment-specific benchmarks, not hardware-independent constants.
+
+## Troubleshooting
+
+- Missing provider-controlled inputs: obtain the source libraries from their original
+  repositories under their access terms; the release identifies derived matrices by content
+  digest and does not redistribute them.
+- Missing R packages or LaTeX tooling: install the packages listed above; checks (1)–(2)
+  need neither.
+- Stale derived files: `submission/`, `supplementary/`, and `manuscript/main.pdf` are all
+  rebuilt from source by the scripts above; delete and rerun rather than patching outputs.
+
 ## Release boundary
 
 `LICENSES.md` describes the separation between code, figure-level derived values, and

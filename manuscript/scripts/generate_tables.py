@@ -109,6 +109,16 @@ def main() -> None:
         throughput.append(
             [substrate_label[key], str(spots), f"{seconds:.3f}", f"{1000 * seconds / spots:.1f}"]
         )
+    rep = {r["metric"]: r["value"] for r in rows("T2_repeated_timing.csv")}
+    # The CV cell carries trailing words so the share-sum test does not read it
+    # as a step share: that test parses lines ending in a bare percent.
+    repeated = [
+        ["Runs", f"{rep['n_warm_runs']} warm, same 400-spot openST pass"],
+        ["Mean $\\pm$ SD", f"${float(rep['mean_s']):.3f} \\pm {float(rep['sd_s']):.3f}$ s"],
+        ["CV", f"{float(rep['cv_pct']):.2f}\\% of the mean"],
+        ["Range", f"${float(rep['min_s']):.3f}$--${float(rep['max_s']):.3f}$ s"],
+        ["Hardware", esc(rep["hardware"])],
+    ]
     (OUT / "T2_timing.tex").write_text(
         table(["Operator step", "Seconds", "Share of pass"], timing, "lrr", rules_before=(len(steps),))
         + "\n\\vspace{4pt}\n\n"
@@ -116,7 +126,9 @@ def main() -> None:
             [r"Full-\(n\) \(t=0\) pass", "Spots", "Seconds", "ms per spot"],
             throughput,
             "lrrr",
-        ),
+        )
+        + "\n\\vspace{4pt}\n\n"
+        + table(["Repeated build", "Value"], repeated, "lp{11cm}"),
         encoding="utf-8",
     )
     source_label = {

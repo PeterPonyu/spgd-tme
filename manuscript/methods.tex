@@ -22,12 +22,12 @@ Nonnegative loadings \(W^\star\) are obtained by multiplicative Poisson updates 
 Index \(s\) is a mixed spot and \(k\) is a type. The matrix \(\hat\pi\) of \eqref{eq:simplex} is the composition estimate. Cell-level fields in Fig.~\ref{fig:cohort}A--D are not \(\hat\pi\).
 
 \paragraph{Mixed-spot construction and predictive sizing.}
-CosMx cells are split by Patient\_ID~\citep{Andreatta2024zenodo,Yerly2025preprint}. Cells from the spot donor are aggregated from recorded coordinates into square spatial bins. Bins with fewer than five cells are dropped. The mixed-spot count vector is the gene-wise sum of member cells, and the mixed-spot coordinate is the mean of those cell coordinates. Display maps convert the native pixel frame to micrometres without exchanging axes. Let \(n_{s,k}\) be the number of typed cells of type \(k\) in spot \(s\). Locked mixed-spot truth is the cell-count share
+CosMx cells are split by Patient\_ID~\citep{Andreatta2024zenodo,Yerly2025preprint}. Cells from the spot donor are aggregated from recorded coordinates into square spatial bins. Bins with fewer than five cells are dropped. The mixed-spot count vector is the gene-wise sum of member cells, and the mixed-spot coordinate is the mean of those cell coordinates. Display maps convert the native pixel frame to micrometres without exchanging axes. Let \(n_{s,k}\) be the number of typed cells of type \(k\) in spot \(s\). Locked mixed-spot truth is the cell-count-share estimand
 \begin{equation}
 \pi_{s,k}=\frac{n_{s,k}}{\sum_{k'=1}^{K}n_{s,k'}},\qquad \pi_{s,k}\ge 0,\quad \sum_{k=1}^{K}\pi_{s,k}=1.
 \label{eq:truth-frac}
 \end{equation}
-On four-patient CosMx BCC, \(K=8\) with types Cancer.cells, Endothelial, Fibroblast, Melanocyte, MoMacDC, Normal.Kerat, Pericyte, and PlasmaCell. On the independent NSCLC edge, the same construction supplies \(\pi_{s,k}\) and \(\hat\pi_{s,k}\) on seventeen types. Approximate spot diameters are 45.7\,\(\mu\)m (A from B), 45.1\,\(\mu\)m (B from A), and 42.6\,\(\mu\)m (D from C), with median cell counts 17, 21, and 19. The reference for a directed edge is built from the other patient's cells, with a builder floor of fifty reference cells per type.
+On four-patient CosMx BCC, \(K=8\) with types Cancer.cells, Endothelial, Fibroblast, Melanocyte, MoMacDC, Normal.Kerat, Pericyte, and PlasmaCell. On the independent NSCLC edge, the same construction supplies \(\pi_{s,k}\) and \(\hat\pi_{s,k}\) on seventeen types. Approximate spot diameters are 45.7\,\(\mu\)m (A from B), 45.1\,\(\mu\)m (B from A), and 42.6\,\(\mu\)m (D from C), with median cell counts 17, 21, and 19. The reference for a directed edge is built from the other patient's cells, with a builder floor of fifty reference cells per type, a pre-agreed operating floor set to sit comfortably clear of the data rather than as an optimum: the smallest retained reference type in this cohort holds 137 cells, so the floor binds nowhere.
 
 \paragraph{Occupancy and colour bar.}
 Spot occupancy of type \(k\) is \(\pi_{s,k}\) of \eqref{eq:truth-frac}. Mean occupancy on an edge of \(n\) spots is
@@ -55,7 +55,7 @@ The frozen threshold applied to \eqref{eq:native-cosine} is \(c^\star=0.80\),
 \cos(p_{\mathrm{mal}},p_{\mathrm{nbr}})< c^\star \;\Rightarrow\; \text{KEEP}.
 \label{eq:keep-gate}
 \end{equation}
-On the KEEP branch of \eqref{eq:keep-gate} a tumor fraction \(\hat\pi_{s,\mathrm{mal}}\) is written. On ABSTAIN the malignant coordinate is held as missing and the remaining types are renormalized,
+The value \(0.80\) was fixed as a round pre-sweep operating value carried over from the parent stack; it is not an optimum from a ROC analysis, a theoretical derivation, or a sweep over these libraries. On the KEEP branch of \eqref{eq:keep-gate} a tumor fraction \(\hat\pi_{s,\mathrm{mal}}\) is written. On ABSTAIN the malignant coordinate is held as missing and the remaining types are renormalized,
 \begin{equation}
 \hat\pi_{s,\mathrm{mal}}\leftarrow\mathrm{missing},\qquad
 \hat\pi_{s,k}\leftarrow\frac{\hat\pi_{s,k}}{\sum_{k'\neq\mathrm{mal}}\hat\pi_{s,k'}}\quad(k\neq\mathrm{mal}).
@@ -77,7 +77,7 @@ The collinearity sweep replaces the malignant signature with
 s(t)=(1-t)\,s_{\mathrm{mal}}+t\,s_{\mathrm{nbr}},\qquad t\in\{0,0.1,\ldots,1.0\}.
 \label{eq:interpolate}
 \end{equation}
-At each \(t\) of \eqref{eq:interpolate}, \eqref{eq:native-cosine} is evaluated on \(s(t)\) and \(s_{\mathrm{nbr}}\). Ungated tumor RMSE is recorded at every \(t\) on a 400-spot subset. The KEEP/ABSTAIN overlay leaves gated tumor RMSE missing on refused \(t\). A spot bootstrap with \(B=1000\) supplies a percentile 95\% interval on the \(t=0\) tumor fractions. Full-\(n\) confirmation repeats \(t=0\) on 6971 openST, 2864 Xenium, and 5686 CosMx spots.
+At each \(t\) of \eqref{eq:interpolate}, \eqref{eq:native-cosine} is evaluated on \(s(t)\) and \(s_{\mathrm{nbr}}\). Ungated tumor RMSE is recorded at every \(t\) on a 400-spot subset, a fixed compute budget that keeps the eleven-point sweep over three substrates (33 fits) comparable at one spot count. The KEEP/ABSTAIN overlay leaves gated tumor RMSE missing on refused \(t\). A spot bootstrap with \(B=1000\) supplies a percentile 95\% interval on the \(t=0\) tumor fractions. Full-\(n\) confirmation repeats \(t=0\) on 6971 openST, 2864 Xenium, and 5686 CosMx spots.
 
 \paragraph{Donor split.}
 Directed transfer uses Patient\_ID as the donor key,

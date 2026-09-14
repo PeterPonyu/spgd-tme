@@ -121,6 +121,7 @@ and share first authorship.\quad
 \RequireManuscriptFile{../data/plotdata/F2_condition_cell_summary.csv}
 \RequireManuscriptFile{../data/plotdata/T1_materials.csv}
 \RequireManuscriptFile{../data/plotdata/T2_timing.csv}
+\RequireManuscriptFile{../data/plotdata/T2_repeated_timing.csv}
 \RequireManuscriptFile{../data/plotdata/T3_donor_matrix.csv}
 \RequireManuscriptFile{../data/plotdata/F12_keep_cosine.csv}
 \RequireManuscriptFile{../data/plotdata/F12_donor_rmse.csv}
@@ -156,7 +157,7 @@ and share first authorship.\quad
 % Required on the first page by the author guidelines. The count is the body
 % text the limit applies to, so it excludes the abstract, the declarations and
 % the reference list.
-\noindent\textit{Word count (main text):} 9{,}657 \quad \textit{Figures:} 15 \quad \textit{Tables:} 3
+\noindent\textit{Word count (main text):} 9{,}483 \quad \textit{Figures:} 15 \quad \textit{Tables:} 3
 
 \section{Introduction}
 \input{intro.tex}
@@ -202,12 +203,14 @@ and share first authorship.\quad
 \section{Discussion}
 \input{discussion.tex}
 
-% The one break the paper keeps. \FloatBarrier alone stops a figure landing
-% between the declarations and the reference list, but the declarations then
-% start in whatever strip is left under the last figure and finish overleaf.
-% The statements a reader is meant to check in one pass have to arrive
-% together, and the last figure block plus the statements do not share a page.
-\clearpage
+% A \clearpage here used to be the one break the paper kept, back when the float
+% queue still drained through the end of the Discussion and the statements had to
+% be pushed clear of it. The queue now empties at Figure 15, well before the
+% Discussion closes, so the barrier alone does the job the break was doing and the
+% break only bought a mostly blank page. The statements still have to arrive in one
+% piece; test_back_matter_layout enforces that against the built PDF rather than
+% against this line.
+\FloatBarrier
 
 % Frontiers generates the ethics and data statements from the submission form, but
 % author contributions and funding must be in the source file, and a reviewer reading
@@ -224,6 +227,9 @@ and share first authorship.\quad
   {-1em}%
   {\normalfont\normalsize\bfseries}}
 \makeatother
+% Same face decision as the reference list below: back matter read by lookup
+% takes \small so the seven statements still land on one page together.
+\small
 \section*{Declarations}
 \input{declarations.tex}
 \endgroup
