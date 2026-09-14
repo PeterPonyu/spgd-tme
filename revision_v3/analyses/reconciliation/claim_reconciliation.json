@@ -83,15 +83,15 @@
       "reviewer_point": "R2-14",
       "estimand": "stored-reference CosMx scan",
       "library_universe": "4 CosMx libraries",
-      "denominator": "51 stored eligible rows",
-      "spot_count": 51,
+      "denominator": "44 eligible rows (46 scanned)",
+      "spot_count": 44,
       "metric": "fraction cosine \u2265 c*",
-      "value": "0.294",
-      "interval": "0.063\u20130.684",
-      "source_artifact": "analyses/reporting/neighbor_max_rule_library_summary.csv; manuscript Results",
+      "value": "0.340909",
+      "interval": "0.080000\u20130.684211",
+      "source_artifact": "analyses/reporting/neighbor_max_rule_library_summary.csv; revision_v3/out/stored_scan_summary.json; manuscript Results",
       "manuscript_location": "Results \u00a7 sensitivity; F12/F13",
       "status": "RECONCILED",
-      "note": ""
+      "note": "Corrected from stale 51-row/0.294 figure; 46 scanned rows; 44 eligible after excluding NotDet/Undetermined; mean cosine 0.696652 (0.604278\u20130.780938)."
     },
     {
       "claim_id": "G07",
