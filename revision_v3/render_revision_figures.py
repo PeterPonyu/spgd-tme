@@ -47,8 +47,8 @@ def render_f13():
     for sub in ['openst','realgt','realgt3']:
         q=pert[pert.substrate==sub].sort_values('fraction'); d.errorbar(q.fraction*100,q.malignant_rmse_mean,yerr=q.malignant_rmse_sd.fillna(0),marker='o',lw=1.4,ms=4,color=COL[sub])
     d.set_ylim(.07,.19); d.set_xlabel('reference genes retained (%)'); d.set_ylabel('malignant RMSE'); d.set_xticks([50,75,100]); panel_title(d,'D','Accuracy cost under gene loss'); clean(d)
-    fig.legend(handles=[Line2D([0],[0],marker='o',color=COL[s],lw=1.4,markersize=4,label=PRETTY[s]) for s in ['openst','realgt','realgt3']],loc='lower center',bbox_to_anchor=(.75,.015),ncol=3,frameon=False,handletextpad=.35,columnspacing=.8)
-    fig.subplots_adjust(left=.105,right=.985,top=.78,bottom=.22,wspace=.33,hspace=.62)
+    fig.legend(handles=[Line2D([0],[0],marker='o',color=COL[s],lw=1.4,markersize=4,label=PRETTY[s]) for s in ['openst','realgt','realgt3']],loc='lower center',bbox_to_anchor=(.5,.035),ncol=3,frameon=False,handletextpad=.35,columnspacing=.8)
+    fig.subplots_adjust(left=.105,right=.985,top=.78,bottom=.155,wspace=.33,hspace=.62)
     fig.savefig(OUT/'F13_revision_audit.pdf',pad_inches=.03); fig.savefig(OUT/'F13_v3_rule_and_perturbation.pdf',bbox_inches='tight',pad_inches=.02); plt.close(fig)
 
 if __name__=='__main__': render_f13()

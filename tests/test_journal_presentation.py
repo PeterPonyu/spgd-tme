@@ -29,13 +29,12 @@ pytestmark = pytest.mark.skipif(
 # in brackets is a citation that survived the move off numeric references.
 INTERVALS = {"[0, 1]", "[0,1]"}
 BRACKETED_NUMBERS = re.compile(r"\[\s*\d[\d,\s\u2013-]*\]")
-# Frontiers prescribes this order for a Methods article. The headings the paper
-# used before were descriptive, mapped onto the order one for one, and matched
-# none of the required names.
+# Author decision 2026-09-13: Materials and Methods are a single section. This
+# deviates from the five-heading Frontiers Methods order this test previously
+# enforced; confirm against the current author guidelines before submitting.
 REQUIRED_SECTIONS = (
     "Introduction",
-    "Materials and Equipment",
-    "Methods",
+    "Materials and Methods",
     "Results",
     "Discussion",
 )
