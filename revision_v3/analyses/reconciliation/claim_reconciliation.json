@@ -98,15 +98,15 @@
       "reviewer_point": "R2-3",
       "estimand": "complete eligible maxima",
       "library_universe": "4 CosMx libraries",
-      "denominator": "17+8+14+5 eligible rows",
-      "spot_count": 44,
+      "denominator": "17+15+14+5 eligible columns",
+      "spot_count": 51,
       "metric": "library maxima",
       "value": "NSCLC 0.847; CRC 0.791; HCC 0.854; PDAC 0.905",
       "interval": "",
-      "source_artifact": "analyses/reporting/neighbor_max_rule_library_summary.csv",
+      "source_artifact": "revision_v3/out/complete_eligible_scan.csv; revision_v3/out/platform_vs_collinearity.json",
       "manuscript_location": "Results \u00a7 sensitivity; F13A/F15A",
       "status": "RECONCILED",
-      "note": ""
+      "note": "Maxima coincide with the stored-export summary; CRC contributes 15 of 16 columns (one unlabelled excluded)."
     },
     {
       "claim_id": "G08",
