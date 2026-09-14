@@ -20,6 +20,9 @@ REQUIRED_CAPTIONS = (
     "F10_eval.tex",
     "F11_floor.tex",
     "F12_keep.tex",
+    "F13_revision_audit.tex",
+    "F14_revision_support.tex",
+    "F15_v3_fulln_comparator.tex",
     "T1_materials.tex",
     "T2_timing.tex",
     "T3_donor_matrix.tex",
@@ -67,6 +70,9 @@ REQUIRED_RENDERED = (
     "F10_eval.pdf",
     "F11_floor.pdf",
     "F12_keep.pdf",
+    "F13_revision_audit.pdf",
+    "F14_revision_support.pdf",
+    "F15_v3_fulln_comparator.pdf",
 )
 REQUIRED_DIRECT_INCLUDES = {
     "F2_hero.pdf": r"\includegraphics[width=\textwidth]{figs/rendered/F2_hero.pdf}",
@@ -194,8 +200,8 @@ def main() -> None:
     if r"\input{figs/fig_pack.tex}" not in body:
         raise SystemExit("manuscript missing merged fig_pack.tex")
     contract = ROOT / "FIGURES.md"
-    if not contract.is_file() or "11 data figures + 3 tables" not in contract.read_text():
-        raise SystemExit("missing 11+3 figure contract")
+    if not contract.is_file() or "14 data figures + 3 tables" not in contract.read_text():
+        raise SystemExit("missing 14+3 figure contract")
     n_fig = body.count("\\begin{figure}")
     if n_fig != 15:
         raise SystemExit(f"manuscript must contain exactly 15 numbered figures, found {n_fig}")

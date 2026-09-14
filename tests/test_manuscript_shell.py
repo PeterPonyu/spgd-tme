@@ -93,6 +93,9 @@ def test_required_figures_are_directly_included():
         r"\includegraphics[width=\textwidth]{figs/rendered/F10_eval.pdf}",
         r"\includegraphics[width=\textwidth]{figs/rendered/F11_floor.pdf}",
         r"\includegraphics[width=\textwidth]{figs/rendered/F12_keep.pdf}",
+        r"\includegraphics[width=\textwidth]{figs/rendered/F13_revision_audit.pdf}",
+        r"\includegraphics[width=\textwidth]{figs/rendered/F14_revision_support.pdf}",
+        r"\includegraphics[width=\textwidth]{figs/rendered/F15_v3_fulln_comparator.pdf}",
     )
     for include in expected:
         assert include in blob

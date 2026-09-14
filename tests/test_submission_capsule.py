@@ -16,7 +16,7 @@ import pytest
 ROOT = Path(__file__).resolve().parents[1]
 CAPSULE = ROOT / "submission"
 TEX = CAPSULE / "manuscript.tex"
-FIGURE_COUNT = 12
+FIGURE_COUNT = 15
 
 pytestmark = pytest.mark.skipif(
     not TEX.exists(), reason="capsule not built; run scripts/28_assemble_submission.py"

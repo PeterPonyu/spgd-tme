@@ -1,8 +1,8 @@
 # SPGD-TME figure contract (2026-08-27)
 
-User bar: **11 data figures + 3 tables of data faces**, plus **1** numbered protocol figure (12 figures + 3 tables).
+User bar: **14 data figures + 3 tables of data faces**, plus **1** numbered protocol figure (15 figures + 3 tables).
 
-Every data figure carries at least panels A–E (target A–F). The four former TikZ schematics live as panels of Figure 1.
+Figures 2–12 carry at least panels A–E (target A–F). Figures 13–15 are the V3 revision boards (rule audit, calibration, full-n/comparator). The four former TikZ schematics live as panels of Figure 1.
 
 | ID | Object | Role | Section |
 |---|---|---|---|
@@ -18,6 +18,9 @@ Every data figure carries at least panels A–E (target A–F). The four former 
 | Fig 10 | Evaluation board | result | Results |
 | Fig 11 | Pair type-floor occupancy | result | Results |
 | Fig 12 | Independent KEEP-carcinoma board | result | Results |
+| Fig 13 | Rule selection and reference perturbation | revision | Results |
+| Fig 14 | Truth-stratified calibration and block bootstrap | revision | Results |
+| Fig 15 | Full-n gate, complete scan, Tangram, BCC consequence | revision | Results |
 
 Do **not** reprint CBC official spatial A–D as this paper’s hero.
 Do **not** add T4, 17-method rank, KM/TCGA, MERFISH/STARmap main text.
@@ -32,7 +35,7 @@ finish if any of the contract below is violated.
 - One flat directory. No subdirectories.
 - One `.tex`. Every section, table body and caption is spliced in, and the resolved
   bibliography is inline, so the capsule compiles without bibtex and without a `.bib`.
-- Figures are `Figure1.jpg`–`Figure12.jpg` at 300 dpi, named explicitly by the `.tex`.
+- Figures are `Figure1.jpg`–`Figure15.jpg` at 300 dpi, named explicitly by the `.tex`.
   Figure 1 is the TikZ protocol panel compiled and rasterised like the rest, so the
   capsule does not depend on TikZ.
 
@@ -50,6 +53,9 @@ finish if any of the contract below is violated.
 | `Figure10.jpg` | `F10_eval.pdf` |
 | `Figure11.jpg` | `F11_floor.pdf` |
 | `Figure12.jpg` | `F12_keep.pdf` |
+| `Figure13.jpg` | `F13_revision_audit.pdf` |
+| `Figure14.jpg` | `F14_revision_support.pdf` |
+| `Figure15.jpg` | `F15_v3_fulln_comparator.pdf` |
 
 `submission/` is generated and untracked; the assembler is the tracked artifact.
 

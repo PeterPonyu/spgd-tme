@@ -42,6 +42,9 @@ FIGURES: dict[int, str] = {
     10: "F10_eval",
     11: "F11_floor",
     12: "F12_keep",
+    13: "F13_revision_audit",
+    14: "F14_revision_support",
+    15: "F15_v3_fulln_comparator",
 }
 FIGURE_DPI = 300
 # Frontiers asks for 300 dpi *at final size*, and final size for a full-width
@@ -132,7 +135,9 @@ def flatten(bbl: str) -> str:
     # The guard block names editing-copy paths. Re-point it at the capsule's own
     # figures so the submission build stays fail-closed on missing evidence.
     text = re.sub(r"\\RequireManuscriptFile\{[^}]*\}\n", "", text)
-    guards = "".join(f"\\RequireManuscriptFile{{Figure{n}.jpg}}\n" for n in range(1, 13))
+    guards = "".join(
+        f"\\RequireManuscriptFile{{Figure{n}.jpg}}\n" for n in range(1, len(FIGURES) + 2)
+    )
     text = text.replace(
         "% Missing evidence must stop the build. No placeholder figures or tables.",
         "% Missing evidence must stop the build. No placeholder figures or tables.",

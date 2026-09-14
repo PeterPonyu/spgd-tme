@@ -26,6 +26,20 @@ latexdiff --flatten --disable-citation-markup "$OLD_DIR/manuscript/main.tex" mai
 sed -i 's/\\protect\([A-Za-z]\)/\\protect \1/g' main_diff_V2_to_V3.tex
 sed -i 's/\\hskip0pt%DIFAUXCMD/\\hskip0pt\\relax%DIFAUXCMD/g' main_diff_V2_to_V3.tex
 sed -i 's/\\csname \\DIFadd{\([A-Za-z]*\)}\\endcsname/\\csname \1\\endcsname/g' main_diff_V2_to_V3.tex
+# Bibliographies are generated output, not a manuscript change.  Replace the
+# flattened added bibliography with the current bbl so unchanged references stay black.
+python - <<'PY2'
+from pathlib import Path
+d=Path("main_diff_V2_to_V3.tex"); b=Path("main.bbl")
+s=d.read_text(); bb=b.read_text()
+start=s.find("\\bibliographystyle{plainnat}")
+end=s.find("\\end{thebibliography}", start)
+bs=bb.find("\\begin{thebibliography}"); be=bb.find("\\end{thebibliography}", bs)
+if min(start,end,bs,be) < 0:
+    raise SystemExit("bibliography boundaries not found")
+s=s[:start]+"\\bibliographystyle{plainnat}\n"+bb[bs:be+len("\\end{thebibliography}")]+s[end+len("\\end{thebibliography}"):]
+d.write_text(s)
+PY2
 
 latexmk -pdf -g -interaction=nonstopmode main_diff_V2_to_V3.tex > /dev/null 2>&1 || true
 

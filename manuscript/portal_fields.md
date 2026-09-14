@@ -136,7 +136,7 @@ institution rather than four variants. Everything above it goes in the Departmen
 | Portal slot | File |
 |-------------|------|
 | Manuscript | `submission/manuscript.pdf` (and `manuscript.tex` if source is requested) |
-| Figures 1–12 | `submission/Figure1.jpg` … `Figure12.jpg`, 300 dpi at 180 mm |
+| Figures 1–15 | `submission/Figure1.jpg` … `Figure15.jpg`, 300 dpi at 180 mm |
 | Supplementary Material | `supplementary.zip` |
 | Cover letter | `manuscript/cover_letter.md`, pasted as plain text |
 
