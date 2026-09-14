@@ -1,7 +1,7 @@
 SPGD-TME is a standalone Methods implementation for reporting mixed-spot tumour composition. It combines a fixed composition-estimation core with two locked operators: a KEEP/ABSTAIN reportability gate and a patient-identity donor split (Fig.~\ref{fig:protocol}A--F). Related mixed-spot readers recover composition, including RCTD, cell2location, DestVI, and CARD~\citep{Cable2022,Kleshchevnikov2022,Lopez2022,Ma2022}. The scientific contribution is the explicit decision contract that states when a malignant coordinate is supported by separable reference programs and when it must be withheld. The accompanying public repository provides the frozen constants, reference tables, analysis scripts, renderers, and verification tests needed to reproduce the operator-inclusive results. The fixed composition core is cited for provenance and is held constant throughout all analyses; the cutoff, donor split, abstention, complete-neighbor sensitivity analysis, and new robustness experiments are evaluated here as one reproducible protocol.
 
 \paragraph{Signatures and specificity weights.}
-A TME reference supplies a gene-by-type matrix \(P\), column-normalized to a probability profile. The specificity of gene \(g\) across \(K\) types is one minus the normalized entropy of that gene's type profile \(q_g\),
+A TME reference supplies a gene-by-type matrix \(P\), column-normalized to a probability profile. The specificity of gene \(g\) across \(K\) types is one minus the normalized entropy of that gene's type profile \(q_g\), as given by Equation~\eqref{eq:specificity}:
 \begin{equation}
 w_g=1-\frac{H(q_g)}{\log K},\qquad H(q_g)=-\sum_{k=1}^{K} q_{gk}\log(q_{gk}+\varepsilon),\qquad \varepsilon=10^{-12}.
 \label{eq:specificity}
@@ -9,12 +9,12 @@ w_g=1-\frac{H(q_g)}{\log K},\qquad H(q_g)=-\sum_{k=1}^{K} q_{gk}\log(q_{gk}+\var
 Marker genes receive large \(w_g\) under \eqref{eq:specificity}; genes shared across neighboring types receive small \(w_g\). The weighted signature and the weighted spot matrix are \(P\odot w\) and \(Y\odot w\). The numerical floor \(\varepsilon=10^{-12}\) is a fixed stability constant, not a fitted or swept hyperparameter: it makes the zero-probability terms in \(q\log q\) finite and is applied identically in every library. Reporting it is therefore part of the decision contract, because a reader can reproduce the entropy weights and the cutoff-adjacent cosine values without inferring a hidden numerical convention.
 
 \paragraph{Platform self-gate and Poisson close.}
-A per-gene platform factor \(\hat\gamma\) is fit by a bulk-ratio update on the weighted Poisson objective. The factor is applied only to the extent it generalizes across a held-out half of the spots. Let \(g\in[0,1]\) be that held-out improvement. In the fixed baseline implementation, spots are permuted with a fixed seed and split into halves A and B; relative held-out Poisson-deviance reductions are computed for A\(\to\)B and B\(\to\)A, averaged, and clipped to \([0,1]\). Thus \(g\) measures the transferable fraction of the platform correction supported by held-out fit. A value near zero means that a platform adjustment which improves one half does not transfer reliably to the other half; a larger value permits more of that adjustment into the working signature because the same direction improves held-out Poisson fit. This cross-half check makes the platform correction self-limiting: it cannot be granted full weight merely because it improves the spots used to estimate it. The operation uses no outcome labels or per-library threshold tuning, and is therefore part of the fixed baseline stage rather than a second training procedure. The working signature is
+A per-gene platform factor \(\hat\gamma\) is fit by a bulk-ratio update on the weighted Poisson objective. The factor is applied only to the extent it generalizes across a held-out half of the spots. Let \(g\in[0,1]\) be that held-out improvement. In the fixed baseline implementation, spots are permuted with a fixed seed and split into halves A and B; relative held-out Poisson-deviance reductions are computed for A\(\to\)B and B\(\to\)A, averaged, and clipped to \([0,1]\). Thus \(g\) measures the transferable fraction of the platform correction supported by held-out fit. A value near zero means that a platform adjustment which improves one half does not transfer reliably to the other half; a larger value permits more of that adjustment into the working signature because the same direction improves held-out Poisson fit. This cross-half check makes the platform correction self-limiting: it cannot be granted full weight merely because it improves the spots used to estimate it. The operation uses no outcome labels or per-library threshold tuning, and is therefore part of the fixed baseline stage rather than a second training procedure. The working signature is given by Equation~\eqref{eq:working-signature}:
 \begin{equation}
 S=e^{g\hat\gamma}\,(P\odot w).
 \label{eq:working-signature}
 \end{equation}
-Nonnegative loadings \(W^\star\) are obtained by multiplicative Poisson updates against \(S\) of \eqref{eq:working-signature}, then projected onto the simplex,
+Nonnegative loadings \(W^\star\) are obtained by multiplicative Poisson updates against \(S\) of \eqref{eq:working-signature}, then projected onto the simplex, as given by Equation~\eqref{eq:simplex}:
 \begin{equation}
 \hat\pi=\mathrm{simplex}(W^\star),\qquad \hat\pi_{s,k}\ge 0,\quad \sum_{k=1}^{K}\hat\pi_{s,k}=1.
 \label{eq:simplex}
@@ -22,7 +22,7 @@ Nonnegative loadings \(W^\star\) are obtained by multiplicative Poisson updates 
 Index \(s\) is a mixed spot and \(k\) is a type. The matrix \(\hat\pi\) of \eqref{eq:simplex} is the composition estimate. Cell-level fields in Fig.~\ref{fig:cohort}A--D are not \(\hat\pi\).
 
 \paragraph{Mixed-spot construction and predictive sizing.}
-CosMx cells are split by Patient\_ID~\citep{Andreatta2024zenodo,Yerly2025preprint}. Cells from the spot donor are aggregated from recorded coordinates into square spatial bins. Bins with fewer than five cells are dropped. The mixed-spot count vector is the gene-wise sum of member cells, and the mixed-spot coordinate is the mean of those cell coordinates. Display maps convert the native pixel frame to micrometres without exchanging axes. Let \(n_{s,k}\) be the number of typed cells of type \(k\) in spot \(s\). Locked mixed-spot truth is the cell-count-share estimand
+CosMx cells are split by Patient\_ID~\citep{Andreatta2024zenodo,Yerly2025preprint}. Cells from the spot donor are aggregated from recorded coordinates into square spatial bins. Bins with fewer than five cells are dropped. The mixed-spot count vector is the gene-wise sum of member cells, and the mixed-spot coordinate is the mean of those cell coordinates. Display maps convert the native pixel frame to micrometres without exchanging axes. Let \(n_{s,k}\) be the number of typed cells of type \(k\) in spot \(s\). Locked mixed-spot truth is the cell-count-share estimand of Equation~\eqref{eq:truth-frac}:
 \begin{equation}
 \pi_{s,k}=\frac{n_{s,k}}{\sum_{k'=1}^{K}n_{s,k'}},\qquad \pi_{s,k}\ge 0,\quad \sum_{k=1}^{K}\pi_{s,k}=1.
 \label{eq:truth-frac}
@@ -30,12 +30,12 @@ CosMx cells are split by Patient\_ID~\citep{Andreatta2024zenodo,Yerly2025preprin
 On four-patient CosMx BCC, \(K=8\) with types Cancer.cells, Endothelial, Fibroblast, Melanocyte, MoMacDC, Normal.Kerat, Pericyte, and PlasmaCell. On the independent NSCLC edge, the same construction supplies \(\pi_{s,k}\) and \(\hat\pi_{s,k}\) on seventeen types. Approximate spot diameters are 45.7\,\(\mu\)m (A from B), 45.1\,\(\mu\)m (B from A), and 42.6\,\(\mu\)m (D from C), with median cell counts 17, 21, and 19. The reference for a directed edge is built from the other patient's cells, with a builder floor of fifty reference cells per type, a pre-agreed operating floor set to sit comfortably clear of the data rather than as an optimum: the smallest retained reference type in this cohort holds 137 cells, so the floor binds nowhere.
 
 \paragraph{Occupancy and colour bar.}
-Spot occupancy of type \(k\) is \(\pi_{s,k}\) of \eqref{eq:truth-frac}. Mean occupancy on an edge of \(n\) spots is
+Spot occupancy of type \(k\) is \(\pi_{s,k}\) of \eqref{eq:truth-frac}. Mean occupancy on an edge of \(n\) spots is given by Equation~\eqref{eq:mean-occupancy}:
 \begin{equation}
 \bar\pi_{k}=\frac{1}{n}\sum_{s=1}^{n}\pi_{s,k}.
 \label{eq:mean-occupancy}
 \end{equation}
-Figure~\ref{fig:myeloid}A is the \(\bar\pi_{\mathrm{MoMacDC}}\) of \eqref{eq:mean-occupancy} together with the per-spot \(\pi_{s,\mathrm{MoMacDC}}\) it averages. A typed cell \(\ell\) carries the indicator
+Figure~\ref{fig:myeloid}A is the \(\bar\pi_{\mathrm{MoMacDC}}\) of \eqref{eq:mean-occupancy} together with the per-spot \(\pi_{s,\mathrm{MoMacDC}}\) it averages. A typed cell \(\ell\) carries the indicator of Equation~\eqref{eq:cell-indicator}:
 \begin{equation}
 I_{\ell,k}=\mathbf{1}\{\mathrm{type}(\ell)=k\}\in\{0,1\}.
 \label{eq:cell-indicator}
@@ -44,18 +44,18 @@ The typed-cell fraction is the cell-level share \(p_{k}^{\mathrm{cell}}=\sum_{\e
 
 \paragraph{Reportability gate.}
 The reportability gate is evaluated on the pre-gate reference profiles \(P\), after the same library normalization used to construct the reference, and before the platform-corrected working signature is used for the Poisson fit. Thus \(p_{\mathrm{mal}}\) and \(p_{\mathrm{nbr}}\) denote the locked malignant and neighbor columns of \(P\); \(S\) is retained for composition fitting and is not substituted into the gate. This distinction follows the released implementation and makes the gate input explicit.
-Native cosine is the uninterpolated column cosine
+Native cosine is the uninterpolated column cosine of Equation~\eqref{eq:native-cosine}:
 \begin{equation}
 \cos(p_{\mathrm{mal}},p_{\mathrm{nbr}})=\frac{p_{\mathrm{mal}}^{\top}p_{\mathrm{nbr}}}{\lVert p_{\mathrm{mal}}\rVert_2\,\lVert p_{\mathrm{nbr}}\rVert_2}.
 \label{eq:native-cosine}
 \end{equation}
-The frozen threshold applied to \eqref{eq:native-cosine} is \(c^\star=0.80\),
+The frozen threshold applied to \eqref{eq:native-cosine} is \(c^\star=0.80\), giving the gate of Equation~\eqref{eq:keep-gate}:
 \begin{equation}
 \cos(p_{\mathrm{mal}},p_{\mathrm{nbr}})\ge c^\star \;\Rightarrow\; \text{ABSTAIN},\qquad
 \cos(p_{\mathrm{mal}},p_{\mathrm{nbr}})< c^\star \;\Rightarrow\; \text{KEEP}.
 \label{eq:keep-gate}
 \end{equation}
-The value \(0.80\) was fixed as a round pre-sweep operating value carried over from the parent stack; it is not an optimum from a ROC analysis, a theoretical derivation, or a sweep over these libraries. On the KEEP branch of \eqref{eq:keep-gate} a tumor fraction \(\hat\pi_{s,\mathrm{mal}}\) is written. On ABSTAIN the malignant coordinate is held as missing and the remaining types are renormalized,
+The value \(0.80\) was fixed as a round pre-sweep operating value carried over from the parent stack; it is not an optimum from a ROC analysis, a theoretical derivation, or a sweep over these libraries. On the KEEP branch of \eqref{eq:keep-gate} a tumor fraction \(\hat\pi_{s,\mathrm{mal}}\) is written. On ABSTAIN the malignant coordinate is held as missing and the remaining types are renormalized, as given by Equation~\eqref{eq:abstain}:
 \begin{equation}
 \hat\pi_{s,\mathrm{mal}}\leftarrow\mathrm{missing},\qquad
 \hat\pi_{s,k}\leftarrow\frac{\hat\pi_{s,k}}{\sum_{k'\neq\mathrm{mal}}\hat\pi_{s,k'}}\quad(k\neq\mathrm{mal}).
@@ -64,7 +64,7 @@ The value \(0.80\) was fixed as a round pre-sweep operating value carried over f
 The renormalization in \eqref{eq:abstain} leaves gated tumor RMSE on ABSTAIN missing, not zero. Because withholding a malignant coordinate can inflate a collinear neighbor, the remaining coordinates are interpreted as a conditional composition after malignant withholding; this potential bias is quantified in the revision sensitivity analysis rather than hidden by scoring the missing coordinate as zero. This is an intentional output state: an ABSTAIN spot is retained for the non-malignant composition question, while the unsupported malignant coordinate remains missing. The reported simplex is consequently conditional on withholding and must not be read as an unbiased estimate of the original full composition. Native calls at interpolation fraction \(t=0\) are CosMx BCC cosine \(0.6037\) (KEEP), CosMx NSCLC cosine \(0.6482\) (KEEP), CosMx colorectal cosine \(0.5058\) (KEEP), CosMx HCC cosine \(0.6486\) (KEEP), CosMx PDAC cosine \(0.8616\) (ABSTAIN), then openST cosine \(0.9727\), Xenium cosine \(0.9802\), and Xenium FLEX cosine \(0.9770\) (ABSTAIN).
 
 \paragraph{Designated neighbor and complete-scan audit.}
-The historical operating call uses the designated malignant--neighbor pair specified for each library before the call is reported; that pair is retained as the primary estimand and is not silently replaced by a result-dependent maximum. For the sensitivity analysis, the eligible set is defined independently of the decision as
+The historical operating call uses the designated malignant--neighbor pair specified for each library before the call is reported; that pair is retained as the primary estimand and is not silently replaced by a result-dependent maximum. For the sensitivity analysis, the eligible set is defined independently of the decision, as given by Equation~\eqref{eq:eligible-neighbors}:
 \begin{equation}
 \mathcal E_L=\{k\in\mathcal T_L: k\neq k_{\mathrm{mal}},\; n_{L,k}\ge n_{\min},\; k\text{ is represented in the locked reference for }L\},
 \label{eq:eligible-neighbors}
@@ -72,7 +72,7 @@ The historical operating call uses the designated malignant--neighbor pair speci
 where \(\mathcal T_L\) is the annotated type set for library \(L\), \(n_{L,k}\) is the available typed-cell count, and \(n_{\min}\) is the reference-support floor. The analysis reports both the historical designated value and the descriptive maximum \(\max_{k\in\mathcal E_L}\cos(p_{\mathrm{mal}},p_k)\). The maximum is a prespecified sensitivity estimand over all represented eligible non-malignant columns; it is reported alongside, rather than substituted for, the historical operating pair.
 
 \paragraph{Interpolation dose.}
-The collinearity sweep replaces the malignant signature with
+The collinearity sweep replaces the malignant signature by the interpolation of Equation~\eqref{eq:interpolate}:
 \begin{equation}
 s(t)=(1-t)\,s_{\mathrm{mal}}+t\,s_{\mathrm{nbr}},\qquad t\in\{0,0.1,\ldots,1.0\}.
 \label{eq:interpolate}
@@ -80,7 +80,7 @@ s(t)=(1-t)\,s_{\mathrm{mal}}+t\,s_{\mathrm{nbr}},\qquad t\in\{0,0.1,\ldots,1.0\}
 At each \(t\) of \eqref{eq:interpolate}, \eqref{eq:native-cosine} is evaluated on \(s(t)\) and \(s_{\mathrm{nbr}}\). Ungated tumor RMSE is recorded at every \(t\) on a 400-spot subset, a fixed compute budget that keeps the eleven-point sweep over three substrates (33 fits) comparable at one spot count. The KEEP/ABSTAIN overlay leaves gated tumor RMSE missing on refused \(t\). A spot bootstrap with \(B=1000\) supplies a percentile 95\% interval on the \(t=0\) tumor fractions. Full-\(n\) confirmation repeats \(t=0\) on 6971 openST, 2864 Xenium, and 5686 CosMx spots.
 
 \paragraph{Donor split.}
-Directed transfer uses Patient\_ID as the donor key,
+Directed transfer uses Patient\_ID as the donor key, giving the disjointness of Equation~\eqref{eq:donor-split}:
 \begin{equation}
 \{\text{spot patient}\}\cap\{\text{reference patient}\}=\emptyset.
 \label{eq:donor-split}
@@ -88,7 +88,7 @@ Directed transfer uses Patient\_ID as the donor key,
 Pairs satisfying \eqref{eq:donor-split} are condition-matched: A with B (Ulcerated nodular) and C with D (wound time course). This analysis computes A from B, B from A, and D from C. The C-from-D composition is the recorded four-edge close. The wound axis is read on Yerly BCC Patients C and D.
 
 \paragraph{Evaluation matrix.}
-Figure~\ref{fig:donor}A reports Overall RMSE, Tumor RMSE, Type PCC, and Spot PCC on each directed edge. With locked truth \(\pi_{s,k}\) and estimate \(\hat\pi_{s,k}\) on \(n\) spots and \(K\) types,
+Figure~\ref{fig:donor}A reports Overall RMSE, Tumor RMSE, Type PCC, and Spot PCC on each directed edge. With locked truth \(\pi_{s,k}\) and estimate \(\hat\pi_{s,k}\) on \(n\) spots and \(K\) types, the metrics of Equations~\eqref{eq:overall-rmse}--\eqref{eq:spot-pcc} are:
 \begin{align}
 \mathrm{RMSE}
 &= \sqrt{\frac{1}{nK}\sum_{s=1}^{n}\sum_{k=1}^{K}(\hat\pi_{s,k}-\pi_{s,k})^{2}},
@@ -103,7 +103,7 @@ Figure~\ref{fig:donor}A reports Overall RMSE, Tumor RMSE, Type PCC, and Spot PCC
 &= \frac{1}{|S_+|}\sum_{s\in S_+}\mathrm{corr}(\pi_{s,\cdot},\hat\pi_{s,\cdot}).
 \label{eq:spot-pcc}
 \end{align}
-The correlation in \eqref{eq:type-pcc} and \eqref{eq:spot-pcc} is Pearson,
+The correlation in \eqref{eq:type-pcc} and \eqref{eq:spot-pcc} is Pearson, as given by Equation~\eqref{eq:pearson}:
 \begin{equation}
 \mathrm{corr}(a,b)=\frac{\sum_{i}(a_i-\bar a)(b_i-\bar b)}{\sqrt{\sum_{i}(a_i-\bar a)^{2}}\,\sqrt{\sum_{i}(b_i-\bar b)^{2}}}.
 \label{eq:pearson}
