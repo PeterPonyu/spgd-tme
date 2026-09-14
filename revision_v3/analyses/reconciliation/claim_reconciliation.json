@@ -118,10 +118,10 @@
       "metric": "cosine",
       "value": "raw 0.987505; canonical P 0.977005",
       "interval": "both ABSTAIN",
-      "source_artifact": "data/plotdata/F2_realgt2_cosine.csv; revision_v3/out/gate_input_fulln.json",
-      "manuscript_location": "Methods/Materials/Results/F12 (canonical 0.9770); historical 0.987505 retained in evidence only",
+      "source_artifact": "scripts/07_confirm_realgt2_cosine.py (raw audit recomputable); revision_v3/out/gate_input_fulln.json (canonical P); data/plotdata/F2_realgt2_cosine.csv (harmonized to canonical)",
+      "manuscript_location": "Methods/Materials/Results/F12 (canonical 0.9770); historical 0.987505 in README + this row only",
       "status": "RECONCILED_WITH_HISTORICAL_VARIANT",
-      "note": "Current operating gate uses library-size-normalized P=0.977005; raw cell-mean audit 0.987505 is retained as historical provenance. Both calls ABSTAIN."
+      "note": "Current operating gate uses library-size-normalized P=0.977005; raw cell-mean audit 0.987505 retained as historical provenance in README and here. Both calls ABSTAIN."
     },
     {
       "claim_id": "G09",
