@@ -35,6 +35,7 @@ from generate_tables import ITEM_LABEL, ROLE_LABEL, ROLE_OVERRIDE  # noqa: E402
 PLOTDATA = ROOT / "data" / "plotdata"
 LOCKS = ROOT / "locks"
 RENDER = ROOT / "manuscript" / "scripts"
+REVISION = ROOT / "revision_v3"
 OUT = ROOT / "supplementary"
 # Not inside submission/: the capsule assembler empties that directory, and not
 # inside the bundle either, because the archive would then have to hash itself.
@@ -58,6 +59,15 @@ LOCKS_WITHHELD = ("input_sha256.txt",)
 # rather than drawn here. It is bookkeeping between two repositories and carries
 # no plotted value, so it is not part of what a reader is promised.
 PLOTDATA_WITHHELD = ("CBC_spatial_maps.REUSE",)
+# Audit tables the response letters cite by role rather than by panel: the
+# complete 109-pair scan behind R2-14 and the prose lock specification behind
+# R2-3. Neither is plotted-panel input, so neither lives in plotdata/; they ship
+# under analyses/ instead, through the same copy path (codename rewrite,
+# provenance strip, forbidden-token scan) as everything else.
+ANALYSES_EXTRA = (
+    ("out/complete_eligible_scan.csv", "complete_eligible_scan.csv"),
+    ("NEIGHBOR_RULE_LOCK_SPEC.md", "NEIGHBOR_RULE_LOCK_SPEC.md"),
+)
 # Two locks record where a file sat on the machine that ran the sitting. That is
 # provenance for this repository and not for a reader, and it is the only content
 # in the locks that names a path, so the key goes rather than its value being
@@ -262,6 +272,8 @@ Contents
   plotdata/    one table per panel; the values the figures and tables plot
   locks/       the constants frozen before any sweep, and the input hashes
   render/      the scripts that draw every figure and write every table body
+  analyses/    audit tables the response letters cite: the complete 109-pair
+               scan and the prose neighbor-rule lock specification
   SHA256SUMS.txt
 
 Reproducing a figure or a table
@@ -333,6 +345,13 @@ def main() -> None:
             copy_script(src, dst, R_ENTRY[src.name])
         else:
             copy_text(src, dst)
+
+    (OUT / "analyses").mkdir(parents=True)
+    for src_rel, dst_name in ANALYSES_EXTRA:
+        src = REVISION / src_rel
+        if not src.is_file():
+            sys.exit(f"FAIL: bundle names missing audit table {src_rel}")
+        copy_file(src, OUT / "analyses" / public_name(dst_name))
 
     missing = [name for name in REQUIRED_EVIDENCE if not (OUT / "plotdata" / public_name(name)).is_file()]
     if missing:

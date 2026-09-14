@@ -92,3 +92,12 @@ def test_index_does_not_call_an_emit_stage_a_figure_number():
     assert any(line.strip() == "Emit stage F9" for line in lines)
     assert not any(line.strip() == "Figure 9" for line in lines)
     assert any(line.strip() == "Table 1" for line in lines)
+
+
+def test_revision_audit_tables_ship_with_the_bundle():
+    """R2-P3 names the lock specification and R2-P14 the complete pair scan as
+    Supplementary evidence. Both must be configured to ship, whatever plotdata
+    happens to contain, or the letters point at files a reviewer cannot open."""
+    assert "analyses/" in supp.README
+    for src_rel, _ in supp.ANALYSES_EXTRA:
+        assert (supp.REVISION / src_rel).is_file(), src_rel
