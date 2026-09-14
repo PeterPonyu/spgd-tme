@@ -204,12 +204,13 @@ and share first authorship.\quad
 \section{Discussion}
 \input{discussion.tex}
 
-% The float queue drains before the Discussion closes, so the \FloatBarrier alone
-% keeps the seven declaration statements together on one page without a \clearpage
-% and without leaving a mostly blank page ahead of them. The statements still have to
-% arrive in one piece; test_back_matter_layout enforces that against the built PDF
-% rather than against this line.
+% The \FloatBarrier drains the float queue before the Discussion closes, and the
+% \clearpage then starts the declarations on a fresh page so the seven statements
+% arrive in one piece. The Discussion fills the preceding page, so the break costs
+% no visible whitespace. test_back_matter_layout enforces the one-page rule against
+% the built PDF rather than against this line.
 \FloatBarrier
+\clearpage
 % Frontiers generates the ethics and data statements from the submission form, but
 % author contributions and funding must be in the source file, and a reviewer reading
 % the PDF alone should see all of them.
