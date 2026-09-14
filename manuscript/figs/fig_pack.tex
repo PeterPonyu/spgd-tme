@@ -142,7 +142,7 @@
   \node[tme step, text width=1.30cm] (fc) at (2.16,0.50) {fit\\{\tiny 8.37 s}};
   \node[tme hot,  text width=1.30cm] (fd) at (-2.16,-0.66) {self-gate\\{\tiny 47.96 s}};
   \node[tme op,   text width=1.30cm] (fe) at (0.00,-0.66) {gate\\{\tiny 0.001 s}};
-  \node[tme step, text width=1.30cm] (ff) at (2.16,-0.66) {simplex\\{\tiny 3.06 s}};
+  \node[tme step, text width=1.30cm] (ff) at (2.16,-0.66) {Poisson\\{\tiny 3.06 s}};
   \draw[tme arr] (fa) -- (fb);
   \draw[tme arr] (fb) -- (fc);
   \draw[tme arr] (fc.south) -- ++(0,-0.14) -| (fd.north);
