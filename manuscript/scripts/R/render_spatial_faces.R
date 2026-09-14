@@ -67,7 +67,7 @@ f3 <- stack_spatial(
     row_fill(list(g3c, g3d), c(packed_aspect(pc), packed_aspect(pd))),
     row_fill(list(g3e, g3f), c(0.38, 0.38))
   ),
-  guide_h = 0.11
+  guide_h = 0.07
 )
 f3_tag <- theme(
   plot.tag = element_text(size = TME_TAG_PT, family = TME_FONT, face = "bold"),
@@ -76,7 +76,7 @@ f3_tag <- theme(
 )
 tme_save(
   f3$plot + plot_annotation(tag_levels = "A") & f3_tag,
-  "F3_cohort", 11.2, 11.2 * sum(f3$heights) + 0.40, figdir
+  "F3_cohort", 11.2, 11.2 * sum(f3$heights) + 0.10, figdir
 )
 if (identical(Sys.getenv("TME_RENDER_ONLY"), "F3")) {
   quit(save = "no")
