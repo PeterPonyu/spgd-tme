@@ -1,6 +1,6 @@
 # SPGD-TME figure contract (2026-08-27)
 
-User bar: **14 data figures + 3 tables of data faces**, plus **1** numbered protocol figure (15 figures + 3 tables).
+User bar: **14 data figures + 4 tables of data faces**, plus **1** numbered protocol figure (15 figures + 4 tables).
 
 Figures 2–12 carry at least panels A–E (target A–F). Figures 13–15 are the V3 revision boards (rule audit, calibration, full-n/comparator). The four former TikZ schematics live as panels of Figure 1.
 

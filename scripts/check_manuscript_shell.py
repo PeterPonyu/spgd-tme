@@ -26,6 +26,7 @@ REQUIRED_CAPTIONS = (
     "T1_materials.tex",
     "T2_timing.tex",
     "T3_donor_matrix.tex",
+    "T4_gate_calls.tex",
 )
 REQUIRED_EVIDENCE = (
     "F2_pair_cards.csv",
@@ -115,6 +116,7 @@ LABEL_TABLE = {
     "tab:materials": "T1_materials.tex",
     "tab:timing": "T2_timing.tex",
     "tab:donor": "T3_donor_matrix.tex",
+    "tab:gate-calls": "T4_gate_calls.tex",
 }
 _SENTENCE = re.compile(r"(?<=\.)\s+(?=[A-Z\\])")
 _METRIC = re.compile(r"\\\((0\.\d{4})\\\)")
@@ -201,8 +203,8 @@ def main() -> None:
     if r"\input{figs/fig_pack.tex}" not in body:
         raise SystemExit("manuscript missing merged fig_pack.tex")
     contract = ROOT / "FIGURES.md"
-    if not contract.is_file() or "14 data figures + 3 tables" not in contract.read_text():
-        raise SystemExit("missing 14+3 figure contract")
+    if not contract.is_file() or "14 data figures + 4 tables" not in contract.read_text():
+        raise SystemExit("missing 14+4 figure contract")
     n_fig = body.count("\\begin{figure}")
     if n_fig != 15:
         raise SystemExit(f"manuscript must contain exactly 15 numbered figures, found {n_fig}")
@@ -224,7 +226,7 @@ def main() -> None:
     reader_body = "\n".join(
         [(MS / name).read_text() for name in PROSE_FILES]
         + [(MS / "captions" / name).read_text() for name in REQUIRED_CAPTIONS]
-        + [(MS / "tables" / name).read_text() for name in ("T1_materials.tex", "T2_timing.tex", "T3_donor_matrix.tex")]
+        + [(MS / "tables" / name).read_text() for name in ("T1_materials.tex", "T2_timing.tex", "T3_donor_matrix.tex", "T4_gate_calls.tex")]
     ).lower()
     for tok in READER_LEAKS:
         if tok in reader_body:

@@ -1,6 +1,6 @@
 # SPGD-TME V3 figure contract (2026-09-12)
 
-The V3 review build contains one numbered protocol figure, 14 data figures + 3 tables. F13--F15 are revision analyses: rule-selection/perturbation stress tests, truth-stratified calibration, and the full-input/comparator audit. Their values are part of the review evidence and remain available even if the final journal package moves selected panels to supplementary material.
+The V3 review build contains one numbered protocol figure, 14 data figures + 4 tables. F13--F15 are revision analyses: rule-selection/perturbation stress tests, truth-stratified calibration, and the full-input/comparator audit. Their values are part of the review evidence and remain available even if the final journal package moves selected panels to supplementary material.
 
 ## Display inventory for the R2-15 allocation
 

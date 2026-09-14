@@ -81,7 +81,7 @@ def test_the_first_page_states_the_word_and_float_counts():
     )
     assert stated, "the first page does not state the word, figure and table counts"
     words, figures, tables = (int(g.replace(",", "")) for g in stated.groups())
-    assert (figures, tables) == (15, 3), f"stated {figures} figures and {tables} tables"
+    assert (figures, tables) == (15, 4), f"stated {figures} figures and {tables} tables"
     assert words <= 12000, f"stated {words} words against a 12,000 limit"
 
     if shutil.which("texcount") is None:

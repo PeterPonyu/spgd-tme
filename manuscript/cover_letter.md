@@ -36,7 +36,7 @@ Two changes in this revision are worth the editor's attention. The platform clai
 submitted text asserted has been withdrawn and replaced by a tested statement that we report
 as underpowered at eight libraries, and an audit prompted by the review found that the
 historical malignant–neighbour pair was not selected by a single uniform rule, which the
-revision now specifies in full. The revision also carries 18 display objects against a combined cap of 15 for this article type; all are retained because each carries evidence the reviewers requested, and the counts are stated on the first page.
+revision now specifies in full. The revision presents 15 figures and 4 tables, above the nominal 15-object combined cap for this article type; all are retained as review evidence and the counts are stated on the first page.
 
 No new data were generated, and every library is named by repository accession in the Data
 availability statement. The manuscript is not under consideration elsewhere and has not been
