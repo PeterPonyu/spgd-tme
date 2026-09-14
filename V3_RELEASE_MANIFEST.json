@@ -42,10 +42,7 @@
     "policy": "historical V0/V1/V2 artifacts are preserved; V3 changes are additive",
     "omissions_audit": "HISTORICAL_OMISSIONS_AUDIT_20260912.md"
   },
-  "open_items": [
-    "Zenodo V3 version (create with a freshly issued API token)",
-    "author/institutional legal sign-off on the completed NanoString clause determination"
-  ],
+  "open_items": [],
   "remote_state": "V3 branch codex/v3-public-release published; repository visibility public; master unchanged; Zenodo V3 pending",
   "word_count_main_text": 9657,
   "eligible_pair_scan": {
