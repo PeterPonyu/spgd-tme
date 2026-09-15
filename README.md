@@ -81,7 +81,10 @@ V3 is additive and does not rewrite historical calls.
 
 Cite a frozen build through its versioned Zenodo record rather than through a branch name.
 
-The V2 reproducibility package is deposited and citable. The V3 repository branch is now
-publicly visible and accompanies the manuscript as the review-build source. A versioned V3
-Zenodo deposit has not yet been created; until that deposit exists, cite the V2 archive DOI
-for the archival release and use the V3 branch as the review-build source.
+The V2 reproducibility package is deposited at
+[10.5281/zenodo.22726775](https://doi.org/10.5281/zenodo.22726775).
+The V3 review-build source is archived at
+[10.5281/zenodo.22759793](https://doi.org/10.5281/zenodo.22759793)
+(concept DOI [10.5281/zenodo.22759792](https://doi.org/10.5281/zenodo.22759792)).
+Cite the versioned record for a frozen build; use the public
+`codex/v3-public-release` branch only when the live source is required.

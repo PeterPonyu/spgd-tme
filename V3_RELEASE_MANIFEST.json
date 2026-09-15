@@ -1,12 +1,12 @@
 {
   "release": "SPGD-TME V3 review build",
-  "generated": "2026-09-13",
+  "generated": "2026-09-14",
   "authoritative_source_tree": "manuscript/",
   "capture_tree": "research/results/SPGD_TME_REVISION/SUBMISSION_CAPTURE_V3_20260912",
   "manuscript_pdf": "manuscript/main.pdf",
   "figures": 15,
-  "tables": 3,
-  "pages": 28,
+  "tables": 4,
+  "pages": 29,
   "canonical_gate_input": "P (library-size-normalized mean reference profile)",
   "fit_signature": "S (platform-corrected working signature)",
   "operating_neighbor_rule": "historical designated malignant-neighbor pair; complete maximum-over-eligible scan is sensitivity estimand",
@@ -43,8 +43,8 @@
     "omissions_audit": "HISTORICAL_OMISSIONS_AUDIT_20260912.md"
   },
   "open_items": [],
-  "remote_state": "V3 branch codex/v3-public-release published; repository visibility public; master unchanged; Zenodo V3 pending",
-  "word_count_main_text": 9483,
+  "remote_state": "V3 branch codex/v3-public-release published; repository visibility public; Zenodo V3 published",
+  "word_count_main_text": 9944,
   "eligible_pair_scan": {
     "all_column_pairs": 112,
     "eligible_pairs": 109,
@@ -65,6 +65,9 @@
   "source_repository_visibility": "public (changed from private after the review-build commit)",
   "zenodo": {
     "v2": "10.5281/zenodo.22726775 (published)",
-    "v3": "not created; pending a freshly issued token and an author-approved payload"
+    "v3": "10.5281/zenodo.22759793 (published)",
+    "v3_concept": "10.5281/zenodo.22759792",
+    "v3_payload": "spgd-tme-v3-03b1517.tar.gz",
+    "v3_source_commit": "03b15179a809f37f7c29f871429921569dfbe439"
   }
 }

@@ -109,6 +109,7 @@ coordinate is reported as missing, never scored as zero.
 - cell2location / RCTD are re-scored from the deconv-lab pipeline's real saved runs via
   `comparator_matched.py` (set `SPGD_DECONV_ROOT`); a from-scratch install is only needed to
   regenerate those saved outputs.
-- The `codex/v3-public-release` GitHub branch is public. A V3 Zenodo deposit is still pending
-  creation with a fresh credential and a final payload audit; the V2 DOI remains the citable
-  archival release until then.
+- The `codex/v3-public-release` GitHub branch is public. The V3 review-build archive is
+  [10.5281/zenodo.22759793](https://doi.org/10.5281/zenodo.22759793). The V2 DOI
+  [10.5281/zenodo.22726775](https://doi.org/10.5281/zenodo.22726775) remains the citable
+  archival release of the earlier public package.

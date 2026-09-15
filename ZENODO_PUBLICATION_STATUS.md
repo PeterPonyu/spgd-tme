@@ -13,21 +13,23 @@ The pre-existing baseline record `10.5281/zenodo.21869991` was inspected and lef
 
 ## V3 status
 
-**No V3 Zenodo version has been created or published.** The V3 package accompanies the
-manuscript as Supplementary Material, and its deposit is scheduled for acceptance so that the
-archived version matches the accepted text. Creating it requires a current API token; no
-previously exposed token may be reused.
+The V3 review-build archive is published at [10.5281/zenodo.22759793](https://doi.org/10.5281/zenodo.22759793)
+(concept DOI [10.5281/zenodo.22759792](https://doi.org/10.5281/zenodo.22759792)).
 
-## V3 upload candidate
+- Zenodo record: `22759793`
+- State verified through the public API: `done`
+- Published file: `spgd-tme-v3-03b1517.tar.gz`
+- Published file size: 78,414,118 bytes
+- Zenodo file checksum: `md5:5ac5d2e15d87870650a55d21b3ee6138`
+- Local archive SHA-256: `93f426371c03f5122fa85c80464042b6c67a8bc95fc13e44af548eea352c851e`
+- Source commit inside the archive: `03b15179a809f37f7c29f871429921569dfbe439`
 
-A sanitized V3 candidate archive and its SHA-256 manifest are prepared in the local handoff
-directory. The candidate is generated directly from the public review branch and has not been
-uploaded or published; its extracted contents were re-scanned for machine-local paths,
-credentials, internal workflow documents, and confidential agreement files before release.
+The V2 DOI remains the citable archival release of the earlier public package. The V3 record
+is a new software deposit linked to V2 by `isVersionOf`; it does not reuse the V2 concept DOI.
 
 ## Source repository visibility
 
 The Git repository backing this release is **public** on the `codex/v3-public-release` branch. An
 unauthenticated GitHub API request returns HTTP 200 with `private=false`; the public branch
-resolves to the reviewed V3 source commit. The V3 Zenodo deposit remains separate and is not
-claimed until it is created and verified.
+resolves to the reviewed V3 source commit. Later citation commits that name the V3 DOI are
+additive and are not inside the deposited tarball.
