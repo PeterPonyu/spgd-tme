@@ -103,13 +103,13 @@ coordinate is reported as missing, never scored as zero.
 
 ## Release status and follow-up
 
-- R2-16 NanoString licence: the governing non-commercial agreement was read clause by clause;
+- R2-16 NanoString licence: the governing non-commercial agreement was reviewed in full;
   the semantic clause determination and redistribution boundary are recorded in the top-level
   `LICENSES.md`. The confidential agreement text is not redistributed.
 - cell2location / RCTD are re-scored from the deconv-lab pipeline's real saved runs via
   `comparator_matched.py` (set `SPGD_DECONV_ROOT`); a from-scratch install is only needed to
   regenerate those saved outputs.
-- The `codex/v3-public-release` GitHub branch is public. The V3 review-build archive is
+- The V3 review-build archive is
   [10.5281/zenodo.22759793](https://doi.org/10.5281/zenodo.22759793). The V2 DOI
   [10.5281/zenodo.22726775](https://doi.org/10.5281/zenodo.22726775) remains the citable
   archival release of the earlier public package.
