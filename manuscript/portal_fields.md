@@ -86,7 +86,7 @@ institution rather than four variants. Everything above it goes in the Departmen
 > every figure and table are provided as Supplementary Material with this submission; the
 > reference matrices are derived from the public libraries named above and are identified
 > in that bundle by digest rather than redistributed under their source licences. The
-> same review-build source is archived at Zenodo, doi:10.5281/zenodo.22759793, in
+> same review-build source is archived at Zenodo, doi:10.5281/zenodo.22759792, in
 > the form already used for the parent estimator (Fu et al., 2026, doi:10.5281/zenodo.21869991).
 > Requests for any input not covered above should go to the corresponding author.
 

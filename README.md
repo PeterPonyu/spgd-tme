@@ -84,6 +84,6 @@ Cite a frozen build through its versioned Zenodo record.
 
 The V2 reproducibility package is deposited at
 [10.5281/zenodo.22726775](https://doi.org/10.5281/zenodo.22726775).
-The V3 review-build source is archived at
-[10.5281/zenodo.22759793](https://doi.org/10.5281/zenodo.22759793)
-(concept DOI [10.5281/zenodo.22759792](https://doi.org/10.5281/zenodo.22759792)).
+The V3 review-build source is archived under concept DOI
+[10.5281/zenodo.22759792](https://doi.org/10.5281/zenodo.22759792),
+which always resolves to the latest published version.
