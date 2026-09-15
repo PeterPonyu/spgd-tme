@@ -37,7 +37,7 @@ platform-level statement: rather than asserting platform independence, the revis
 as an explicitly power-limited observation across eight libraries, grounded in a variance
 decomposition that does not depend on the underpowered test. Second, in response to the review
 we now specify in full the rule by which the malignant–neighbour pair is designated, making the
-selection criterion explicit and auditable. The revision presents 15 figures and 4 tables, above the nominal 15-object combined cap for this article type; all are retained as review evidence and the counts are stated on the first page.
+selection criterion explicit and auditable.
 
 No new data were generated, and every library is named by repository accession in the Data
 availability statement. The manuscript is not under consideration elsewhere and has not been
