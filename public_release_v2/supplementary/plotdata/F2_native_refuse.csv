@@ -1,4 +1,0 @@
-substrate,malignant,neighbor,cosine,c_star,decision
-openst,Tumor,Tumor_Keratin_Pearl,0.972678,0.8,ABSTAIN
-cosmx,Cancer.cells,Normal.Kerat,0.603666,0.8,KEEP
-xenium,Invasive_Tumor,Prolif_Invasive_Tumor,0.980196,0.8,ABSTAIN

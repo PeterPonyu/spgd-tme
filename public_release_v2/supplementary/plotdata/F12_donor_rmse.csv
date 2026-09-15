@@ -1,5 +1,0 @@
-edge,overall_rmse,spot_pcc,n_spots
-BCC B from A,0.0659,0.9528,2020
-BCC D from C,0.0906,0.9037,3261
-BCC A from B,0.1349,0.803,1194
-NSCLC P1 from P0,0.1066,0.8415,4237

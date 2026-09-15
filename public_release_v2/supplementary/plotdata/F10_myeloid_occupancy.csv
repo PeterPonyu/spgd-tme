@@ -1,4 +1,0 @@
-pair,type,mean,zero_rate,source
-A_from_B,MoMacDC,0.080336,0.538526,q1_truth
-B_from_A,MoMacDC,0.012888,0.858911,q1_truth
-D_from_C,MoMacDC,0.063606,0.727998,q1_truth

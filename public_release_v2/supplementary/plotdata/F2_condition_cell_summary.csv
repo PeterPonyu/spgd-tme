@@ -1,9 +1,0 @@
-patient,condition,n_cells,cancer_fraction,fibroblast_fraction,momacdc_fraction
-PatientA,Ulcerated_nodular,20730,0.492233,0.227545,0.070622
-PatientB,Ulcerated_nodular,41728,0.827694,0.105565,0.010137
-PatientC,Baseline,21291,0.76018,0.131746,0.009675
-PatientC,Unwound,48293,0.859027,0.074048,0.007351
-PatientC,Wound,20903,0.664785,0.20021,0.034971
-PatientD,Baseline,17729,0.886288,0.060692,0.005697
-PatientD,Unwound,18530,0.839072,0.077658,0.01252
-PatientD,Wound,27745,0.539557,0.182916,0.126581

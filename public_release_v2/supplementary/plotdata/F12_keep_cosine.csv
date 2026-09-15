@@ -1,9 +1,0 @@
-substrate,malignant,neighbor,cosine,c_star,decision
-CosMx BCC,Cancer.cells,Normal.Kerat,0.603666,0.8,KEEP
-CosMx NSCLC,tumor,fibroblast,0.648151,0.8,KEEP
-CosMx CRC,tumor,fibroblast,0.505826,0.8,KEEP
-CosMx HCC,tumor,Stellate.cells,0.648597,0.8,KEEP
-CosMx PDAC,tumor,CAF,0.861599,0.8,ABSTAIN
-openST,Tumor,Tumor_Keratin_Pearl,0.972678,0.8,ABSTAIN
-Xenium,Invasive_Tumor,Prolif_Invasive_Tumor,0.980196,0.8,ABSTAIN
-Xenium FLEX,Invasive_Tumor,Prolif_Invasive_Tumor,0.987505,0.8,ABSTAIN

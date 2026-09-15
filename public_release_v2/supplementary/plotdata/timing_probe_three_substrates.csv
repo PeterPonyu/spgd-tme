@@ -1,6 +1,0 @@
-job,n_spots,seconds,source,started_utc
-cosmx_t0_fulln,5686,234.554,timing_probe.csv,2026-08-27T07:13:13.321579+00:00
-openst_t0_fulln,6971,267.696,timing_probe_three_substrates,2026-08-27T07:13:13.321579+00:00
-xenium_t0_fulln,2864,24.158,timing_probe_three_substrates,2026-08-27T07:13:13.321579+00:00
-projected_11_x_sum3_hours,33,1.608,11 * (openst+xenium+cosmx)_fulln_t0 / 3600,2026-08-27T07:13:13.321579+00:00
-naive_33_x_cosmx_hours,33,2.15,33 * cosmx_fulln / 3600,2026-08-27T07:13:13.321579+00:00

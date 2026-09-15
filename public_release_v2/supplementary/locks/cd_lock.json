@@ -1,8 +1,0 @@
-{
-  "pair": "C_from_D",
-  "method": "OUR-v4",
-  "RMSE": 0.1149,
-  "PCC_type": 0.7708,
-  "PCC_spot": 0.8773,
-  "source": "locked"
-}

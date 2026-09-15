@@ -1,3 +1,0 @@
-OK A_from_B: types=8 spots=1194
-OK B_from_A: types=8 spots=2020
-OK D_from_C: types=8 spots=3261

@@ -1,2 +1,0 @@
-substrate,reference,malignant,neighbor,cosine,xenium_ref_cosine,c_star,decision,n_spots,source
-xenium_flex,FLEX_orthogonal,Invasive_Tumor,Prolif_Invasive_Tumor,0.987505,0.980196,0.8,ABSTAIN,2864,confirm_cosine_only

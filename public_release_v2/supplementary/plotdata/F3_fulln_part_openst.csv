@@ -1,2 +1,0 @@
-substrate,t,n_spots,n_pred,n_truth,cosine,tumor_rmse,malignant,neighbor,c_star,abstain,source
-openst,0.0,6971,6971,6971,0.972678,0.090296,Tumor,Tumor_Keratin_Pearl,0.8,True,confirm_t0_fulln

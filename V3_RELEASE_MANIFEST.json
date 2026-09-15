@@ -38,9 +38,8 @@
     }
   ],
   "historical_preservation": {
-    "v2_source": "public_release_v2/",
-    "policy": "historical V0/V1/V2 artifacts are preserved; V3 changes are additive",
-    "omissions_audit": "HISTORICAL_OMISSIONS_AUDIT_20260912.md"
+    "v2_source": "Zenodo 10.5281/zenodo.22726775",
+    "policy": "historical V2 artifacts are archived at the V2 Zenodo DOI; V3 changes are additive"
   },
   "open_items": [],
   "remote_state": "repository public; Zenodo V3 published",

@@ -1,4 +1,0 @@
-pair,spot_donor,ref_donor,n_spots,median_cells,approx_um,n_types
-A_from_B,PatientA,PatientB,1194,17.0,45.66,8
-B_from_A,PatientB,PatientA,2020,21.0,45.09,8
-D_from_C,PatientD,PatientC,3261,19.0,42.57,8
