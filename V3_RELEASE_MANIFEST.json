@@ -64,9 +64,9 @@
   "source_repository_visibility": "public (changed from private after the review-build commit)",
   "zenodo": {
     "v2": "10.5281/zenodo.22726775 (published)",
-    "v3": "10.5281/zenodo.22759793 (published)",
-    "v3_concept": "10.5281/zenodo.22759792",
-    "v3_payload": "spgd-tme-v3-03b1517.tar.gz",
-    "v3_source_commit": "03b15179a809f37f7c29f871429921569dfbe439"
+    "v3_concept": "10.5281/zenodo.22759792 (cite this; resolves to the newest version)",
+    "v3_latest_version": "3.0.2 - 10.5281/zenodo.22764388",
+    "v3_payload": "spgd-tme-v3-184beab-source.tar.gz",
+    "v3_source_commit": "184beabd5faabb298a32eea2159872ad8b2f7323"
   }
 }
