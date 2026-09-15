@@ -28,6 +28,9 @@ sed -i 's/\\hskip0pt%DIFAUXCMD/\\hskip0pt\\relax%DIFAUXCMD/g' main_diff_V2_to_V3
 sed -i 's/\\csname \\DIFadd{\([A-Za-z]*\)}\\endcsname/\\csname \1\\endcsname/g' main_diff_V2_to_V3.tex
 # Bibliographies are generated output, not a manuscript change.  Replace the
 # flattened added bibliography with the current bbl so unchanged references stay black.
+# latexdiff lengthens the Discussion, so the journal \clearpage would leave two
+# leftover lines alone on the next page. Keep the float drain; drop the page
+# break so Declarations continue on that page instead of after a white gap.
 python - <<'PY2'
 from pathlib import Path
 d=Path("main_diff_V2_to_V3.tex"); b=Path("main.bbl")
@@ -38,6 +41,18 @@ bs=bb.find("\\begin{thebibliography}"); be=bb.find("\\end{thebibliography}", bs)
 if min(start,end,bs,be) < 0:
     raise SystemExit("bibliography boundaries not found")
 s=s[:start]+"\\bibliographystyle{plainnat}\n"+bb[bs:be+len("\\end{thebibliography}")]+s[end+len("\\end{thebibliography}"):]
+last = "\\DIFadd{The computational cost of the added decision layer"
+if last not in s:
+    raise SystemExit("last Discussion paragraph not found")
+s = s.replace(
+    last,
+    "\\enlargethispage{2\\baselineskip}\n" + last,
+    1,
+)
+marker = "\\DIFaddbegin \\FloatBarrier\n\\DIFaddend \\clearpage"
+if marker not in s:
+    raise SystemExit("Discussion FloatBarrier/clearpage marker not found")
+s = s.replace(marker, "\\DIFaddbegin \\FloatBarrier\n\\DIFaddend", 1)
 d.write_text(s)
 PY2
 
