@@ -43,3 +43,6 @@ submission/
 # submission/, so the reviewer archive is written beside its own bundle.
 supplementary/
 supplementary.zip
+
+# Reviewer responses: kept local for portal upload, not published.
+responses/
