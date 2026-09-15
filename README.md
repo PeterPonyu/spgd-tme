@@ -55,7 +55,7 @@ The release runs in dependency order:
 
 ## Tested environment
 
-CPython 3.13.7; R with ggplot2, patchwork, dplyr, tidyr, ragg, and Cairo; a TeX Live
+CPython 3.13; R with ggplot2, patchwork, dplyr, tidyr, ragg, and Cairo; a TeX Live
 installation with `latexmk`, `bibtex`, and `latexdiff` for the manuscript builds. Wall-clock
 timings were measured on an Intel Core Ultra 9 275HX (24 logical CPUs, 62 GiB RAM) with no
 accelerator; they are environment-specific benchmarks, not hardware-independent constants.
