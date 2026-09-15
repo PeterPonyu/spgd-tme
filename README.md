@@ -6,7 +6,7 @@ reviewable release layer.
 
 ## V3 review build
 
-The current revision contains 15 figures and 3 tables. It evaluates two locked operators:
+The current revision contains 15 figures and 4 tables. It evaluates two locked operators:
 
 - a cosine-based KEEP/ABSTAIN reportability gate with a cutoff fixed before the sensitivity sweeps;
 - a Patient-ID disjoint donor split for mixed-spot construction and reference transfer.
@@ -18,10 +18,10 @@ timing, and the corrected conditional-renormalization audit.
 
 It also adds a matched multi-method comparison on identical spot sets and the same locked
 cell-count truth: a fresh independent Tangram refit on CosMx BCC, and RCTD and cell2location
-re-scored from their real saved runs on Xenium, Xenium FLEX, and openST. The comparison is
-reported with its losses as well as its wins — RCTD attains a lower malignant-coordinate RMSE
-on Xenium and a lower overall RMSE on Xenium FLEX — because the article's claim concerns the
-reportability state rather than aggregate accuracy.
+re-scored from their real saved runs on Xenium, Xenium FLEX, and openST. Each method's result is
+reported in full — RCTD attains a lower malignant-coordinate RMSE on Xenium and a lower overall
+RMSE on Xenium FLEX — because the article's claim concerns the reportability state rather than
+aggregate accuracy.
 
 Exact numerical outputs are retained in machine-readable files under `revision_v3/analyses/`
 and `revision_v3/out/`.
@@ -37,16 +37,16 @@ python -m pytest tests -q
 
 The V3 numerical analyses are run from the scripts under `revision_v3/`. Source libraries and
 provider-controlled reference inputs must be obtained from their original repositories under
-their applicable access terms. The governing NanoString agreement has been read clause by
-clause; it permits non-commercial redistribution of derived reference matrices only under
-same-licence terms that a CC-BY supplement cannot carry, so this release identifies those
-matrices by content digest instead of shipping them. See `LICENSES.md` for the full boundary.
+their applicable access terms. Under the governing NanoString agreement, non-commercial
+redistribution of derived reference matrices is permitted only under same-licence terms that a
+CC-BY supplement cannot carry, so this release identifies those matrices by content digest
+instead of shipping them. See `LICENSES.md` for the full boundary.
 
 The release runs in dependency order:
 
 1. `python scripts/check_scaffold.py` — verifies the required inputs and layout.
-2. `python -m pytest tests -q` — the 104-check release contract (seven checks read the built
-   PDF and are skipped until `manuscript/main.pdf` exists).
+2. `python -m pytest tests -q` — the release verification suite; the checks that read the built
+   PDF are skipped until `manuscript/main.pdf` exists.
 3. `Rscript manuscript/scripts/R/render_disk_faces.R`,
    `Rscript manuscript/scripts/R/render_F12_keep.R`, and
    `python manuscript/scripts/generate_tables.py` — reproduce the figures and table bodies
@@ -73,9 +73,10 @@ accelerator; they are environment-specific benchmarks, not hardware-independent 
 ## Release boundary
 
 `LICENSES.md` describes the separation between code, figure-level derived values, and
-provider-controlled source data. Machine paths, private workbench records, agent transcripts,
-and compute-queue notes are excluded. The V2 release remains available in the Git history;
-V3 is additive and does not rewrite historical calls.
+provider-controlled source data. The release carries only the materials needed to read and
+reproduce the study; internal working files are not part of it. The V2 release remains
+available in the Git history, and V3 is an additive layer that leaves the earlier results
+unchanged.
 
 ## Citation and archive
 

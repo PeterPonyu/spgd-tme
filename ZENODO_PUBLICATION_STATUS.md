@@ -3,7 +3,7 @@
 The SPGD-TME V2 public reproducibility package is published at [10.5281/zenodo.22726775](https://doi.org/10.5281/zenodo.22726775).
 
 - Zenodo record: `22726775`
-- State verified through the public API: `done`
+- Publication state: `done`
 - Published file: `PUBLIC_RELEASE_V2_20260912.tar.gz`
 - Published file size: 38,561,772 bytes
 - Zenodo file checksum: `md5:f17eb25649b2989593b96dd9e881c6fb`
@@ -17,7 +17,7 @@ The V3 review-build archive is published at [10.5281/zenodo.22759793](https://do
 (concept DOI [10.5281/zenodo.22759792](https://doi.org/10.5281/zenodo.22759792)).
 
 - Zenodo record: `22759793`
-- State verified through the public API: `done`
+- Publication state: `done`
 - Published file: `spgd-tme-v3-03b1517.tar.gz`
 - Published file size: 78,414,118 bytes
 - Zenodo file checksum: `md5:5ac5d2e15d87870650a55d21b3ee6138`
@@ -29,7 +29,6 @@ is a new software deposit linked to V2 by `isVersionOf`; it does not reuse the V
 
 ## Source repository visibility
 
-The Git repository backing this release is **public** on the `codex/v3-public-release` branch. An
-unauthenticated GitHub API request returns HTTP 200 with `private=false`; the public branch
+The Git repository backing this release is public on the `codex/v3-public-release` branch, which
 resolves to the reviewed V3 source commit. Later citation commits that name the V3 DOI are
 additive and are not inside the deposited tarball.

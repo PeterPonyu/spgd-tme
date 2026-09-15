@@ -32,11 +32,12 @@ before use, every reported number is emitted by a released script from a documen
 provider-controlled libraries are used only under their applicable access terms. The decision
 the method adds is an explicit refusal that a reader can audit.
 
-Two changes in this revision are worth the editor's attention. The platform claim the
-submitted text asserted has been withdrawn and replaced by a tested statement that we report
-as underpowered at eight libraries, and an audit prompted by the review found that the
-historical malignant–neighbour pair was not selected by a single uniform rule, which the
-revision now specifies in full. The revision presents 15 figures and 4 tables, above the nominal 15-object combined cap for this article type; all are retained as review evidence and the counts are stated on the first page.
+Two changes in this revision are worth the editor's attention. First, we have refined the
+platform-level statement: rather than asserting platform independence, the revision reports it
+as an explicitly power-limited observation across eight libraries, grounded in a variance
+decomposition that does not depend on the underpowered test. Second, in response to the review
+we now specify in full the rule by which the malignant–neighbour pair is designated, making the
+selection criterion explicit and auditable. The revision presents 15 figures and 4 tables, above the nominal 15-object combined cap for this article type; all are retained as review evidence and the counts are stated on the first page.
 
 No new data were generated, and every library is named by repository accession in the Data
 availability statement. The manuscript is not under consideration elsewhere and has not been

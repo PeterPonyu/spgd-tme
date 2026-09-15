@@ -15,8 +15,8 @@ This release separates three kinds of material.
 
 The CosMx NSCLC and human liver libraries reach this work through the Zenodo redistribution at
 `10.5281/zenodo.15487520`, which deposits the governing agreement alongside the data. That
-agreement is the Bruker Spatial Biology Data License Agreement for Non-Commercial Use. It was
-read clause by clause for this release, and the determination is recorded here in semantic
+agreement is the Bruker Spatial Biology Data License Agreement for Non-Commercial Use. Its
+terms were reviewed in full for this release, and the determination is recorded here in semantic
 form; the agreement text itself is **not** redistributed, because the document is marked
 confidential by its provider.
 
@@ -44,5 +44,5 @@ institution.
 
 ## Not included
 
-The release deliberately omits private workbench records, machine-specific paths, agent
-transcripts, unpublished raw donor files, and the provider agreement text itself.
+The release deliberately omits internal working files, unpublished raw donor files, and the
+provider agreement text itself.

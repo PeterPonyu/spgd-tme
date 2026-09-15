@@ -20,6 +20,9 @@ data/donor_pairs/
 .omx/
 .claude/
 
+# Local working notes: byline/strategy scratch, never tracked or published.
+*.local.md
+
 # Derived from data/plotdata/ by manuscript/scripts; not a truth source.
 manuscript/figs/rendered/
 manuscript/*.pdf
