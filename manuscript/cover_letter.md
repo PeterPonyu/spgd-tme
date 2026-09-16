@@ -13,9 +13,16 @@ College of Preventive Medicine, Army Medical University, Chongqing, China
 
 Dear Editors,
 
+This letter is the first part of a single PDF. It continues with the revised manuscript in
+tracked-changes form, where every insertion and deletion against the reviewed version is
+marked and highlighted, so the changes described below can be read directly against the text
+that carries them. All analyses added in this revision appear in that manuscript, and the
+values behind every figure and table are supplied as Supplementary Material.
+
 We submit the revised version of *Two locked operators report mixed-spot TME composition on
 CosMx carcinomas* for consideration as a Methods article, with a point-by-point response to
-each reviewer and a short overview of the revision.
+each reviewer and a short overview of the revision. Each of those responses is likewise
+attached as a single PDF that carries the tracked-changes manuscript behind it.
 
 Spatial composition estimators write a malignant fraction into every mixed spot, including
 spots where the reference cannot separate the malignant program from the neighbour it is
