@@ -1,0 +1,5 @@
+benchmark,method,source,files_on_disk,per_spot_spread_field,withheld_coordinate_state
+Xenium,RCTD,"saved run, re-scored here",estimated_proportions.csv; provenance.json,none,no
+Xenium FLEX,RCTD,"saved run, re-scored here",estimated_proportions.csv; provenance.json,none,no
+openST,cell2location,"saved run, re-scored here",estimated_proportions.csv; native_interval_high.csv; native_interval_low.csv; posterior_predictive_high.csv; posterior_predictive_low.csv; provenance.json; run.log,native_interval_high.csv; native_interval_low.csv; posterior_predictive_high.csv; posterior_predictive_low.csv,no
+CosMx BCC,Tangram,refit here,"refit here; writes a mapping and cluster proportions, no per-spot interval",none,no

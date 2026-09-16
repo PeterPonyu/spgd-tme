@@ -25,6 +25,8 @@ data/donor_pairs/
 
 # Derived from data/plotdata/ by manuscript/scripts; not a truth source.
 manuscript/figs/rendered/
+# 300 dpi JPEGs copied from submission/ so the highlight PDF stays under 20 MB.
+manuscript/figs/highlight_raster/
 manuscript/*.pdf
 manuscript/*.bbl
 manuscript/*.blg

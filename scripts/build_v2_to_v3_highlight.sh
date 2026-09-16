@@ -74,9 +74,69 @@ s = s.replace(marker, "\\DIFaddbegin \\FloatBarrier\n\\DIFaddend", 1)
 d.write_text(s)
 PY2
 
+# The rendered figure PDFs total ~35 MB once pdfTeX embeds them, which is already
+# over a 20 MB attachment cap. The submission JPEGs are the same 300 dpi faces
+# the clean manuscript uses (that PDF is 14 MB). Point the highlight at those
+# rasters so the review aid can occupy a portal slot.
+python - <<'PY3'
+import re
+import shutil
+from pathlib import Path
+
+figures = {
+    2: "F2_hero",
+    3: "F3_cohort",
+    4: "F4_ulcerated",
+    5: "F5_wound",
+    6: "F6_keep",
+    7: "F7_dose",
+    8: "F8_donor",
+    9: "F9_myeloid",
+    10: "F10_eval",
+    11: "F11_floor",
+    12: "F12_keep",
+    13: "F13_revision_audit",
+    14: "F14_revision_support",
+    15: "F15_v3_fulln_comparator",
+}
+src_dir = Path("../submission")
+raster = Path("figs/highlight_raster")
+raster.mkdir(parents=True, exist_ok=True)
+missing = [n for n in figures if not (src_dir / f"Figure{n}.jpg").exists()]
+if missing:
+    raise SystemExit(
+        "highlight needs the submission JPEGs; run scripts/28_assemble_submission.py first"
+        f" (missing Figure{missing[0]}.jpg)"
+    )
+for n in figures:
+    shutil.copy2(src_dir / f"Figure{n}.jpg", raster / f"Figure{n}.jpg")
+
+stem_to_n = {stem: n for n, stem in figures.items()}
+tex = Path("main_diff_V2_to_V3.tex")
+pattern = re.compile(
+    r"(\\includegraphics(?:\[[^\]]*\])?)\{figs/rendered/([A-Za-z0-9_]+)\.pdf\}"
+)
+
+def repl(match):
+    stem = match.group(2)
+    if stem not in stem_to_n:
+        raise SystemExit(f"no submission JPEG for {stem}")
+    return f"{match.group(1)}{{figs/highlight_raster/Figure{stem_to_n[stem]}.jpg}}"
+
+text, n = pattern.subn(repl, tex.read_text())
+if n != len(figures):
+    raise SystemExit(f"rewrote {n} figure includes, expected {len(figures)}")
+tex.write_text(text)
+print(f"highlight figures: {n} includes -> submission JPEGs")
+PY3
+
 latexmk -pdf -g -interaction=nonstopmode main_diff_V2_to_V3.tex > /dev/null 2>&1 || true
 
 errors=$(grep -c '^! ' main_diff_V2_to_V3.log || true)
 pages=$(pdfinfo main_diff_V2_to_V3.pdf | awk '/^Pages/{print $2}')
-echo "highlight against ${OLD_REF}: ${pages} pages, ${errors} TeX errors"
+bytes=$(stat -c%s main_diff_V2_to_V3.pdf)
+echo "highlight against ${OLD_REF}: ${pages} pages, ${errors} TeX errors, ${bytes} bytes"
 [ "$errors" -eq 0 ]
+# 20 MB decimal, the stricter of the usual portal readings of "20 MB".
+python -c "import sys; sys.exit(0 if int('$bytes') < 20_000_000 else 1)"
+

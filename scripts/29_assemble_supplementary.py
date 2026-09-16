@@ -67,6 +67,35 @@ PLOTDATA_WITHHELD = ("CBC_spatial_maps.REUSE",)
 ANALYSES_EXTRA = (
     ("out/complete_eligible_scan.csv", "complete_eligible_scan.csv"),
     ("NEIGHBOR_RULE_LOCK_SPEC.md", "NEIGHBOR_RULE_LOCK_SPEC.md"),
+    # Everything below is a table a response letter quotes a number out of. The
+    # bundle used to ship only the scan and the lock spec, so a reviewer who
+    # wanted to check the comparator losses, the permutation and variance
+    # decomposition, the threshold grid or the abstention audit had the claim
+    # and not the table behind it.
+    ("out/comparator_matched.csv", "comparator_matched.csv"),
+    ("out/comparator_matched.json", "comparator_matched.json"),
+    ("out/comparator_tangram.json", "comparator_tangram.json"),
+    ("out/comparator_fields.csv", "comparator_fields.csv"),
+    ("out/platform_vs_collinearity.json", "platform_permutation_and_variance.json"),
+    ("out/clustered_bootstrap.json", "clustered_bootstrap.json"),
+    ("out/cutoff_separability.json", "cutoff_separability.json"),
+    ("out/threshold_grid.csv", "threshold_grid.csv"),
+    ("out/library_rule_comparison.csv", "library_rule_comparison.csv"),
+    ("out/gate_input_fulln.csv", "gate_input_fulln.csv"),
+    ("out/gate_input_fulln.json", "gate_input_fulln.json"),
+    ("out/stored_scan_summary.json", "stored_scan_summary.json"),
+    ("out/validation_anchor.csv", "validation_anchor.csv"),
+    ("out/bcc_abstain_downstream.json", "bcc_abstain_downstream.json"),
+    ("analyses/reporting/abstain_truth_corrected_summary.csv",
+     "abstain_truth_corrected_summary.csv"),
+    ("analyses/reporting/abstain_truth_malignant_strata.csv",
+     "abstain_truth_malignant_strata.csv"),
+    ("analyses/reporting/neighbor_denominator_reconciliation.csv",
+     "neighbor_denominator_reconciliation.csv"),
+    ("analyses/reporting/neighbor_max_rule_library_summary.csv",
+     "neighbor_max_rule_library_summary.csv"),
+    ("analyses/donor_strata/stratified_metrics.csv", "donor_stratified_metrics.csv"),
+    ("analyses/donor_strata/block_bootstrap_rmse.csv", "donor_block_bootstrap_rmse.csv"),
 )
 # Two locks record where a file sat on the machine that ran the sitting. That is
 # provenance for this repository and not for a reader, and it is the only content
@@ -149,9 +178,21 @@ def public_name(name: str) -> str:
     return name
 
 
+# Names of sibling workspaces on this machine. They mean nothing to a reader and
+# the release boundary forbids publishing them, so a provenance note that says
+# where a saved run came from is rewritten into what it says about the run.
+WORKBENCH = (
+    (r"the deconv-lab pipeline's real saved runs", "their own saved runs"),
+    (r"deconv-lab/?", "the benchmark workspace"),
+    (r"spgd-tme/?", "this release"),
+)
+
+
 def rewrite(text: str) -> str:
     for codename, public in CODENAME:
         text = re.sub(codename, public, text, flags=re.IGNORECASE)
+    for workbench, public in WORKBENCH:
+        text = re.sub(workbench, public, text)
     return text
 
 
@@ -272,8 +313,14 @@ Contents
   plotdata/    one table per panel; the values the figures and tables plot
   locks/       the constants frozen before any sweep, and the input hashes
   render/      the scripts that draw every figure and write every table body
-  analyses/    audit tables the response letters cite: the complete 109-pair
-               scan and the prose neighbor-rule lock specification
+  analyses/    the tables the response letters quote numbers out of: the
+               complete 112-column eligible-neighbour scan, the neighbour-rule
+               lock specification, the matched comparator scores against RCTD,
+               cell2location and Tangram, the library-clustered permutation test
+               and variance decomposition, the threshold grid and cutoff
+               separability record, the designated-versus-maximum rule
+               comparison, the full-n gate-input record, the forced-abstention
+               conditional audit, and the donor-stratified metrics
   SHA256SUMS.txt
 
 Reproducing a figure or a table

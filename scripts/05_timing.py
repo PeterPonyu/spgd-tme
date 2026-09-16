@@ -58,8 +58,15 @@ def hardware() -> str:
     return f"{model or 'CPU unknown'}; {cpus} logical CPUs; {ram}; {py}; CPU only"
 
 
-def timed_build(spots: str, ref: str, types: list[str], deconv) -> dict[str, float]:
-    """Run build_v4's sequence, timing each stage exactly once."""
+def timed_build(spots: str, ref: str, types: list[str], deconv,
+                pair: dict, c_star: float) -> dict[str, float]:
+    """Run build_v4's sequence, timing each stage exactly once.
+
+    The locked pair and cutoff are read once by the caller and passed in.
+    Reading them between two timed stages left about 1.5 ms of the build
+    outside every stage, so the stages summed to slightly less than the
+    build they are supposed to decompose.
+    """
     _nnls_setup = deconv._nnls_setup
     _specificity_weight = deconv._specificity_weight
     _fit_gamma_pois = deconv._fit_gamma_pois
@@ -78,26 +85,28 @@ def timed_build(spots: str, ref: str, types: list[str], deconv) -> dict[str, flo
     Pw, Yw = P * w[:, None], Y * w[None, :]
     times["specificity_weight"] = time.perf_counter() - t0
 
+    def dev(lg, Yt, Pw):
+        S = np.exp(lg)[:, None] * Pw
+        W = _poisson_fit(S, Yt, N_FIT)
+        r = W @ S.T + 1e-9
+        return float(np.mean(np.sum(r - Yt * np.log(r), axis=1)))
+
+    # The self-gate proper, from its own setup onwards: the held-out split, the
+    # two half fits, their deviance comparison, and the clip that turns the
+    # comparison into the transferable fraction g. Splitting Yw copies the
+    # matrix, which is the self-gate's work and not free; timing from after the
+    # split left about 1.3 ms of every build outside all six stages.
+    t0 = time.perf_counter()
     lo, hi = np.log(GAMMA_CLIP[0]), np.log(GAMMA_CLIP[1])
     rng = np.random.default_rng(SEED)
     perm = rng.permutation(Yw.shape[0])
     half = Yw.shape[0] // 2
     A, B = Yw[perm[:half]], Yw[perm[half:]]
     z = np.zeros(Pw.shape[0])
-
-    def dev(lg, Yt):
-        S = np.exp(lg)[:, None] * Pw
-        W = _poisson_fit(S, Yt, N_FIT)
-        r = W @ S.T + 1e-9
-        return float(np.mean(np.sum(r - Yt * np.log(r), axis=1)))
-
-    # The self-gate proper: two held-out halves, their deviance comparison, and
-    # the clip that turns the comparison into the transferable fraction g.
-    t0 = time.perf_counter()
     lgA = _fit_gamma_pois(Pw, A, N_GAMMA, N_FIT, lo, hi)
     lgB = _fit_gamma_pois(Pw, B, N_GAMMA, N_FIT, lo, hi)
-    gate = float(np.clip(0.5 * ((dev(z, B) - dev(lgA, B)) / abs(dev(z, B) + 1e-9)
-                                + (dev(z, A) - dev(lgB, A)) / abs(dev(z, A) + 1e-9)), 0.0, 1.0))
+    gate = float(np.clip(0.5 * ((dev(z, B, Pw) - dev(lgA, B, Pw)) / abs(dev(z, B, Pw) + 1e-9)
+                                + (dev(z, A, Pw) - dev(lgB, A, Pw)) / abs(dev(z, A, Pw) + 1e-9)), 0.0, 1.0))
     times["platform_self_gate"] = time.perf_counter() - t0
 
     t0 = time.perf_counter()
@@ -109,11 +118,9 @@ def timed_build(spots: str, ref: str, types: list[str], deconv) -> dict[str, flo
     pi_full = simplex(pd.DataFrame(_poisson_fit(S, Yw, N_FIT * 2), index=idx, columns=resolved))
     times["poisson_close"] = time.perf_counter() - t0
 
-    pairs = json.loads((LOCKS / "type_pairs.json").read_text())
-    c_star = float(json.loads((LOCKS / "c_star.json").read_text())["value"])
     t0 = time.perf_counter()
-    if should_abstain(float(pairs["openst"]["cosine"]), c_star):
-        apply_abstain(pi_full, [pairs["openst"]["malignant"]])
+    if should_abstain(float(pair["cosine"]), c_star):
+        apply_abstain(pi_full, [pair["malignant"]])
     times["reportability_gate"] = time.perf_counter() - t0
 
     return times
@@ -134,13 +141,16 @@ def main() -> None:
     subsample_spots(bench / "benchmark_spots.h5ad", 400, 0, spots)
     ref = bench / "reference_subset.h5ad"
 
+    pair = json.loads((LOCKS / "type_pairs.json").read_text())["openst"]
+    c_star = float(json.loads((LOCKS / "c_star.json").read_text())["value"])
+
     print("[T2] warm-up pass", flush=True)
-    timed_build(str(spots), str(ref), types, deconv)
+    timed_build(str(spots), str(ref), types, deconv, pair, c_star)
 
     runs = []
     for i in range(REPEATS):
         t0 = time.perf_counter()
-        times = timed_build(str(spots), str(ref), types, deconv)
+        times = timed_build(str(spots), str(ref), types, deconv, pair, c_star)
         total = time.perf_counter() - t0
         times["_total"] = total
         runs.append(times)
@@ -182,7 +192,11 @@ def main() -> None:
     pd.DataFrame(summary).to_csv(PLOTDATA / "T2_repeated_timing.csv", index=False)
     print(json.dumps(rows, indent=2))
     covered = sum(r["seconds"] for r in rows if r["step"] != "build_total")
-    print(f"[T2] steps sum to {covered:.3f} s against a measured build of {totals.mean():.3f} s")
+    gap = abs(covered - totals.mean())
+    print(f"[T2] steps sum to {covered:.6f} s against a measured build of {totals.mean():.6f} s "
+          f"(unattributed {gap * 1000:.3f} ms)")
+    if gap > 0.001:
+        raise SystemExit(f"[T2] {gap * 1000:.3f} ms of the build is outside every stage")
 
 
 if __name__ == "__main__":

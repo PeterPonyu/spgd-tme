@@ -93,7 +93,14 @@ def t2_done() -> bool:
         return False
     mean = float(rep.loc[rep["metric"] == "mean_s", "value"].iloc[0])
     total = float(df.loc[df["step"] == "build_total", "seconds"].iloc[0])
-    return abs(mean - total) <= 0.001
+    if abs(mean - total) > 0.001:
+        return False
+    # A decomposition that does not account for the build it decomposes is not a
+    # finished measurement.  An earlier probe left the locked-pair read between
+    # two stages, so 1.5 ms of every build sat outside all of them and the
+    # printed stages summed to less than the printed total.
+    steps = float(df.loc[df["step"] != "build_total", "seconds"].astype(float).sum())
+    return abs(steps - total) <= 0.001
 
 
 def t3_done() -> bool:
