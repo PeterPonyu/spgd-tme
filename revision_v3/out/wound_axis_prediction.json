@@ -1,0 +1,31 @@
+{
+  "pair": "D_from_C",
+  "malignant": "Cancer.cells",
+  "n_spots_scored": 3261,
+  "truth_drop_baseline_to_wound": 0.376,
+  "estimate_drop_baseline_to_wound": 0.3843,
+  "monotone_in_estimate": true,
+  "rows": [
+    {
+      "condition": "Baseline",
+      "n_spots": 977,
+      "truth_mean": 0.8425,
+      "estimate_mean": 0.8041,
+      "difference": -0.0385
+    },
+    {
+      "condition": "Unwound",
+      "n_spots": 812,
+      "truth_mean": 0.7518,
+      "estimate_mean": 0.6999,
+      "difference": -0.0519
+    },
+    {
+      "condition": "Wound",
+      "n_spots": 1472,
+      "truth_mean": 0.4665,
+      "estimate_mean": 0.4198,
+      "difference": -0.0468
+    }
+  ]
+}

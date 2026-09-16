@@ -13,16 +13,17 @@ College of Preventive Medicine, Army Medical University, Chongqing, China
 
 Dear Editors,
 
-This letter is the first part of a single PDF. It continues with the revised manuscript in
-tracked-changes form, where every insertion and deletion against the reviewed version is
-marked and highlighted, so the changes described below can be read directly against the text
-that carries them. All analyses added in this revision appear in that manuscript, and the
-values behind every figure and table are supplied as Supplementary Material.
+This letter is the first part of a single PDF. An overview of the revision follows it.
+The file ends with the revised manuscript in tracked-changes form, where every insertion
+and deletion against the reviewed version is marked and highlighted, so the changes
+described below can be read directly against the text that carries them. All analyses
+added in this revision appear in that manuscript, and the values behind every figure and
+table are supplied as Supplementary Material.
 
 We submit the revised version of *Two locked operators report mixed-spot TME composition on
 CosMx carcinomas* for consideration as a Methods article, with a point-by-point response to
-each reviewer and a short overview of the revision. Each of those responses is likewise
-attached as a single PDF that carries the tracked-changes manuscript behind it.
+each reviewer. Each reviewer attachment is a single PDF that carries this overview and the
+tracked-changes manuscript behind the letter.
 
 Spatial composition estimators write a malignant fraction into every mixed spot, including
 spots where the reference cannot separate the malignant program from the neighbour it is
@@ -34,8 +35,8 @@ builds mixed spots and reference from disjoint patients. Both are evaluated on p
 libraries spanning three assay platforms; the quantitative results are in the abstract.
 
 The work suits Frontiers in Genetics as a Methods article because its contribution is a
-checkable computational contract rather than a biological finding: every constant is frozen
-before use, every reported number is emitted by a released script from a documented input, and
+checkable computational contract rather than a biological finding: the cutoff is frozen
+before any sweep, every reported number is emitted by a released script from a documented input, and
 provider-controlled libraries are used only under their applicable access terms. The decision
 the method adds is an explicit refusal that a reader can audit.
 
@@ -50,7 +51,7 @@ than describing a rule those eight calls did not follow, and a single algorithmi
 locked for any further library. We judged it better to report what we found than to present the
 record more tidily than it supports.
 
-No new data were generated, and every library is named by repository accession in the Data
+No new data were generated, and every library is named by the repository that serves it in the Data
 availability statement. The manuscript is not under consideration elsewhere and has not been
 published elsewhere; the fixed composition core is cited for provenance through its software
 archive (doi:10.5281/zenodo.21869991). All authors have read and approved the submitted

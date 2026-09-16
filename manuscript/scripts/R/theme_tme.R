@@ -96,11 +96,16 @@ pretty_type <- function(x) {
 pretty_step <- function(x) {
   map <- c(
     "extract_signature" = "Signature extraction",
+    "signature_setup" = "Signature and spot setup",
     "specificity_weight" = "Specificity weights",
     "fit_gamma" = "Weighted fit",
+    "platform_factor_fit" = "Platform factor fit",
     "self_gate" = "Platform self-gate",
+    "platform_self_gate" = "Platform self-gate",
     "refuse" = "Reportability gate",
-    "poisson_fit" = "Poisson close"
+    "reportability_gate" = "Reportability gate",
+    "poisson_fit" = "Poisson close",
+    "poisson_close" = "Poisson close"
   )
   out <- unname(map[as.character(x)])
   ifelse(is.na(out), as.character(x), out)

@@ -199,10 +199,11 @@ eC <- ggplot(eC_d, aes(pair, RMSE, fill = source)) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.18))) +
   labs(x = NULL, y = "Donor RMSE") +
   theme_tme()
+timing <- timing[timing$step != "build_total", , drop = FALSE]
 timing$step <- factor(pretty_step(timing$step), levels = rev(pretty_step(timing$step)))
-# The self-gate is fifty times the next step, so on a shared vertical axis the
-# other five steps are invisible and their names have to be angled to fit. Laid
-# on its side each step gets a full-width label and prints its own seconds.
+# The self-gate is the largest stage of the current build, so on a shared
+# vertical axis the other steps flatten. Laid on its side each step gets a
+# full-width label and prints its own seconds.
 eD <- ggplot(timing, aes(step, seconds)) +
   geom_col(fill = oi("orange"), width = 0.66) +
   geom_text(

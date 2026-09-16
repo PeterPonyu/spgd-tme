@@ -76,6 +76,11 @@ ANALYSES_EXTRA = (
     ("out/comparator_matched.json", "comparator_matched.json"),
     ("out/comparator_tangram.json", "comparator_tangram.json"),
     ("out/comparator_fields.csv", "comparator_fields.csv"),
+    # The Abstract says the operators recover the wound axis and prints numbers
+    # that are locked truth. This is the estimate beside that truth, by wound
+    # condition, so the recovery claim has a table rather than an assertion.
+    ("out/wound_axis_prediction.csv", "wound_axis_prediction.csv"),
+    ("out/wound_axis_prediction.json", "wound_axis_prediction.json"),
     ("out/platform_vs_collinearity.json", "platform_permutation_and_variance.json"),
     ("out/clustered_bootstrap.json", "clustered_bootstrap.json"),
     ("out/cutoff_separability.json", "cutoff_separability.json"),
@@ -303,8 +308,8 @@ Two locked operators report mixed-spot TME composition on CosMx carcinomas
 This bundle is the material the Data availability statement names. It holds every
 number the figures and tables plot, the frozen constants those numbers were
 produced under, and the scripts that turn one into the other. It holds no
-sequencing data: the libraries are public and are cited by repository accession in
-the manuscript, and the reference matrices they yield are named here by content
+sequencing data: the libraries are public and are named by the repository that
+serves them in the manuscript, and the reference matrices they yield are named here by content
 hash rather than redistributed under their source licences.
 
 Contents

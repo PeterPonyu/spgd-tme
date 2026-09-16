@@ -46,9 +46,24 @@ three topic editors share an institution with any author.
 
 198 words against the 200-word cap.
 
-## Title
+## Abstract
 
-Two locked operators report mixed-spot TME composition on CosMx carcinomas
+Paste this into the manuscript-information Abstract field. It is the current
+abstract, not the Version 1 text still on the project page.
+
+> This study presents two locked operators around a training-free composition baseline in a standalone SPGD-TME Methods implementation, so that, for the locked or explicitly eligible malignant-neighbor comparison, a per-spot malignant fraction is written only where the reference can separate the malignant program from its neighbor: a KEEP/ABSTAIN reportability gate that withholds the malignant coordinate once the malignant-neighbor cosine reaches a frozen cutoff c* = 0.80, and a Patient_ID donor split that builds mixed spots and reference from disjoint patients. On four-patient CosMx basal-cell carcinoma the operators recover named tissue objects: ulcerated-nodular Patient B is tumor-rich relative to Patient A, the wound axis on D-from-C drops tumor fraction from 0.8425 to 0.4665 while fibroblast and MoMacDC rise, and directed transfer recovers composition most tightly on B from A (RMSE 0.0659, spot-level PCC 0.9528). The frozen cosine reports KEEP, and therefore a tumor fraction, on CosMx BCC (cosine 0.6037), independent CosMx NSCLC (tumor versus fibroblast 0.6482; directed-transfer RMSE 0.1066, spot-level PCC 0.8415), CosMx colorectal carcinoma (0.5058), and CosMx HCC (0.6486). It returns ABSTAIN, holding the malignant coordinate missing and continuing the remaining types on the simplex, on CosMx PDAC (0.8616), HNSCC openST (0.9727), breast Xenium (0.9802), and an orthogonal Xenium FLEX reference (0.9770). CosMx PDAC abstains on the same platform that carries all four KEEP calls, so the observed pattern is consistent with collinear type pairs; the present library-level design does not establish platform independence. A repeated 400-spot openST build takes 16.103 +/- 2.891 s (five warm runs; CV 17.95%), of which the in-memory reportability decision is 0.001 s, so reportability remains a small operation relative to the fixed baseline fit.
+
+## Running title
+
+Locked mixed-spot TME operators
+
+## Counts to type into the form
+
+Word count 11104. Figures 15. Tables 4.
+
+The Version 1 project page still shows FLEX 0.987505, "the cutoff separates collinear type pairs rather than assay platforms", and "0.001 s of a 60.252 s pass". Those are the submitted abstract. Replace them with the abstract above when the form is edited. Do not type a calendar date into any correspondence box.
+
+## Title
 
 ## Keywords
 
@@ -70,19 +85,24 @@ institution rather than four variants. Everything above it goes in the Departmen
 ## Data availability statement
 
 > This study is a reanalysis of public spatial transcriptomics data; no new data were
-> generated. The four-patient CosMx basal-cell carcinoma export that carries the wound axis
+> generated, and every library below is named with the repository that serves it. The
+> four-patient CosMx basal-cell carcinoma export that carries the wound axis
 > and the donor split is deposited at Zenodo under doi:10.5281/zenodo.14330691 (Andreatta
 > et al., 2024) and is described in Yerly et al., Nature Communications 2022 and Yerly et
 > al., bioRxiv 2025. The CosMx non-small-cell lung and human liver libraries are the
 > NanoString NSCLC and human liver FFPE releases (He et al., Nature Biotechnology 2022),
 > taken from the redistribution at Zenodo doi:10.5281/zenodo.15487520 and governed by the
-> NanoString data licence deposited in that record (Sun et al., 2025). The CosMx colorectal
+> NanoString data licence deposited in that record (Sun et al., 2025). That agreement is
+> the Bruker Spatial Biology Data License Agreement for Non-Commercial Use. Those terms are
+> not compatible with a CC-BY supplement, so the matrices derived from that release stay
+> under the deposited licence rather than the article terms. The CosMx colorectal
 > sections are at Zenodo doi:10.5281/zenodo.15574384 (Crowell et al., bioRxiv 2025). The
 > CosMx pancreatic library is at NCBI GEO under accession GSE277782 (Pei et al., Nature
 > 2025). The HNSCC openST library and the breast Xenium and Xenium FLEX libraries are the
 > public releases of their source publications (Schott et al., Cell 2024; Janesick et al.,
-> Nature Communications 2023). The values plotted behind every panel, the constants frozen
-> before any sweep, the content digest of every locked input, and the scripts that render
+> Nature Communications 2023). The values plotted behind every panel, the cutoff frozen
+> before any sweep, the locked constants as they stand, the content digest of every locked
+> input, and the scripts that render
 > every figure and table are provided as Supplementary Material with this submission; the
 > reference matrices are derived from the public libraries named above and are identified
 > in that bundle by digest rather than redistributed under their source licences. The
@@ -136,9 +156,19 @@ institution rather than four variants. Everything above it goes in the Departmen
 
 ## Files to upload
 
+Use the current pack, not `labs/active/spgd-tme/submission/`. Do not type a calendar
+date into any correspondence box.
+
 | Portal slot | File |
 |-------------|------|
-| Manuscript | `submission/manuscript.pdf` (and `manuscript.tex` if source is requested) |
-| Figures 1–15 | `submission/Figure1.jpg` … `Figure15.jpg`, 300 dpi at 180 mm |
+| Manuscript PDF | `manuscript.pdf` |
+| Manuscript source | `manuscript.tex` (one flattened file; JPEG figures; `\bibliography{references}`) |
+| Bibliography | `references.bib` (31 cited entries, each with a DOI) |
+| Figures 1–15 | `Figure1.jpg` … `Figure15.jpg`, 300 dpi; do not downsample |
 | Supplementary Material | `supplementary.zip` |
-| Cover letter | `manuscript/cover_letter.md`, pasted as plain text |
+| Reviewer 1 attachment | `merged/reviewer1_response_with_tracked_changes.pdf` |
+| Reviewer 2 attachment | `merged/reviewer2_response_with_tracked_changes.pdf` |
+| Editor / cover attachment | `merged/cover_letter_with_tracked_changes.pdf` |
+
+Paste, not upload: `cover_letter.txt`, `reviewer1_portal.txt`, `reviewer2_portal.txt`,
+`rebuttal_overview_portal.txt`, and the statement blocks above.

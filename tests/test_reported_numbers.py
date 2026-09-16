@@ -294,3 +294,35 @@ def test_the_rendered_evaluation_board_agrees_with_the_timing_table():
     # The profile the revision withdrew, in the artefact a reader looks at.
     for stale in ("47.96", "60.25", "22.56", "Signature extraction", "Weighted fit"):
         assert stale not in drawn, stale
+
+
+def test_recovery_claims_do_not_rest_on_a_truth_table():
+    """A sentence about the estimate must not be evidenced by the truth.
+
+    F9_D_from_C_spot_condition.csv is byte-identical to the truth maps on the
+    malignant column, yet the Abstract printed its numbers under "the operators
+    recover". Every check in this file compared a printed number to some table
+    and none asked what the table was, so the claim stayed green for three
+    rounds. This pins the distinction: the condition table is truth, and the
+    prose that claims recovery must be able to reach an estimate.
+    """
+    truth_rows = {r["spot"]: r for r in _rows("F9_D_from_C_spot_condition.csv")}
+    maps = {r[""]: r for r in _rows("F9_D_from_C_truth_maps.csv")}
+    shared = set(truth_rows) & set(maps)
+    assert shared, "the two D-from-C tables no longer share spots"
+    same = all(
+        math.isclose(float(truth_rows[s]["Cancer.cells"]),
+                     float(maps[s]["Cancer.cells"]), abs_tol=1e-12)
+        for s in shared
+    )
+    assert same, "F9_D_from_C_spot_condition is no longer the truth column"
+
+    body = _body_text()
+    if "per-spot estimate" not in body:
+        return
+    # The claim is made, so the estimate must exist as its own table.
+    estimate = PLOTDATA.parent.parent / "revision_v3/out/wound_axis_prediction.csv"
+    assert estimate.is_file(), (
+        "the text claims the gradient is visible in the per-spot estimate, but no "
+        "estimate table exists; run revision_v3/wound_axis_prediction.py"
+    )
