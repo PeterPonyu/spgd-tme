@@ -80,26 +80,35 @@ def main() -> None:
         encoding="utf-8",
     )
     timing_label = {
-        "extract_signature": "Signature extraction",
+        "signature_setup": "Signature and spot setup",
         "specificity_weight": "Specificity weights",
-        "fit_gamma": "Weighted fit",
-        "self_gate": "Platform self-gate",
-        "refuse": "Reportability gate",
-        "poisson_fit": "Poisson close",
+        "platform_self_gate": "Platform self-gate",
+        "platform_factor_fit": "Platform factor fit",
+        "poisson_close": "Poisson close",
+        "reportability_gate": "Reportability gate",
     }
-    steps = rows("T2_timing.csv")
-    pass_seconds = sum(float(r["seconds"]) for r in steps)
+    # build_total is the measured build these stages decompose, so it is the
+    # denominator rather than another addend; summing every row would count the
+    # build once as itself and once as its parts.
+    all_rows = rows("T2_timing.csv")
+    steps = [r for r in all_rows if r["step"] != "build_total"]
+    total_row = next(r for r in all_rows if r["step"] == "build_total")
+    build_seconds = float(total_row["seconds"])
     # The claim the table supports is that refusability is cheap relative to the
-    # fit it guards, which is a share of the pass and not an absolute duration.
+    # fit it guards, which is a share of the build and not an absolute duration.
     timing = [
         [
             esc(timing_label.get(r["step"], r["step"])),
-            floor_num(float(r["seconds"]), 3),
-            floor_num(100 * float(r["seconds"]) / pass_seconds, 2) + r"\%",
+            f"{float(r['seconds']):.3f} \\(\\pm\\) {float(r['seconds_sd']):.3f}",
+            floor_num(100 * float(r["seconds"]) / build_seconds, 2) + r"\%",
         ]
         for r in steps
     ]
-    timing.append(["One openST pass", f"{pass_seconds:.3f}", r"100\%"])
+    timing.append([
+        "One openST 400-spot build",
+        f"{build_seconds:.3f} \\(\\pm\\) {float(total_row['seconds_sd']):.3f}",
+        r"100\%",
+    ])
     substrate_label = SUBSTRATE_LABEL
     probes = {r["job"]: r for r in rows("timing_probe_three_substrates.csv")}
     throughput = []
@@ -110,7 +119,7 @@ def main() -> None:
             [substrate_label[key], str(spots), f"{seconds:.3f}", f"{1000 * seconds / spots:.1f}"]
         )
     (OUT / "T2_timing.tex").write_text(
-        table(["Operator step", "Seconds", "Share of pass"], timing, "lrr", rules_before=(len(steps),))
+        table(["Operator step", "Seconds (mean \\(\\pm\\) SD)", "Share of build"], timing, "lrr", rules_before=(len(steps),))
         + "\n\\vspace{4pt}\n\n"
         + table(
             [r"Full-\(n\) \(t=0\) pass", "Spots", "Seconds", "ms per spot"],

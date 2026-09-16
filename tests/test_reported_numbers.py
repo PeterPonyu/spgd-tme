@@ -119,18 +119,40 @@ def test_gate_cosines_match_keep_table():
         assert float(row["c_star"]) == 0.80
 
 
-def test_reported_pass_time_is_the_sum_of_the_timed_steps():
-    total = sum(float(r["seconds"]) for r in _rows("T2_timing.csv"))
-    assert f"{total:.3f}" == "60.252"
-    assert "60.252" in _body_text()
+def test_the_timed_steps_decompose_the_build_rather_than_overlapping_it():
+    """The stages must sum to the build they decompose, not to each other.
+
+    The superseded profile timed a whole build under the name of one of its own
+    stages, so its rows overlapped and summed to a duration no pass had.  Summing
+    the step rows against the separately measured ``build_total`` is what catches
+    that, and the earlier version of this test summed ``build_total`` in with the
+    steps, which would have passed on the broken table.
+    """
+    rows = {r["step"]: float(r["seconds"]) for r in _rows("T2_timing.csv")}
+    total = rows.pop("build_total")
+    assert math.isclose(sum(rows.values()), total, abs_tol=0.01)
+    assert f"{total:.3f}" in _body_text()
 
 
 def test_v3_repeated_timing_is_reported():
+    """Every timing figure in the prose comes off the tracked measurement."""
     body = _body_text()
-    assert "22.565" in body
-    assert "2.861" in body
-    assert "0.455" in body
+    summary = {r["metric"]: r["value"] for r in _rows("T2_repeated_timing.csv")}
+    steps = {r["step"]: r for r in _rows("T2_timing.csv")}
+
+    mean, sd = float(summary["mean_s"]), float(summary["sd_s"])
+    assert f"{mean:.3f}" in body
+    assert f"{sd:.3f}" in body
+    assert f"{float(summary['cv_pct']):.2f}" in body
     assert "five warm runs" in body
+
+    gate = steps["reportability_gate"]
+    self_gate = steps["platform_self_gate"]
+    assert f"{float(self_gate['seconds']):.3f}" in body
+    assert f"{float(self_gate['seconds_sd']):.3f}" in body
+    # The gate rounds to a millisecond; the share is what the prose claims for it.
+    assert f"{float(gate['seconds']):.3f}" in body
+    assert 100 * float(gate["seconds"]) / mean < 0.01
 
 
 def test_occupancy_sparsity_claims_match_the_type_floor():

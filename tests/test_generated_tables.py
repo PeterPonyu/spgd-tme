@@ -26,13 +26,21 @@ def test_regenerating_the_tables_reproduces_the_typeset_ones():
 
 
 def test_the_timing_table_shares_sum_to_the_pass_it_reports():
+    """The step shares must add to the build row, which is the last row before the rule.
+
+    Keying the total off the last row rather than off its wording means renaming
+    it cannot quietly leave the 100% row in the sum, which is how this check went
+    from catching drift to reporting 200%.
+    """
     body = (TABLES / "T2_timing.tex").read_text(encoding="utf-8")
+    rows = [line for line in body.splitlines() if line.endswith(r"\%" + " \\\\")]
+    assert len(rows) > 1, "no step rows parsed out of T2"
     shares = [
         float(cell.rstrip("\\%"))
-        for line in body.splitlines()
-        if line.endswith(r"\%" + " \\\\") and "One openST pass" not in line
+        for line in rows[:-1]
         for cell in [line.split("&")[-1].strip().removesuffix("\\\\").strip()]
         if not cell.startswith(r"\(<\)")
     ]
     assert shares, "no per-step shares parsed out of T2"
+    assert rows[-1].split("&")[-1].strip().removesuffix("\\\\").strip() == r"100\%"
     assert abs(sum(shares) - 100) < 0.05, f"steps sum to {sum(shares):.2f}%, not 100%"

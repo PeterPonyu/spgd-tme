@@ -1,9 +1,12 @@
 # Malignant-neighbor selection rule — author-lock specification (V3)
 
-Status: candidate specification for author decision. This document does not
-change any historical locked call. It records the rule options, the complete
-evidence generated in `revision_v3/`, and a recommendation, so the neighbor
-rule (R2-3) can be locked before any dependent downstream number is reported.
+Status: locked for prospective use. This document does not change, and does not
+describe, any of the eight historical calls. Those were designated by three
+different procedures, one of them outcome-dependent, which the Methods section
+now states in the manuscript rather than only here. What is locked below is the
+rule any further library must follow, fixed before a further call is made, so the
+designated pair stops being a per-library judgement. It records the rule options,
+the complete evidence generated in `revision_v3/`, and the selected rule.
 
 The frozen cutoff `c* = 0.80` is used exactly as locked and is not re-tuned
 anywhere in this analysis.

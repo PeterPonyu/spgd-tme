@@ -1,7 +1,8 @@
-step,seconds
-extract_signature,0.857891
-specificity_weight,0.000492
-fit_gamma,8.374243
-self_gate,47.960884
-refuse,0.00101
-poisson_fit,3.057825
+step,seconds,seconds_sd
+signature_setup,1.249347,0.315391
+specificity_weight,0.002011,5.6e-05
+platform_self_gate,17.722496,1.844694
+platform_factor_fit,8.705108,1.424624
+poisson_close,2.104908,0.469274
+reportability_gate,0.000806,7.6e-05
+build_total,29.786173,1.499969

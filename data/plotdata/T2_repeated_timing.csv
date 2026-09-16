@@ -1,8 +1,8 @@
 metric,value,note
-n_warm_runs,5,same 400-spot openST pass
-mean_s,22.565,wall time
-sd_s,2.861,wall time
-cv_pct,12.68,SD as share of mean
-min_s,19.026,range over runs
-max_s,25.588,range over runs
-hardware,Ultra 9 275HX with 24 CPUs and 62 GiB RAM; Python 3.13; CPU only,
+n_warm_runs,5,same 400-spot openST build
+mean_s,29.786,wall time
+sd_s,1.5,wall time
+cv_pct,5.04,SD as share of mean
+min_s,28.073,range over runs
+max_s,32.163,range over runs
+hardware,Intel(R) Core(TM) Ultra 9 275HX; 24 logical CPUs; 62 GiB RAM; Python 3.13; CPU only,

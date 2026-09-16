@@ -22,6 +22,9 @@ git -C "$ROOT" archive "$OLD_REF" manuscript | tar -x -C "$OLD_DIR"
 
 cd "$MS"
 latexdiff --flatten --disable-citation-markup "$OLD_DIR/manuscript/main.tex" main.tex > main_diff_V2_to_V3.tex
+# A clean flattened copy of the current manuscript: identical inputs leave the
+# body unmarked, so this supplies each table in its revised form.
+latexdiff --flatten --disable-citation-markup main.tex main.tex > main_diff_new_flat.tex
 
 sed -i 's/\\protect\([A-Za-z]\)/\\protect \1/g' main_diff_V2_to_V3.tex
 sed -i 's/\\hskip0pt%DIFAUXCMD/\\hskip0pt\\relax%DIFAUXCMD/g' main_diff_V2_to_V3.tex
@@ -32,9 +35,24 @@ sed -i 's/\\csname \\DIFadd{\([A-Za-z]*\)}\\endcsname/\\csname \1\\endcsname/g' 
 # leftover lines alone on the next page. Keep the float drain; drop the page
 # break so Declarations continue on that page instead of after a white gap.
 python - <<'PY2'
+import re
 from pathlib import Path
 d=Path("main_diff_V2_to_V3.tex"); b=Path("main.bbl")
 s=d.read_text(); bb=b.read_text()
+
+# latexdiff marks up table cells, and when it deletes a whole row it comments
+# out that row's terminating \\ along with the row.  The next \midrule then
+# lands inside an unfinished row and TeX stops on "Misplaced \noalign".  The
+# markup is not worth the breakage: a table's revision is legible from the table
+# itself, so each tabular is restored to its current form and the surrounding
+# prose keeps its highlight.
+TABULAR = re.compile(r"\\begin\{tabular\}.*?\\end\{tabular\}", re.S)
+clean = TABULAR.findall(Path("main_diff_new_flat.tex").read_text())
+marked = TABULAR.findall(s)
+if len(clean) != len(marked):
+    raise SystemExit(f"tabular counts differ: {len(marked)} in the diff, {len(clean)} current")
+for old, new in zip(marked, clean):
+    s = s.replace(old, new, 1)
 start=s.find("\\bibliographystyle{plainnat}")
 end=s.find("\\end{thebibliography}", start)
 bs=bb.find("\\begin{thebibliography}"); be=bb.find("\\end{thebibliography}", bs)

@@ -137,12 +137,16 @@
 \begin{scope}[shift={($(pF.center)+(0,-0.26)$)}]
   % The seconds ride inside their own box. Hung underneath, they were crossed by
   % the connector that carries the first row down to the second.
-  \node[tme step, text width=1.30cm] (fa) at (-2.16,0.50) {signature\\{\tiny 0.86 s}};
+  % Nodes run in the order the build runs them: the self-gate fits the platform
+  % factor on two held-out halves before the full factor fit, and the
+  % reportability gate is applied to the closed composition last. Seconds are the
+  % five-run means of Table 2, which decompose one build without overlapping.
+  \node[tme step, text width=1.30cm] (fa) at (-2.16,0.50) {signature\\{\tiny 1.25 s}};
   \node[tme step, text width=1.30cm] (fb) at (0.00,0.50) {weights\\{\tiny \(<\)0.01 s}};
-  \node[tme step, text width=1.30cm] (fc) at (2.16,0.50) {fit\\{\tiny 8.37 s}};
-  \node[tme hot,  text width=1.30cm] (fd) at (-2.16,-0.66) {self-gate\\{\tiny 47.96 s}};
-  \node[tme op,   text width=1.30cm] (fe) at (0.00,-0.66) {gate\\{\tiny 0.001 s}};
-  \node[tme step, text width=1.30cm] (ff) at (2.16,-0.66) {Poisson\\{\tiny 3.06 s}};
+  \node[tme hot,  text width=1.30cm] (fc) at (2.16,0.50) {self-gate\\{\tiny 17.72 s}};
+  \node[tme step, text width=1.30cm] (fd) at (-2.16,-0.66) {factor fit\\{\tiny 8.71 s}};
+  \node[tme step, text width=1.30cm] (fe) at (0.00,-0.66) {Poisson\\{\tiny 2.10 s}};
+  \node[tme op,   text width=1.30cm] (ff) at (2.16,-0.66) {gate\\{\tiny 0.001 s}};
   \draw[tme arr] (fa) -- (fb);
   \draw[tme arr] (fb) -- (fc);
   \draw[tme arr] (fc.south) -- ++(0,-0.14) -| (fd.north);

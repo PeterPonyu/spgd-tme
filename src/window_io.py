@@ -10,13 +10,27 @@ from src.paths import PLOTDATA
 F3_N = 33
 F3_PART_N = 11
 F5_N = 4
+# Stages of one composition build, timed so they do not overlap and so they sum
+# to the build they decompose. The earlier set timed the whole build under the
+# name "self_gate" beside three of that build's own internal stages.
 T2_STEPS = {
-    "extract_signature",
+    "signature_setup",
     "specificity_weight",
-    "fit_gamma",
-    "self_gate",
-    "refuse",
-    "poisson_fit",
+    "platform_self_gate",
+    "platform_factor_fit",
+    "poisson_close",
+    "reportability_gate",
+    "build_total",
+}
+# Run-to-run spread of the same repeats, written beside the decomposition.
+T2_REPEAT_METRICS = {
+    "n_warm_runs",
+    "mean_s",
+    "sd_s",
+    "cv_pct",
+    "min_s",
+    "max_s",
+    "hardware",
 }
 F3_PART_COLS = {
     "substrate",
@@ -68,7 +82,18 @@ def f5_done() -> bool:
 
 def t2_done() -> bool:
     df = _csv(PLOTDATA / "T2_timing.csv")
-    return df is not None and set(df["step"]) == T2_STEPS
+    if df is None or set(df["step"]) != T2_STEPS:
+        return False
+    # The run-to-run summary the review asked for comes off the same repeats, so
+    # the step is only done once both files exist and agree on the build they
+    # describe.  A summary left over from an earlier run reads as incomplete
+    # rather than as done, which is how the two drifted apart before.
+    rep = _csv(PLOTDATA / "T2_repeated_timing.csv")
+    if rep is None or not T2_REPEAT_METRICS <= set(rep["metric"]):
+        return False
+    mean = float(rep.loc[rep["metric"] == "mean_s", "value"].iloc[0])
+    total = float(df.loc[df["step"] == "build_total", "seconds"].iloc[0])
+    return abs(mean - total) <= 0.001
 
 
 def t3_done() -> bool:

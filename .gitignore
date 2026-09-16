@@ -29,6 +29,10 @@ manuscript/*.pdf
 manuscript/*.bbl
 manuscript/*.blg
 manuscript/main_diff_V2_to_V3.tex
+# The unmarked flattened copy the highlight build uses to restore its tables.
+manuscript/main_diff_new_flat.tex
+# Rendered from cover_letter.md by build_cover_letter.py; the markdown is source.
+manuscript/cover_letter.txt
 
 # Internal licence evidence: contains a provider-confidential agreement copy.
 # Never publish; kept out of the public release.

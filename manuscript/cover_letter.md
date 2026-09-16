@@ -35,9 +35,13 @@ the method adds is an explicit refusal that a reader can audit.
 Two changes in this revision are worth the editor's attention. First, we have refined the
 platform-level statement: rather than asserting platform independence, the revision reports it
 as an explicitly power-limited observation across eight libraries, grounded in a variance
-decomposition that does not depend on the underpowered test. Second, in response to the review
-we now specify in full the rule by which the malignant–neighbour pair is designated, making the
-selection criterion explicit and auditable.
+decomposition that does not depend on the underpowered test. Second, the review's question
+about how the malignant–neighbour pair is chosen led us to audit that step, and the audit found
+that three different procedures had been in use across the eight libraries, one of them
+outcome-dependent. The Methods now state all three as the historical operating estimand rather
+than describing a rule those eight calls did not follow, and a single algorithmic rule is
+locked for any further library. We judged it better to report what we found than to present the
+record more tidily than it supports.
 
 No new data were generated, and every library is named by repository accession in the Data
 availability statement. The manuscript is not under consideration elsewhere and has not been
