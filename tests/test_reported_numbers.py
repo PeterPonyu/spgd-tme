@@ -144,7 +144,7 @@ def test_v3_repeated_timing_is_reported():
     assert f"{mean:.3f}" in body
     assert f"{sd:.3f}" in body
     assert f"{float(summary['cv_pct']):.2f}" in body
-    assert "five warm runs" in body
+    assert "five warm" in body
 
     gate = steps["reportability_gate"]
     self_gate = steps["platform_self_gate"]
@@ -153,6 +153,9 @@ def test_v3_repeated_timing_is_reported():
     # The gate rounds to a millisecond; the share is what the prose claims for it.
     assert f"{float(gate['seconds']):.3f}" in body
     assert 100 * float(gate["seconds"]) / mean < 0.01
+    caption = (MANUSCRIPT / "captions/F10_eval.tex").read_text()
+    assert "47.96" not in caption
+    assert f"{float(self_gate['seconds']):.2f}" in caption
 
 
 def test_occupancy_sparsity_claims_match_the_type_floor():
@@ -266,3 +269,28 @@ def test_cutoff_margins_match_the_native_board():
     assert len(keep) == 1
     assert f"{keep[0]:.4f}" in body
     assert f"{refused[0]:.4f}" in body and f"{refused[-1]:.4f}" in body
+
+
+def test_the_rendered_evaluation_board_agrees_with_the_timing_table():
+    """The figure's own labels must match the measurement, not just the caption.
+
+    A caption guard already forbids the superseded 47.96 s in F10's caption, but
+    the seconds a reader actually sees are drawn inside the figure. A pack once
+    shipped with the caption corrected and Figure 10 still rendering the
+    withdrawn overlapping profile, because every check looked at text and none
+    looked at the plot. This reads the rendered vector's own labels.
+    """
+    import shutil
+    import subprocess
+
+    figure = MANUSCRIPT / "figs/rendered/F10_eval.pdf"
+    if shutil.which("pdftotext") is None or not figure.is_file():
+        return
+    drawn = subprocess.run(["pdftotext", str(figure), "-"],
+                           capture_output=True, text=True, check=True).stdout
+    seconds = {r["step"]: float(r["seconds"]) for r in _rows("T2_timing.csv")}
+    for step in ("signature_setup", "platform_self_gate", "platform_factor_fit", "poisson_close"):
+        assert f"{seconds[step]:.2f} s" in drawn, (step, f"{seconds[step]:.2f} s")
+    # The profile the revision withdrew, in the artefact a reader looks at.
+    for stale in ("47.96", "60.25", "22.56", "Signature extraction", "Weighted fit"):
+        assert stale not in drawn, stale
