@@ -1,31 +1,85 @@
 {
   "pair": "D_from_C",
-  "malignant": "Cancer.cells",
+  "types_scored": [
+    "Cancer.cells",
+    "Fibroblast",
+    "MoMacDC"
+  ],
   "n_spots_scored": 3261,
-  "truth_drop_baseline_to_wound": 0.376,
-  "estimate_drop_baseline_to_wound": 0.3843,
-  "monotone_in_estimate": true,
+  "refit_metrics": {
+    "RMSE": 0.090597,
+    "tumor_RMSE": 0.122219,
+    "PCC_spot": 0.903654
+  },
+  "published_metrics": {
+    "RMSE": 0.090597,
+    "PCC_spot": 0.903654,
+    "tumor_rmse": 0.122219
+  },
+  "environment": {
+    "python": "3.13.5",
+    "numpy": "2.2.6",
+    "pandas": "2.3.3"
+  },
+  "gradients": {
+    "Cancer.cells": {
+      "truth_change_baseline_to_wound": -0.376,
+      "estimate_change_baseline_to_wound": -0.3843,
+      "direction_agrees": true,
+      "estimate_monotone": true
+    },
+    "Fibroblast": {
+      "truth_change_baseline_to_wound": 0.1226,
+      "estimate_change_baseline_to_wound": 0.0689,
+      "direction_agrees": true,
+      "estimate_monotone": false
+    },
+    "MoMacDC": {
+      "truth_change_baseline_to_wound": 0.121,
+      "estimate_change_baseline_to_wound": 0.133,
+      "direction_agrees": true,
+      "estimate_monotone": true
+    }
+  },
   "rows": [
     {
       "condition": "Baseline",
       "n_spots": 977,
-      "truth_mean": 0.8425,
-      "estimate_mean": 0.8041,
-      "difference": -0.0385
+      "Cancer.cells_truth": 0.8425,
+      "Cancer.cells_estimate": 0.8041,
+      "Cancer.cells_difference": -0.0385,
+      "Fibroblast_truth": 0.0881,
+      "Fibroblast_estimate": 0.076,
+      "Fibroblast_difference": -0.0121,
+      "MoMacDC_truth": 0.007,
+      "MoMacDC_estimate": 0.0074,
+      "MoMacDC_difference": 0.0004
     },
     {
       "condition": "Unwound",
       "n_spots": 812,
-      "truth_mean": 0.7518,
-      "estimate_mean": 0.6999,
-      "difference": -0.0519
+      "Cancer.cells_truth": 0.7518,
+      "Cancer.cells_estimate": 0.6999,
+      "Cancer.cells_difference": -0.0519,
+      "Fibroblast_truth": 0.1209,
+      "Fibroblast_estimate": 0.0708,
+      "Fibroblast_difference": -0.0501,
+      "MoMacDC_truth": 0.0149,
+      "MoMacDC_estimate": 0.0214,
+      "MoMacDC_difference": 0.0065
     },
     {
       "condition": "Wound",
       "n_spots": 1472,
-      "truth_mean": 0.4665,
-      "estimate_mean": 0.4198,
-      "difference": -0.0468
+      "Cancer.cells_truth": 0.4665,
+      "Cancer.cells_estimate": 0.4198,
+      "Cancer.cells_difference": -0.0468,
+      "Fibroblast_truth": 0.2107,
+      "Fibroblast_estimate": 0.1449,
+      "Fibroblast_difference": -0.0658,
+      "MoMacDC_truth": 0.128,
+      "MoMacDC_estimate": 0.1404,
+      "MoMacDC_difference": 0.0124
     }
   ]
 }

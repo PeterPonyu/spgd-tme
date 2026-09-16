@@ -1,0 +1,4 @@
+quantity,n_spots,dimension,value,note
+full composition RMSE,5686,11,0.106347,all types including the malignant coordinate
+"conditional RMSE, zero-mass rows scored",5686,10,0.213989,superseded: an all-zero row is not a conditional composition
+"conditional RMSE, zero-mass rows excluded",4133,10,0.187631,matches the exclusion rule the 400-spot audit already uses

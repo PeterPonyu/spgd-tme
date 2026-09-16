@@ -1,4 +1,4 @@
-condition,n_spots,truth_mean,estimate_mean,difference
-Baseline,977,0.8425,0.8041,-0.0385
-Unwound,812,0.7518,0.6999,-0.0519
-Wound,1472,0.4665,0.4198,-0.0468
+condition,n_spots,Cancer.cells_truth,Cancer.cells_estimate,Cancer.cells_difference,Fibroblast_truth,Fibroblast_estimate,Fibroblast_difference,MoMacDC_truth,MoMacDC_estimate,MoMacDC_difference
+Baseline,977,0.8425,0.8041,-0.0385,0.0881,0.076,-0.0121,0.007,0.0074,0.0004
+Unwound,812,0.7518,0.6999,-0.0519,0.1209,0.0708,-0.0501,0.0149,0.0214,0.0065
+Wound,1472,0.4665,0.4198,-0.0468,0.2107,0.1449,-0.0658,0.128,0.1404,0.0124

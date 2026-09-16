@@ -33,13 +33,16 @@ from src.compute_gate import require_compute  # noqa: E402
 from src.paths import PLOTDATA  # noqa: E402
 
 OUT = Path(__file__).resolve().parent / "out"
-MIRROR = Path(os.environ.get(
-    "SPGD_DONOR_PAIRS",
-    "/home/zeyufu/Desktop/singlecell-genomics-research/research/results/"
-    "SPGD_TME_REVISION/MIRROR_v3_enhanced_20260912/data/donor_pairs",
-))
+# The donor pairs live in the response workspace beside this repository, not in
+# it. Point SPGD_DONOR_PAIRS at them; the default is the sibling layout and
+# carries no machine-specific prefix.
+MIRROR = Path(os.environ.get("SPGD_DONOR_PAIRS", str(
+    ROOT.parents[2] / "singlecell-genomics-research/research/results/SPGD_TME_REVISION"
+    / "MIRROR_v3_enhanced_20260912/data/donor_pairs")))
 PAIR = "D_from_C"
 MALIGNANT = "Cancer.cells"
+# The Abstract claims three things move together, so all three are scored.
+TRACKED_TYPES = ("Cancer.cells", "Fibroblast", "MoMacDC")
 ORDER = ("Baseline", "Unwound", "Wound")
 
 
@@ -64,43 +67,83 @@ def main() -> None:
     shared = [s for s in pi.index if s in conditions.index]
     print(f"[wound] {len(shared)} spots carry a wound condition", flush=True)
 
+    # The refit has to be the same fit the paper reports, or the table below
+    # describes a different run. Scored against the pair's own locked truth.
+    import numpy as np
+    shared_idx = [s for s in pi.index if s in truth.index]
+    a = truth.loc[shared_idx, list(pi.columns)].to_numpy(float)
+    b = pi.loc[shared_idx].to_numpy(float)
+    refit = {
+        "RMSE": round(float(np.sqrt(np.mean((a - b) ** 2))), 6),
+        "tumor_RMSE": round(float(np.sqrt(np.mean(
+            (truth.loc[shared_idx, MALIGNANT].to_numpy(float)
+             - pi.loc[shared_idx, MALIGNANT].to_numpy(float)) ** 2))), 6),
+        "PCC_spot": round(float(np.mean([
+            np.corrcoef(a[i], b[i])[0, 1] for i in range(len(a))
+            if a[i].std() > 0 and b[i].std() > 0])), 6),
+    }
+    published = {r["pair"]: r for r in pd.read_csv(
+        PLOTDATA / "F5_donor_transfer.csv").to_dict("records")}.get(PAIR, {})
+    print(f"[wound] refit RMSE {refit['RMSE']} against published "
+          f"{published.get('RMSE', 'n/a')}", flush=True)
+
+    # The per-spot matrix, so the next reader does not have to refit to check.
+    pi.loc[shared].to_csv(OUT / "wound_axis_per_spot_estimate.csv")
+
     rows = []
     for condition in ORDER:
         spots = [s for s in shared if conditions.loc[s, "condition"] == condition]
         if not spots:
             continue
-        est = [float(pi.loc[s, MALIGNANT]) for s in spots]
-        tru = [float(conditions.loc[s, MALIGNANT]) for s in spots]
-        rows.append({
-            "condition": condition,
-            "n_spots": len(spots),
-            "truth_mean": round(statistics.mean(tru), 4),
-            "estimate_mean": round(statistics.mean(est), 4),
-            "difference": round(statistics.mean(est) - statistics.mean(tru), 4),
-        })
+        row = {"condition": condition, "n_spots": len(spots)}
+        for kind in TRACKED_TYPES:
+            if kind not in pi.columns or kind not in conditions.columns:
+                continue
+            est = [float(pi.loc[s, kind]) for s in spots]
+            tru = [float(conditions.loc[s, kind]) for s in spots]
+            row[f"{kind}_truth"] = round(statistics.mean(tru), 4)
+            row[f"{kind}_estimate"] = round(statistics.mean(est), 4)
+            row[f"{kind}_difference"] = round(statistics.mean(est) - statistics.mean(tru), 4)
+        rows.append(row)
 
     OUT.mkdir(parents=True, exist_ok=True)
     frame = pd.DataFrame(rows)
     frame.to_csv(OUT / "wound_axis_prediction.csv", index=False)
 
-    drop_truth = rows[0]["truth_mean"] - rows[-1]["truth_mean"]
-    drop_est = rows[0]["estimate_mean"] - rows[-1]["estimate_mean"]
+    gradients = {}
+    for kind in TRACKED_TYPES:
+        tk, ek = f"{kind}_truth", f"{kind}_estimate"
+        if tk not in rows[0]:
+            continue
+        rising = rows[0][tk] < rows[-1][tk]
+        gradients[kind] = {
+            "truth_change_baseline_to_wound": round(rows[-1][tk] - rows[0][tk], 4),
+            "estimate_change_baseline_to_wound": round(rows[-1][ek] - rows[0][ek], 4),
+            "direction_agrees": (rows[-1][ek] > rows[0][ek]) == rising,
+            "estimate_monotone": all(
+                (rows[i + 1][ek] > rows[i][ek]) == rising for i in range(len(rows) - 1)),
+        }
     summary = {
         "pair": PAIR,
-        "malignant": MALIGNANT,
+        "types_scored": list(gradients),
         "n_spots_scored": len(shared),
-        "truth_drop_baseline_to_wound": round(drop_truth, 4),
-        "estimate_drop_baseline_to_wound": round(drop_est, 4),
-        "monotone_in_estimate": all(
-            rows[i]["estimate_mean"] > rows[i + 1]["estimate_mean"]
-            for i in range(len(rows) - 1)),
+        "refit_metrics": refit,
+        "published_metrics": {k: published.get(k) for k in ("RMSE", "PCC_spot", "tumor_rmse")},
+        "environment": {
+            "python": sys.version.split()[0],
+            "numpy": __import__("numpy").__version__,
+            "pandas": pd.__version__,
+        },
+        "gradients": gradients,
         "rows": rows,
     }
     (OUT / "wound_axis_prediction.json").write_text(json.dumps(summary, indent=2) + "\n")
 
     print(frame.to_string(index=False))
-    print(f"[wound] truth falls {drop_truth:.4f}, estimate falls {drop_est:.4f}; "
-          f"estimate monotone: {summary['monotone_in_estimate']}")
+    for kind, g in gradients.items():
+        print(f"[wound] {kind:<14} truth {g['truth_change_baseline_to_wound']:+.4f}  "
+              f"estimate {g['estimate_change_baseline_to_wound']:+.4f}  "
+              f"direction agrees: {g['direction_agrees']}  monotone: {g['estimate_monotone']}")
 
 
 if __name__ == "__main__":

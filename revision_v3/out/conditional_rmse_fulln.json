@@ -1,0 +1,33 @@
+{
+  "library": "CosMx BCC",
+  "n_spots_full": 5686,
+  "n_zero_nonmalignant_truth_excluded": 1553,
+  "zero_mass_fraction": 0.2731,
+  "full_composition_rmse": 0.106347,
+  "conditional_rmse_scored_with_zero_rows": 0.213989,
+  "conditional_rmse_excluding_zero_rows": 0.187631,
+  "comparability": "The full-composition RMSE is an 11-type score including the malignant coordinate; the conditional RMSE is a 10-type score of a different estimand after that coordinate is withheld. They are not two measurements of one quantity and their ordering does not establish that one neighbour rule is more accurate than another.",
+  "rows": [
+    {
+      "quantity": "full composition RMSE",
+      "n_spots": 5686,
+      "dimension": 11,
+      "value": 0.106347,
+      "note": "all types including the malignant coordinate"
+    },
+    {
+      "quantity": "conditional RMSE, zero-mass rows scored",
+      "n_spots": 5686,
+      "dimension": 10,
+      "value": 0.213989,
+      "note": "superseded: an all-zero row is not a conditional composition"
+    },
+    {
+      "quantity": "conditional RMSE, zero-mass rows excluded",
+      "n_spots": 4133,
+      "dimension": 10,
+      "value": 0.187631,
+      "note": "matches the exclusion rule the 400-spot audit already uses"
+    }
+  ]
+}
