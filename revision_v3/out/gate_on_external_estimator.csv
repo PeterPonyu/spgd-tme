@@ -1,0 +1,4 @@
+library,estimator,n_spots,locked_cosine,gate_decision,malignant_coordinate,malignant_rmse_of_that_coordinate,conditional_rmse_after_withholding,n_zero_nonmalignant_truth_excluded
+CosMx BCC,RCTD (saved spacexr 2.2.1),5686,0.603666,KEEP,reported,0.118696,0.179462,1553
+Xenium,RCTD (saved spacexr 2.2.1),2864,0.980196,ABSTAIN,withheld,0.125821,0.105753,16
+Xenium FLEX,RCTD (saved spacexr 2.2.1),2864,0.977005,ABSTAIN,withheld,0.150992,0.100753,16

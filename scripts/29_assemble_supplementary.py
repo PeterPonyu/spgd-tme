@@ -91,6 +91,10 @@ ANALYSES_EXTRA = (
     # beside the reported full-n estimate, with the field audit that carries the
     # reportability claim independently of which method is more accurate.
     ("out/comparator_bcc_rctd.csv", "comparator_bcc_rctd.csv"),
+    # The Discussion says the state can be applied around another estimator's
+    # output. This is that, run over saved RCTD fits the gate never produced.
+    ("out/gate_on_external_estimator.csv", "gate_on_external_estimator.csv"),
+    ("out/gate_on_external_estimator.json", "gate_on_external_estimator.json"),
     ("out/comparator_bcc_rctd.json", "comparator_bcc_rctd.json"),
     ("out/conditional_rmse_fulln.csv", "conditional_rmse_fulln.csv"),
     ("out/conditional_rmse_fulln.json", "conditional_rmse_fulln.json"),

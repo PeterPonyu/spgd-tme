@@ -1,0 +1,41 @@
+{
+  "c_star": 0.8,
+  "claim_under_test": "the reportability state can be applied around an estimate produced by another estimator",
+  "how": "The gate reads the locked reference profile, so the same frozen cutoff decides over a saved RCTD output without the estimator being rerun or modified. On these three libraries it returns KEEP once and ABSTAIN twice, which is the same split it returns for the estimator used here.",
+  "caveat": "The gate asserts that the reference separates the two programs, not that the reported coordinate is accurate. The malignant RMSE it withholds and the one it reports are listed so that distinction can be checked rather than assumed.",
+  "rows": [
+    {
+      "library": "CosMx BCC",
+      "estimator": "RCTD (saved spacexr 2.2.1)",
+      "n_spots": 5686,
+      "locked_cosine": 0.603666,
+      "gate_decision": "KEEP",
+      "malignant_coordinate": "reported",
+      "malignant_rmse_of_that_coordinate": 0.118696,
+      "conditional_rmse_after_withholding": 0.179462,
+      "n_zero_nonmalignant_truth_excluded": 1553
+    },
+    {
+      "library": "Xenium",
+      "estimator": "RCTD (saved spacexr 2.2.1)",
+      "n_spots": 2864,
+      "locked_cosine": 0.980196,
+      "gate_decision": "ABSTAIN",
+      "malignant_coordinate": "withheld",
+      "malignant_rmse_of_that_coordinate": 0.125821,
+      "conditional_rmse_after_withholding": 0.105753,
+      "n_zero_nonmalignant_truth_excluded": 16
+    },
+    {
+      "library": "Xenium FLEX",
+      "estimator": "RCTD (saved spacexr 2.2.1)",
+      "n_spots": 2864,
+      "locked_cosine": 0.977005,
+      "gate_decision": "ABSTAIN",
+      "malignant_coordinate": "withheld",
+      "malignant_rmse_of_that_coordinate": 0.150992,
+      "conditional_rmse_after_withholding": 0.100753,
+      "n_zero_nonmalignant_truth_excluded": 16
+    }
+  ]
+}
