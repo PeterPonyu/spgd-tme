@@ -81,6 +81,12 @@ ANALYSES_EXTRA = (
     # condition, so the recovery claim has a table rather than an assertion.
     ("out/wound_axis_prediction.csv", "wound_axis_prediction.csv"),
     ("out/wound_axis_prediction.json", "wound_axis_prediction.json"),
+    # R2 P2 asked what justifies the cutoff. Threshold invariance answers a
+    # different question; this is whether the deciding cosine orders the error.
+    ("out/cutoff_calibration.csv", "cutoff_calibration.csv"),
+    ("out/cutoff_calibration.json", "cutoff_calibration.json"),
+    ("out/conditional_rmse_fulln.csv", "conditional_rmse_fulln.csv"),
+    ("out/conditional_rmse_fulln.json", "conditional_rmse_fulln.json"),
     ("out/platform_vs_collinearity.json", "platform_permutation_and_variance.json"),
     ("out/clustered_bootstrap.json", "clustered_bootstrap.json"),
     ("out/cutoff_separability.json", "cutoff_separability.json"),
@@ -101,6 +107,12 @@ ANALYSES_EXTRA = (
      "neighbor_max_rule_library_summary.csv"),
     ("analyses/donor_strata/stratified_metrics.csv", "donor_stratified_metrics.csv"),
     ("analyses/donor_strata/block_bootstrap_rmse.csv", "donor_block_bootstrap_rmse.csv"),
+    ("analyses/donor_strata/summary_metrics.csv", "summary_metrics.csv"),
+    ("analyses/donor_strata/stratified_metrics.csv", "stratified_metrics.csv"),
+    ("analyses/donor_strata/block_bootstrap_rmse.csv", "block_bootstrap_rmse.csv"),
+    ("analyses/perturbation/perturbation_summary.csv", "perturbation_summary.csv"),
+    ("out/conditional_rmse_fulln.csv", "conditional_rmse_fulln.csv"),
+    ("out/conditional_rmse_fulln.json", "conditional_rmse_fulln.json"),
 )
 # Two locks record where a file sat on the machine that ran the sitting. That is
 # provenance for this repository and not for a reader, and it is the only content
@@ -159,6 +171,11 @@ PY_REBIND = (
     ("ROOT = Path(__file__).resolve().parents[2]", "ROOT = Path(__file__).resolve().parents[1]"),
     ('PLOTDATA = ROOT / "data" / "plotdata"', 'PLOTDATA = ROOT / "plotdata"'),
     ('OUT = ROOT / "manuscript" / "tables"', 'OUT = ROOT / "tables"'),
+)
+FIGURE_PY = (
+    ("render_f13.py", "render_F13.py"),
+    ("render_f14.py", "render_F14.py"),
+    ("render_f15.py", "render_F15.py"),
 )
 # A bundle is only as good as the worst string in it. Anything here fails the
 # build rather than shipping.
@@ -334,14 +351,20 @@ Reproducing a figure or a table
 Run these from the directory this file sits in. Nothing outside the bundle is
 needed and nothing outside it is written.
 
+  Figure 1       ships as Figure1.jpg in the submission capsule; this bundle
+                 does not redraw it from plotdata
   Figures 2-11   Rscript render/render_disk_faces.R
   Figure 12      Rscript render/render_F12_keep.R
                  both read plotdata/ and write one PDF and one PNG per figure
                  into figures/
-  Figure 1       drawn in the manuscript source as a TikZ picture, not from data
+  Figures 13-15  python3 render/render_F13.py
+                 python3 render/render_F14.py
+                 python3 render/render_F15.py
+                 read analyses/ and write figures/
   Tables 1-3     python3 render/generate_tables.py
                  reads plotdata/T1_materials.csv, T2_timing.csv and
                  T3_donor_matrix.csv, writes the TeX table bodies into tables/
+  Table 4        tables/T4_gate_calls.tex (manuscript source; not generated)
 
 R needs ggplot2, patchwork, dplyr, tidyr, ragg and Cairo.
 
@@ -391,6 +414,12 @@ def main() -> None:
     write_materials_lock()
 
     copy_script(RENDER / "generate_tables.py", OUT / "render" / "generate_tables.py", PY_REBIND)
+    for src_name, dst_name in FIGURE_PY:
+        src = REVISION / src_name
+        if not src.is_file():
+            sys.exit(f"FAIL: bundle names missing figure renderer {src_name}")
+        copy_text(src, OUT / "render" / dst_name)
+    copy_text(ROOT / "manuscript" / "tables" / "T4_gate_calls.tex", OUT / "tables" / "T4_gate_calls.tex")
     for src in sorted((RENDER / "R").glob("*.R")):
         dst = OUT / "render" / public_name(src.name)
         if src.name in R_ENTRY:

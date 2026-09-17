@@ -2,7 +2,10 @@
 from __future__ import annotations
 
 import importlib.util
+import subprocess
 import sys
+import tempfile
+import zipfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -78,10 +81,18 @@ def test_readme_names_only_commands_the_bundle_can_run():
     assert "Figures 2-11" in supp.README
     assert "render/render_F12_keep.R" in supp.README
     assert "Figures 2-12" not in supp.README
+    assert "TikZ picture" not in supp.README
+    assert "Figure1.jpg" in supp.README
+    assert "render/render_F13.py" in supp.README
+    assert "render/render_F14.py" in supp.README
+    assert "render/render_F15.py" in supp.README
+    assert "T4_gate_calls.tex" in supp.README
     bundle = ROOT / "supplementary"
     if bundle.is_dir():
-        for script in ("render_disk_faces.R", "render_F12_keep.R", "generate_tables.py"):
+        for script in ("render_disk_faces.R", "render_F12_keep.R", "generate_tables.py",
+                       "render_F13.py", "render_F14.py", "render_F15.py"):
             assert (bundle / "render" / script).is_file(), script
+        assert (bundle / "tables" / "T4_gate_calls.tex").is_file()
 
 
 def test_index_does_not_call_an_emit_stage_a_figure_number():
@@ -101,3 +112,55 @@ def test_revision_audit_tables_ship_with_the_bundle():
     assert "analyses/" in supp.README
     for src_rel, _ in supp.ANALYSES_EXTRA:
         assert (supp.REVISION / src_rel).is_file(), src_rel
+    names = {dst for _, dst in supp.ANALYSES_EXTRA}
+    for required in (
+        "perturbation_summary.csv",
+        "summary_metrics.csv",
+        "stratified_metrics.csv",
+        "conditional_rmse_fulln.json",
+        "conditional_rmse_fulln.csv",
+    ):
+        assert required in names, required
+    for src_name, _ in supp.FIGURE_PY:
+        assert (supp.REVISION / src_name).is_file(), src_name
+
+
+def test_unpacked_bundle_carries_documented_figure_and_table_inputs():
+    """Acceptance is unpack-in-empty-dir, not 'four extra scripts exist'."""
+    archive = ROOT / "supplementary.zip"
+    if not archive.is_file():
+        return
+    with tempfile.TemporaryDirectory() as tmp:
+        dest = Path(tmp)
+        with zipfile.ZipFile(archive) as zf:
+            zf.extractall(dest)
+        for rel in (
+            "render/render_disk_faces.R",
+            "render/render_F12_keep.R",
+            "render/render_F13.py",
+            "render/render_F14.py",
+            "render/render_F15.py",
+            "render/generate_tables.py",
+            "tables/T4_gate_calls.tex",
+            "analyses/perturbation_summary.csv",
+            "analyses/summary_metrics.csv",
+            "analyses/stratified_metrics.csv",
+            "analyses/conditional_rmse_fulln.json",
+            "plotdata/T1_materials.csv",
+            "plotdata/T2_timing.csv",
+            "plotdata/T3_donor_matrix.csv",
+        ):
+            assert (dest / rel).is_file(), rel
+        py = sys.executable
+        for script, expected in (
+            ("render/render_F13.py", "F13_revision_audit.pdf"),
+            ("render/render_F14.py", "F14_revision_support.pdf"),
+            ("render/render_F15.py", "F15_v3_fulln_comparator.pdf"),
+            ("render/generate_tables.py", None),
+        ):
+            subprocess.run([py, str(dest / script)], check=True, cwd=dest)
+            if expected:
+                assert (dest / "figures" / expected).is_file(), expected
+        assert (dest / "tables" / "T1_materials.tex").is_file()
+        assert (dest / "tables" / "T2_timing.tex").is_file()
+        assert (dest / "tables" / "T3_donor_matrix.tex").is_file()

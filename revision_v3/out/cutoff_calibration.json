@@ -1,0 +1,48 @@
+{
+  "c_star": 0.8,
+  "question": "does the deciding cosine predict malignant-column error?",
+  "per_substrate": [
+    {
+      "substrate": "openST",
+      "n_steps": 11,
+      "cosine_min": 0.9727,
+      "cosine_max": 1.0,
+      "tumor_rmse_min": 0.0745,
+      "tumor_rmse_max": 0.3357,
+      "spearman_cosine_vs_error": 0.991,
+      "monotone_rising": false,
+      "sweep_crosses_cutoff": false
+    },
+    {
+      "substrate": "Xenium",
+      "n_steps": 11,
+      "cosine_min": 0.9802,
+      "cosine_max": 1.0,
+      "tumor_rmse_min": 0.1272,
+      "tumor_rmse_max": 0.1759,
+      "spearman_cosine_vs_error": 0.018,
+      "monotone_rising": false,
+      "sweep_crosses_cutoff": false
+    },
+    {
+      "substrate": "CosMx BCC",
+      "n_steps": 11,
+      "cosine_min": 0.6037,
+      "cosine_max": 1.0,
+      "tumor_rmse_min": 0.1542,
+      "tumor_rmse_max": 0.6862,
+      "spearman_cosine_vs_error": 1.0,
+      "monotone_rising": true,
+      "sweep_crosses_cutoff": true
+    }
+  ],
+  "crossing": {
+    "substrate": "CosMx BCC",
+    "native_cosine": 0.6037,
+    "native_tumor_rmse": 0.1542,
+    "first_abstaining_cosine": 0.8548,
+    "first_abstaining_tumor_rmse": 0.3604,
+    "error_ratio": 2.34
+  },
+  "reading": "Where the sweep spans the cutoff the deciding quantity orders the error perfectly and crossing the cutoff more than doubles it, so the gate's premise holds where it is testable. Only one of the three substrates spans the cutoff; the other two sit above 0.97 throughout, and on Xenium the relationship there is absent. The cutoff's position is therefore calibrated by a single crossing, and the cosine is informative across the decision-relevant range rather than everywhere."
+}

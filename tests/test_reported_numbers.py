@@ -9,6 +9,7 @@ away from data/plotdata/.
 from __future__ import annotations
 
 import csv
+import json
 import math
 import statistics
 from collections import Counter, defaultdict
@@ -326,3 +327,46 @@ def test_recovery_claims_do_not_rest_on_a_truth_table():
         "the text claims the gradient is visible in the per-spot estimate, but no "
         "estimate table exists; run revision_v3/wound_axis_prediction.py"
     )
+
+
+def test_conditional_rmse_in_results_is_the_excluded_estimand():
+    """0.214 scored undefined rows; 0.188 is the paper's own exclusion rule."""
+    record = json.loads(
+        (ROOT / "revision_v3/out/conditional_rmse_fulln.json").read_text()
+    )
+    assert record["n_zero_nonmalignant_truth_excluded"] == 1553
+    assert record["n_spots_full"] == 5686
+    assert abs(record["conditional_rmse_excluding_zero_rows"] - 0.187631) < 1e-6
+    body = _body_text()
+    assert "4{,}133" in body or "4133" in body
+    assert "1{,}553" in body or "1553" in body
+    assert "0.188" in body
+    assert "27.3" in body
+    # The superseded number may still be named as superseded; it must not
+    # justify keeping the designated pair.
+    results = (MANUSCRIPT / "results.tex").read_text()
+    assert "cannot rank the designated pair against the maximum" in results
+    assert "demonstrates why the designated pair is retained" not in results
+
+
+def test_abstract_does_not_claim_fibroblast_rises_in_the_estimate():
+    """Locked truth rises; the estimate is not monotone and recovers ~56%."""
+    abstract = (MANUSCRIPT / "abstract.tex").read_text()
+    assert "fibroblast and MoMacDC rise" not in abstract
+    assert "estimate recovers only part of that shift and is not monotone" in abstract
+    gradients = json.loads(
+        (ROOT / "revision_v3/out/wound_axis_prediction.json").read_text()
+    )["gradients"]
+    assert gradients["Fibroblast"]["estimate_monotone"] is False
+    assert gradients["MoMacDC"]["estimate_monotone"] is True
+    assert gradients["Cancer.cells"]["estimate_monotone"] is True
+
+
+def test_lock_spec_does_not_use_withdrawn_neighbor_defences():
+    spec = (ROOT / "revision_v3/NEIGHBOR_RULE_LOCK_SPEC.md").read_text()
+    assert "share epidermal lineage" not in spec
+    assert "biologically implausible" not in spec
+    assert "false positive of the maximum" not in spec
+    assert "neural-crest" in spec
+    assert "type name is not that evidence" in spec
+    assert "not a justification for retaining the designated pair" in spec

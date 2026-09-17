@@ -40,12 +40,15 @@ maximum-eligible rule at `c* = 0.80`, three KEEP libraries flip to ABSTAIN:
 | CosMx HCC | Stellate.cells 0.6486 → KEEP | CD3+ αβ T cells 0.8541 → ABSTAIN |
 | CosMx BCC | Normal.Kerat 0.6037 → KEEP | Melanocyte 0.8247 → ABSTAIN |
 
-The HCC flip is driven by an immune neighbor (CD3+ T cells), which is
-biologically implausible collinearity and most likely a small-panel artifact.
-This is direct evidence that an unconstrained maximum rule is unsafe and that
-the manuscript's decision to keep the designated pair primary is correct. The
-lock spec recommends locking the designated-pair rule and publishing this scan
-as the R2-3 sensitivity audit.
+The HCC flip is a CD3+ T-cell column at 0.854. That is a collinearity fact on
+this panel, not independent QC evidence of a false positive, and it is not a
+reason to keep or discard either rule. BCC and melanocytes share epidermal
+residence, not lineage (epithelial versus neural-crest). The eight published
+calls remain the designated-pair operating estimand because that is the pair
+they were read from. The complete scan is the sensitivity audit. Three
+prospective options are recorded in the lock spec; this package does not
+select one of them from a type name, a headline result, or an incommensurable
+RMSE comparison.
 
 ### R2-2 — origin and stability of c* = 0.80
 `out/cutoff_separability.json`.
@@ -91,8 +94,12 @@ retaining S for the composition fit.
 
 If BCC were locked to ABSTAIN, the Cancer.cells coordinate (full-n tumor RMSE
 0.1516 under KEEP) is withheld, and the non-malignant simplex is renormalized
-and re-scored (RMSE 0.2140, type PCC 0.417, spot PCC 0.661). The withheld
-coordinate is reported as missing, never scored as zero.
+and re-scored. Scoring spots with no non-malignant truth mass as an all-zero
+composition yields RMSE 0.2140 (type PCC 0.417, spot PCC 0.661). Excluding
+those 1,553 of 5,686 spots (27.3%) yields conditional RMSE 0.1876 on 4,133
+spots. The historical full-simplex RMSE 0.106 is an eleven-type estimand and
+cannot be ranked against either conditional number. The withheld coordinate is
+reported as missing, never scored as zero.
 
 ## Integrity
 

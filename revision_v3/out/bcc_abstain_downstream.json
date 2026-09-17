@@ -10,11 +10,14 @@
     "PCC_type": 0.658847,
     "PCC_spot": 0.852694
   },
-  "ABSTAIN_nonmalignant": {
-    "tumor_RMSE_reported": "withheld (malignant coordinate missing, not zero)",
-    "nonmalignant_RMSE": 0.213989,
-    "nonmalignant_PCC_type": 0.416667,
-    "nonmalignant_PCC_spot": 0.661395
-  },
-  "interpretation": "Under the max-eligible rule BCC flips to ABSTAIN, so the Cancer.cells coordinate would be withheld rather than reported. The historical KEEP tumor RMSE above is what would no longer be reported; the non-malignant composition is re-scored after malignant withholding and renormalization."
+    "ABSTAIN_nonmalignant": {
+        "tumor_RMSE_reported": "withheld (malignant coordinate missing, not zero)",
+        "nonmalignant_RMSE": 0.213989,
+        "nonmalignant_RMSE_excluding_zero_mass_rows": 0.187631,
+        "n_spots_conditional": 4133,
+        "n_zero_nonmalignant_truth_excluded": 1553,
+        "nonmalignant_PCC_type": 0.416667,
+        "nonmalignant_PCC_spot": 0.661395
+    },
+    "interpretation": "Under the max-eligible rule BCC flips to ABSTAIN, so the Cancer.cells coordinate would be withheld rather than reported. nonmalignant_RMSE scores all 5,686 spots, including 1,553 with no non-malignant truth mass, and is superseded. The exclusion-corrected conditional RMSE is 0.187631 on 4,133 spots. Neither number is commensurate with the historical eleven-type full-simplex RMSE 0.106347, so the ordering does not rank neighbor rules."
 }

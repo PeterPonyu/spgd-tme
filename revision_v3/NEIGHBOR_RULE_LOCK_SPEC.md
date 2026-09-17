@@ -1,15 +1,15 @@
 # Malignant-neighbor selection rule — author-lock specification (V3)
 
-Status: locked for prospective use. This document does not change, and does not
-describe, any of the eight historical calls. Those were designated by three
-different procedures, one of them outcome-dependent, which the Methods section
-now states in the manuscript rather than only here. What is locked below is the
-rule any further library must follow, fixed before a further call is made, so the
-designated pair stops being a per-library judgement. It records the rule options,
-the complete evidence generated in `revision_v3/`, and the selected rule.
+Status: the eight published calls remain the designated-pair operating
+estimand, because that is the pair each call was read from. This document
+records the complete eligible scan and three prospective rules. It does not
+change any historical call, and it does not retune the frozen cutoff
+`c* = 0.80`.
 
-The frozen cutoff `c* = 0.80` is used exactly as locked and is not re-tuned
-anywhere in this analysis.
+What is locked for any further library is still a scientific choice. Three
+executable options are written below. This file does not adopt one of them on
+the basis of a type name, a headline result, or a comparison of incommensurable
+RMSE values.
 
 ## 1. What the audit established
 
@@ -33,23 +33,35 @@ Designated pair versus maximum-eligible neighbor at `c* = 0.80`
 | Xenium FLEX | Prolif_Invasive_Tumor 0.9770 → ABSTAIN | (same) 0.9770 → ABSTAIN | No |
 | CosMx BCC | Normal.Kerat 0.6037 → KEEP | Melanocyte 0.8247 → ABSTAIN | **Yes** |
 
-Three KEEP libraries flip under the maximum-eligible rule. The three flips are
-not equally plausible:
+Three KEEP libraries flip under the unconstrained maximum. Those flips are
+collinearity facts on the measured panel:
 
-- **NSCLC → epithelial (0.847):** epithelial cells are the tissue of origin of
-  a lung carcinoma, so a high malignant–epithelial cosine is a genuine
-  collinearity, not an artifact. A flip here is defensible.
-- **CosMx BCC → Melanocyte (0.825, 879 reference cells, robust to every support
-  floor):** BCC and melanocytes share epidermal lineage and pigment-pathway
-  genes on a small panel; the near-collinearity is biologically interpretable.
-- **HCC → CD3+ αβ T cells (0.854):** an immune neighbor collinear with the
-  malignant hepatocyte program is biologically implausible and most likely a
-  small-panel / doublet artifact. A flip driven by this neighbor is a false
-  positive of the maximum rule.
+- **NSCLC → epithelial (0.847).** A high malignant–epithelial cosine is a
+  genuine collinearity with the tissue of origin. It is not, by itself, a
+  reason to keep or discard either rule.
+- **CosMx BCC → Melanocyte (0.825, 879 reference cells, robust to every
+  support floor).** BCC and melanocytes share epidermal *residence*. They do
+  not share lineage: basal-cell carcinoma is epithelial in origin; melanocytes
+  are neural-crest derived. Shared pigment-pathway genes on a small panel can
+  still produce a high cosine. That is a geometry fact, not a QC diagnosis.
+- **HCC → CD3+ αβ T cells (0.854).** An immune neighbor can sit near the
+  malignant hepatocyte program on this panel. Calling that a false positive or
+  a doublet/contamination artifact requires independent QC evidence (doublet
+  rate, contamination, annotation audit). The type name is not that evidence.
 
-The HCC case is the decisive observation: an unconstrained maximum-over-eligible
-rule can select a cross-compartment neighbor that no analyst would designate,
-and would then withhold a reportable malignant coordinate for the wrong reason.
+The unconstrained maximum therefore answers a different question (any eligible
+neighbor) from the historical designated pair (a stated pair). A flip of the
+BCC application cohort, or of any other KEEP library, is a consequence to
+state. It is not a justification for retaining the designated pair.
+
+The previously quoted BCC downstream RMSEs cannot rank the rules either. The
+historical full-simplex score (0.106) is an eleven-type estimand including the
+malignant coordinate. The conditional score after withholding is a ten-type
+estimand. Scoring spots with no non-malignant truth mass as an all-zero
+composition yields 0.214; excluding those 1,553 of 5,686 spots (27.3%) yields
+0.188 on 4,133 spots. The two numbers stay on the record in
+`out/conditional_rmse_fulln.json`. Their ordering does not show that one
+neighbor rule is more accurate than the other.
 
 ## 2. Cutoff separability (why 0.80 needs no re-tuning)
 
@@ -63,44 +75,57 @@ of eligible pairs at or above 0.80 is 0.24 with a 95% interval of about
 
 ## 3. Rule options
 
-**Option A — designated-pair operating rule (recommended).** The operating
-malignant coordinate is gated on the pre-registered designated pair: the
-same-compartment stromal or epithelial program that is the biological neighbor
-of the malignant program in that library. The complete maximum-eligible scan is
-reported as a transparency audit, not as the operating call. Justification: the
-designated calls sit outside the 0.75–0.85 band, and the maximum rule is shown
-to select an implausible neighbor in HCC.
+These are prospective contracts. None is selected here by outcome.
+
+**Option A — designated-pair operating rule.** The operating malignant
+coordinate is gated on a pair named before scoring. For the eight libraries in
+this article, that pair is the historical designated pair already reported.
+The complete maximum-eligible scan is a transparency audit, not the operating
+call. This option is executable only if the pair is named independently of the
+cosine it will receive. "The biologically meaningful same-compartment neighbor"
+is not such a name: two analysts can disagree about the compartment, so it is
+not a unique rule.
 
 **Option B — constrained maximum-eligible rule.** Eligible set = every
 annotated non-malignant program with at least `n_min` reference cells that is
-represented in the locked reference AND lies in the same tissue compartment as
-the malignant program (epithelial/stromal; immune-only programs excluded as
-malignant neighbors). Score = maximum eligible cosine; ties broken by
-lexicographic reference label. Under this constraint the HCC immune flip is
-removed, while NSCLC (epithelial) and BCC (melanocyte) flips remain and require
-a downstream recompute.
+represented in the locked reference AND whose annotation label is in a
+pre-specified candidate set written down before any cosine is read. Score =
+maximum eligible cosine; ties broken by lexicographic reference label. A
+compartment filter is allowed only if the membership list is attached to the
+lock and is not edited after a cosine is seen. Under a stromal/epithelial
+candidate set the HCC immune flip is removed, while NSCLC (epithelial) and BCC
+(melanocyte) flips remain and require a downstream recompute.
 
-**Option C — unconstrained maximum-eligible rule (not recommended).** Eligible
-set excludes only the malignant program; score = maximum eligible cosine. This
-is the descriptive audit already reported; it flips NSCLC, HCC, and BCC,
-including the implausible HCC immune neighbor, so it should not be the operating
-rule.
+**Option C — unconstrained maximum-eligible rule.** Eligible set excludes only
+the malignant program; score = maximum eligible cosine. This is the
+descriptive audit already reported. It flips NSCLC, HCC, and BCC. It is a
+complete identifiability scan. It is not the same scientific object as the
+eight designated calls.
 
-## 4. Recommendation
+## 4. What the current manuscript uses
 
-Lock **Option A**. Keep the historical designated calls as the primary
-operating estimand; publish the complete eligible scan (this analysis) as the
-sensitivity audit that answers R2-3; and state the HCC immune-neighbor result
-explicitly as the reason a naive maximum rule is not adopted. If the editor
-requires an algorithmic rule, adopt **Option B** and recompute the downstream
-composition for NSCLC, BCC (and any other constrained flip) under that lock;
-`downstream_and_gate_fulln.py` already provides the BCC KEEP-versus-ABSTAIN
-downstream at full n.
+The current manuscript uses the historical designated pairs as the operating
+estimand of the eight published calls, and publishes the complete eligible
+scan as the sensitivity audit that answers R2-3. That is a description of
+what was already read, not a new prospective lock chosen to preserve a
+headline.
+
+If a later library needs a prospective algorithmic rule, one of Options A–C
+must be named, with its eligible set written down, before that library is
+scored. Recomputing the eight historical libraries after seeing their results
+is retrospective robustness, not prospective validation.
+
+If a flip is later locked as the operating call, the downstream contract in
+section 5 applies. `downstream_and_gate_fulln.py` already provides the BCC
+KEEP-versus-ABSTAIN downstream at full n; `conditional_rmse_fulln.py` reports
+the exclusion-corrected conditional RMSE beside the superseded figure.
 
 ## 5. If a flip is locked: downstream contract
 
 For any library whose operating call becomes ABSTAIN, the malignant coordinate
 is withheld (missing, never scored as zero) and the remaining simplex is
 renormalized. The reported non-malignant composition is then conditional on
-malignant withholding. The BCC downstream under this contract is quantified in
-`out/bcc_abstain_downstream.json`.
+malignant withholding. Spots with no non-malignant truth mass are undefined
+for that conditional question and are excluded and counted, matching the
+400-spot audit. The BCC downstream under this contract is quantified in
+`out/bcc_abstain_downstream.json` and `out/conditional_rmse_fulln.json`.
