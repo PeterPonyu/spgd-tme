@@ -1,4 +1,4 @@
-substrate,n_steps,cosine_min,cosine_max,tumor_rmse_min,tumor_rmse_max,spearman_cosine_vs_error,monotone_rising,sweep_crosses_cutoff
-openST,11,0.9727,1.0,0.0745,0.3357,0.991,False,False
-Xenium,11,0.9802,1.0,0.1272,0.1759,0.018,False,False
-CosMx BCC,11,0.6037,1.0,0.1542,0.6862,1.0,True,True
+substrate,n_steps,cosine_min,cosine_max,tumor_rmse_at_native,tumor_rmse_min,tumor_rmse_max,spearman_cosine_vs_error,error_monotone_in_t,sweep_crosses_cutoff
+openST,11,0.9727,1.0,0.0757,0.0745,0.3357,0.991,False,False
+Xenium,11,0.9802,1.0,0.1558,0.1272,0.1759,0.018,False,False
+CosMx BCC,11,0.6037,1.0,0.1542,0.1542,0.6862,1.0,True,True

@@ -1,16 +1,18 @@
 {
   "c_star": 0.8,
-  "question": "does the deciding cosine predict malignant-column error?",
+  "question": "where along the deciding cosine does the malignant error become large?",
+  "design": "Eleven-step interpolation of the malignant signature toward its neighbour. The cosine and the error are both functions of the interpolation parameter, so their rank correlation is not evidence that the cosine predicts error independently; what the sweep gives is the position on the cosine axis at which the error becomes large.",
   "per_substrate": [
     {
       "substrate": "openST",
       "n_steps": 11,
       "cosine_min": 0.9727,
       "cosine_max": 1.0,
+      "tumor_rmse_at_native": 0.0757,
       "tumor_rmse_min": 0.0745,
       "tumor_rmse_max": 0.3357,
       "spearman_cosine_vs_error": 0.991,
-      "monotone_rising": false,
+      "error_monotone_in_t": false,
       "sweep_crosses_cutoff": false
     },
     {
@@ -18,10 +20,11 @@
       "n_steps": 11,
       "cosine_min": 0.9802,
       "cosine_max": 1.0,
+      "tumor_rmse_at_native": 0.1558,
       "tumor_rmse_min": 0.1272,
       "tumor_rmse_max": 0.1759,
       "spearman_cosine_vs_error": 0.018,
-      "monotone_rising": false,
+      "error_monotone_in_t": false,
       "sweep_crosses_cutoff": false
     },
     {
@@ -29,20 +32,28 @@
       "n_steps": 11,
       "cosine_min": 0.6037,
       "cosine_max": 1.0,
+      "tumor_rmse_at_native": 0.1542,
       "tumor_rmse_min": 0.1542,
       "tumor_rmse_max": 0.6862,
       "spearman_cosine_vs_error": 1.0,
-      "monotone_rising": true,
+      "error_monotone_in_t": true,
       "sweep_crosses_cutoff": true
     }
   ],
   "crossing": {
     "substrate": "CosMx BCC",
+    "native_t": 0.0,
     "native_cosine": 0.6037,
     "native_tumor_rmse": 0.1542,
-    "first_abstaining_cosine": 0.8548,
-    "first_abstaining_tumor_rmse": 0.3604,
-    "error_ratio": 2.34
+    "last_keep_t": 0.2,
+    "last_keep_cosine": 0.7871,
+    "last_keep_tumor_rmse": 0.2805,
+    "first_abstain_t": 0.3,
+    "first_abstain_cosine": 0.8548,
+    "first_abstain_tumor_rmse": 0.3604,
+    "adjacent_step_ratio": 1.29,
+    "native_to_first_abstain_ratio": 2.34,
+    "steps_between_native_and_first_abstain": 3
   },
-  "reading": "Where the sweep spans the cutoff the deciding quantity orders the error perfectly and crossing the cutoff more than doubles it, so the gate's premise holds where it is testable. Only one of the three substrates spans the cutoff; the other two sit above 0.97 throughout, and on Xenium the relationship there is absent. The cutoff's position is therefore calibrated by a single crossing, and the cosine is informative across the decision-relevant range rather than everywhere."
+  "reading": "Only CosMx BCC spans the cutoff, because openST and Xenium sit above 0.97 at every step. On CosMx BCC the malignant error rises monotonically across the sweep, from 0.1542 at the native cosine 0.6037 to 0.6862 at 1.0. The two steps that straddle the cutoff are 0.2805 at cosine 0.7871 and 0.3604 at 0.8548, a factor of 1.29; measured instead from the native step, three interpolation steps below, the factor is 2.34. On openST the error rises over the sweep as a whole, while on Xenium it rises to 0.1759 and falls back to 0.1272 before the final step, so the error there is not monotone in the sweep at all. The cutoff's position is calibrated by a single library's crossing, and the sweep says where the error becomes large rather than that the cosine predicts it in unmanipulated data."
 }

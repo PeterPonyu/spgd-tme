@@ -68,6 +68,28 @@
   {
     "benchmark": "CosMx BCC (realgt3)",
     "method": "SPGD (build_v4)",
+    "n_spots": 5686,
+    "malignant": "Cancer.cells",
+    "overall_RMSE": 0.106347,
+    "tumor_RMSE": 0.151633,
+    "PCC_type": 0.658847,
+    "PCC_spot": 0.852694,
+    "JSD": 0.09139
+  },
+  {
+    "benchmark": "CosMx BCC (realgt3)",
+    "method": "RCTD",
+    "n_spots": 5686,
+    "malignant": "Cancer.cells",
+    "overall_RMSE": 0.083724,
+    "tumor_RMSE": 0.118696,
+    "PCC_type": 0.635009,
+    "PCC_spot": 0.894032,
+    "JSD": 0.070958
+  },
+  {
+    "benchmark": "CosMx BCC (realgt3)",
+    "method": "SPGD (build_v4)",
     "n_spots": 800,
     "malignant": "Cancer.cells",
     "overall_RMSE": 0.108186,

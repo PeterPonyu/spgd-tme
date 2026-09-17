@@ -81,10 +81,17 @@ ANALYSES_EXTRA = (
     # condition, so the recovery claim has a table rather than an assertion.
     ("out/wound_axis_prediction.csv", "wound_axis_prediction.csv"),
     ("out/wound_axis_prediction.json", "wound_axis_prediction.json"),
+    # The per-spot matrix, so checking the wound axis does not require a refit.
+    ("out/wound_axis_per_spot_estimate.csv", "wound_axis_per_spot_estimate.csv"),
     # R2 P2 asked what justifies the cutoff. Threshold invariance answers a
     # different question; this is whether the deciding cosine orders the error.
     ("out/cutoff_calibration.csv", "cutoff_calibration.csv"),
     ("out/cutoff_calibration.json", "cutoff_calibration.json"),
+    # R2-5 on the library the first claim rests on: the saved RCTD fit scored
+    # beside the reported full-n estimate, with the field audit that carries the
+    # reportability claim independently of which method is more accurate.
+    ("out/comparator_bcc_rctd.csv", "comparator_bcc_rctd.csv"),
+    ("out/comparator_bcc_rctd.json", "comparator_bcc_rctd.json"),
     ("out/conditional_rmse_fulln.csv", "conditional_rmse_fulln.csv"),
     ("out/conditional_rmse_fulln.json", "conditional_rmse_fulln.json"),
     ("out/platform_vs_collinearity.json", "platform_permutation_and_variance.json"),

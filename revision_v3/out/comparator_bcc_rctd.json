@@ -1,0 +1,83 @@
+{
+  "library": "CosMx BCC",
+  "question": "R2 Point 5 on the library the first claim rests on",
+  "n_spots_scored": 5686,
+  "n_types_scored": 11,
+  "rctd_provenance": {
+    "method": "RCTD (spacexr)",
+    "spacexr_version": "2.2.1",
+    "mode": "full",
+    "n_ref_cells": 106929,
+    "runtime_seconds": 469.8,
+    "deviations": [
+      "Spot coordinates are placeholder grid (no obsm['spatial']); RCTD full mode fits each spot independently and does not use coords.",
+      "Reference min_UMI lowered from spacexr default 100 to 25 to retain rare low-UMI CosMx types (e.g. Neutrophil) above the hard-coded CELL_MIN=25 reference QC."
+    ]
+  },
+  "scores": [
+    {
+      "method": "SPGD (build_v4, full n)",
+      "n_spots": 5686,
+      "n_types": 11,
+      "overall_RMSE": 0.106347,
+      "malignant_RMSE": 0.151633,
+      "PCC_type": 0.658847,
+      "PCC_spot": 0.852694,
+      "JSD": 0.09139
+    },
+    {
+      "method": "RCTD (spacexr 2.2.1, full mode)",
+      "n_spots": 5686,
+      "n_types": 11,
+      "overall_RMSE": 0.083724,
+      "malignant_RMSE": 0.118696,
+      "PCC_type": 0.635009,
+      "PCC_spot": 0.894032,
+      "JSD": 0.070958
+    }
+  ],
+  "field_audit": [
+    {
+      "method": "SPGD",
+      "malignant_value_written_at_every_spot": true,
+      "n_spots_with_malignant_value": 5686,
+      "n_spots_withheld_or_missing": 0,
+      "columns_in_output": [
+        "Bcell",
+        "Cancer.cells",
+        "Endothelial",
+        "Fibroblast",
+        "Melanocyte",
+        "MoMacDC",
+        "Neutrophil",
+        "Normal.Kerat",
+        "Pericyte",
+        "PlasmaCell",
+        "Tcell"
+      ],
+      "carries_a_reportability_state": true,
+      "state_on_this_library": "KEEP (designated cosine 0.6037 < c* = 0.80)"
+    },
+    {
+      "method": "RCTD",
+      "malignant_value_written_at_every_spot": true,
+      "n_spots_with_malignant_value": 5686,
+      "n_spots_withheld_or_missing": 0,
+      "columns_in_output": [
+        "Bcell",
+        "Cancer.cells",
+        "Endothelial",
+        "Fibroblast",
+        "Melanocyte",
+        "MoMacDC",
+        "Neutrophil",
+        "Normal.Kerat",
+        "Pericyte",
+        "PlasmaCell",
+        "Tcell"
+      ],
+      "carries_a_reportability_state": false
+    }
+  ],
+  "reading": "RCTD is placed on the library the first claim rests on, which the revision had covered only with a Tangram refit. Accuracy is reported without a uniform-superiority claim. The reportability point is separate and does not depend on which method scores better: the RCTD output is a full weight vector with a malignant value at every spot and no field marking that value unsupported, so the claim that existing estimators expose no matched reportability state is now evidenced on CosMx BCC rather than asserted."
+}

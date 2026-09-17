@@ -362,6 +362,69 @@ def test_abstract_does_not_claim_fibroblast_rises_in_the_estimate():
     assert gradients["Cancer.cells"]["estimate_monotone"] is True
 
 
+def test_cutoff_calibration_states_both_crossing_ratios_and_its_limits():
+    """The 2.34x spans three interpolation steps; 1.29x is the marginal one.
+
+    Reporting only the wide ratio reads as the cost of crossing the cutoff, which
+    it is not. And both the cosine and the error are functions of the same
+    interpolation parameter, so the sweep locates where error becomes large
+    rather than validating the cosine as an independent predictor.
+    """
+    record = json.loads((ROOT / "revision_v3/out/cutoff_calibration.json").read_text())
+    crossing = record["crossing"]
+    assert crossing["substrate"] == "CosMx BCC"
+    assert crossing["adjacent_step_ratio"] == 1.29
+    assert crossing["native_to_first_abstain_ratio"] == 2.34
+    assert crossing["steps_between_native_and_first_abstain"] == 3
+
+    spans = [r for r in record["per_substrate"] if r["sweep_crosses_cutoff"]]
+    assert [r["substrate"] for r in spans] == ["CosMx BCC"], "only one library crosses c*"
+    xenium = next(r for r in record["per_substrate"] if r["substrate"] == "Xenium")
+    assert xenium["error_monotone_in_t"] is False
+
+    body = _body_text()
+    for printed in ("1.29", "2.34", "0.2805", "0.3604", "0.7871", "0.8548"):
+        assert printed in body, printed
+    results = (MANUSCRIPT / "results.tex").read_text()
+    assert "both functions of the interpolation parameter" in results
+    assert "rather than establishing the cosine as an independent predictor" in results
+
+
+def test_bcc_comparator_reports_the_loss_it_found():
+    """RCTD leads on four of five fields on the library the first claim rests on.
+
+    The revision covered CosMx BCC with a Tangram refit that SPGD wins while an
+    unfavourable RCTD run for the same library sat unscored. Presenting only the
+    win is the outcome-dependent selection R2 P3 objected to, so the text must
+    carry the loss and must not rest the reportability claim on accuracy.
+    """
+    record = json.loads((ROOT / "revision_v3/out/comparator_bcc_rctd.json").read_text())
+    scores = {r["method"].split(" (")[0]: r for r in record["scores"]}
+    spgd, rctd = scores["SPGD"], scores["RCTD"]
+    assert spgd["n_spots"] == rctd["n_spots"] == 5686
+
+    # The SPGD row must still be the estimate the manuscript reports.
+    assert abs(spgd["overall_RMSE"] - 0.106347) < 1e-6
+    assert abs(spgd["malignant_RMSE"] - 0.151633) < 1e-6
+
+    beaten = [f for f in ("overall_RMSE", "malignant_RMSE", "JSD") if rctd[f] < spgd[f]]
+    assert beaten == ["overall_RMSE", "malignant_RMSE", "JSD"]
+    assert rctd["PCC_spot"] > spgd["PCC_spot"]
+    assert rctd["PCC_type"] < spgd["PCC_type"]
+
+    body = _body_text()
+    for printed in ("0.0837", "0.1187", "0.8940", "0.0710", "0.6350"):
+        assert printed in body, printed
+
+    # The reportability claim is about fields and must not be evidenced by accuracy.
+    audit = {a["method"]: a for a in record["field_audit"]}
+    assert audit["RCTD"]["carries_a_reportability_state"] is False
+    assert audit["RCTD"]["n_spots_with_malignant_value"] == 5686
+    assert audit["SPGD"]["carries_a_reportability_state"] is True
+    results = (MANUSCRIPT / "results.tex").read_text()
+    assert "claim about the fields an output carries rather than about accuracy" in results
+
+
 def test_lock_spec_does_not_use_withdrawn_neighbor_defences():
     spec = (ROOT / "revision_v3/NEIGHBOR_RULE_LOCK_SPEC.md").read_text()
     assert "share epidermal lineage" not in spec

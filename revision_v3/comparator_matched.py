@@ -35,6 +35,12 @@ JOBS = {
     "Xenium (realgt)": ("realgt_benchmark", "results/rctd_realgt", "RCTD", "Invasive_Tumor"),
     "Xenium FLEX (realgt2)": ("realgt2_benchmark", "results/rctd_realgt2", "RCTD", "Invasive_Tumor"),
     "openST (openst)": ("openst_benchmark", "results/c2l_openst", "cell2location", "Tumor"),
+    # The BCC row carried only the fresh Tangram refit. A real spacexr 2.2.1 full-mode
+    # run over all 5,686 BCC spots predates this revision and sat unscored, and it is
+    # the more accurate estimate on four of five fields. Leaving it out while keeping
+    # the favourable Tangram comparison on the same library would be the selection by
+    # outcome that R2 Point 3 objects to.
+    "CosMx BCC (realgt3)": ("realgt3_benchmark", "results/rctd_realgt3", "RCTD", "Cancer.cells"),
 }
 
 

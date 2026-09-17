@@ -59,7 +59,7 @@ Locked mixed-spot TME operators
 
 ## Counts to type into the form
 
-Word count 11337. Figures 15. Tables 4.
+Word count 11739. Figures 15. Tables 4.
 
 The Version 1 project page still shows FLEX 0.987505, "the cutoff separates collinear type pairs rather than assay platforms", and "0.001 s of a 60.252 s pass". Those are the submitted abstract. Replace them with the abstract above when the form is edited. Do not type a calendar date into any correspondence box.
 
