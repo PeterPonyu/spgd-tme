@@ -40,10 +40,18 @@ DECONV = Path(os.environ.get("SPGD_DECONV_ROOT", str(ROOT.parent / "deconv-lab")
 C_STAR = 0.80
 
 # library key -> (public label, saved RCTD run, malignant type, locked cosine)
+# (library key, public label, saved run, malignant type, locked cosine, estimator)
+# Two estimators rather than one: if the state only ever travelled over RCTD the
+# demonstration would be about RCTD, not about the gate.
 RUNS = (
-    ("realgt3", "CosMx BCC", "results/rctd_realgt3", "Cancer.cells", 0.603666),
-    ("realgt", "Xenium", "results/rctd_realgt", "Invasive_Tumor", 0.980196),
-    ("realgt2", "Xenium FLEX", "results/rctd_realgt2", "Invasive_Tumor", 0.977005),
+    ("realgt3", "CosMx BCC", "results/rctd_realgt3", "Cancer.cells", 0.603666,
+     "RCTD (saved spacexr 2.2.1)"),
+    ("realgt", "Xenium", "results/rctd_realgt", "Invasive_Tumor", 0.980196,
+     "RCTD (saved spacexr 2.2.1)"),
+    ("realgt2", "Xenium FLEX", "results/rctd_realgt2", "Invasive_Tumor", 0.977005,
+     "RCTD (saved spacexr 2.2.1)"),
+    ("openst", "openST", "results/c2l_openst", "Tumor", 0.972678,
+     "cell2location (saved run)"),
 )
 
 
@@ -53,7 +61,7 @@ def rmse(a: np.ndarray, b: np.ndarray) -> float:
 
 def main() -> None:
     rows = []
-    for key, label, rel, mal, cosine in RUNS:
+    for key, label, rel, mal, cosine, estimator in RUNS:
         pred_path = DECONV / rel / "estimated_proportions.csv"
         truth_path = Path(BENCH[key]) / "truth_proportions.csv"
         if not pred_path.is_file() or not truth_path.is_file():
@@ -81,7 +89,7 @@ def main() -> None:
 
         rows.append({
             "library": label,
-            "estimator": "RCTD (saved spacexr 2.2.1)",
+            "estimator": estimator,
             "n_spots": len(common),
             "locked_cosine": cosine,
             "gate_decision": "ABSTAIN" if abstain else "KEEP",

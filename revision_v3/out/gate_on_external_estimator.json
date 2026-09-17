@@ -36,6 +36,17 @@
       "malignant_rmse_of_that_coordinate": 0.150992,
       "conditional_rmse_after_withholding": 0.100753,
       "n_zero_nonmalignant_truth_excluded": 16
+    },
+    {
+      "library": "openST",
+      "estimator": "cell2location (saved run)",
+      "n_spots": 6971,
+      "locked_cosine": 0.972678,
+      "gate_decision": "ABSTAIN",
+      "malignant_coordinate": "withheld",
+      "malignant_rmse_of_that_coordinate": 0.122328,
+      "conditional_rmse_after_withholding": 0.160453,
+      "n_zero_nonmalignant_truth_excluded": 1395
     }
   ]
 }
